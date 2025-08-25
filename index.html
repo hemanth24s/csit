@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chemical Society, IISER TVM (CSIT)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* -------------------------
+       Page background (animated gradient)
+       ------------------------- */
+    body {
+      margin: 0;
+      font-family: 'Poppins', Tahoma, sans-serif;
+      background: linear-gradient(270deg, #071022, #1b2b44, #334a6a, #7aa0d6);
+      background-size: 600% 600%;
+      animation: gradientBG 20s ease infinite;
+      overflow-x: hidden;
+    }
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* -------------------------
+       Fullscreen particles canvas (chemistry atoms)
+       ------------------------- */
+    canvas#molecules {
+      position: fixed;
+      inset: 0;               /* top:0; left:0; right:0; bottom:0 */
+      width: 100%;
+      height: 100%;
+      pointer-events: none;   /* allow clicks through canvas */
+      z-index: 0;             /* behind page content */
+      mix-blend-mode: screen; /* optional blending for glow effect */
+    }
+
+    /* Animated reactions background canvas */
+    #reactions-bg {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.85;
+    }
+
+    /* Make main page elements stack above canvas */
+    header, nav, .carousel, main, footer, section {
+      position: relative;
+      z-index: 2;
+    }
+
+    header {
+      background-color: rgba(44, 62, 80, 0.85);
+      height: 120px; /* Increased header height */
+      /* include safe-area inset for devices with notches and ensure box-sizing */
+      padding: 0 calc(28px + env(safe-area-inset-right, 0px)) calc(0px + env(safe-area-inset-bottom, 0px)) calc(28px + env(safe-area-inset-left, 0px));
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      color: white;
+      text-align: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 20;
+    }
+
+    nav {
+      background-color: rgba(52, 73, 94, 0.85);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 48px;
+      position: fixed;
+      top: 120px; /* Move nav below new header height */
+      left: 0;
+      width: 100%;
+      z-index: 19;
+    }
+
+    nav a {
+      color: white;
+      padding: 14px 20px;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    nav a:hover {
+      background-color: #1abc9c;
+    }
+
+    /* responsive carousel: use aspect-ratio so height scales with viewport width */
+    .carousel {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1920 / 560; /* desktop banner aspect */
+      max-height: 60vh; /* cap height on very tall/narrow screens */
+      overflow: hidden;
+      margin-top: 168px; /* header (120px) + nav (48px) */
+    }
+
+    .slides {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      opacity: 0;
+      transition: opacity 1s ease;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .slide.active {
+      opacity: 1;
+      z-index: 2;
+      pointer-events: auto;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* scale and crop to fill container */
+      display: block;
+      /* Ken Burns effect: slow zoom and pan */
+      animation: kenburns 8s ease-in-out forwards;
+    }
+
+    .slide:not(.active) img {
+      animation: none !important;
+    }
+
+    @keyframes kenburns {
+      0% {
+        transform: scale(1) translate(0, 0);
+      }
+      100% {
+        transform: scale(1.12) translate(-2%, -2%);
+      }
+    }
+
+    .prev, .next, .pause-play {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 10px;
+      background-color: rgba(0,0,0,0.5);
+      color: white;
+      border: none;
+      font-size: 18px;
+      z-index: 2; /* above slides */
+    }
+
+    .prev { left: 10px; }
+    .next { right: 10px; }
+    .pause-play {
+      top: auto;
+      bottom: 10px;
+      right: 15px;
+      transform: none;
+    }
+
+    main {
+      padding: 20px;
+      text-align: center;
+      margin-top: 20px; /* Space below carousel */
+    }
+
+    section {
+      background-color: rgba(255, 255, 255, 0.9);
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 800px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    img.logo {
+      max-width: 120px;
+      height: auto;
+      display: block;
+      margin: 0 auto 20px auto;
+    }
+
+    footer {
+      background-color: rgba(44, 62, 80, 0.85);
+      color: white;
+      text-align: center;
+      padding: 10px;
+      /* Remove position: fixed, width, bottom, z-index */
+    }
+
+    /* Glassmorphism effect for cards */
+    .glass-card {
+      background: rgba(255,255,255,0.18);
+      border-radius: 16px;
+      box-shadow: 0 4px 32px 0 rgba(31, 38, 135, 0.13);
+      backdrop-filter: blur(12px) saturate(140%);
+      -webkit-backdrop-filter: blur(12px) saturate(140%);
+      border: 1.5px solid rgba(255,255,255,0.28);
+      transition: box-shadow 0.2s, background 0.2s;
+    }
+    .glass-card:hover {
+      box-shadow: 0 8px 40px 0 rgba(31, 38, 135, 0.18);
+      background: rgba(255,255,255,0.28);
+    }
+
+    /* Ensure sections are above the animated canvas */
+    .updates-section, .team-section, .quicklinks-section {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* responsive tweak for smaller screens */
+    @media (max-width: 900px) {
+      /* use a taller aspect on small screens to avoid extremely short banners */
+      .carousel { aspect-ratio: 16 / 9; max-height: 50vh; }
+    }
+
+    /* Header styles */
+    .header-flex {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 120px;
+      width: 100%;
+    }
+
+    .header-logo-link {
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
+
+    .header-logo-csit {
+      width: 74px;
+      height: 74px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #fff;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+      margin-left: 10px;
+      cursor: pointer;
+      transition: box-shadow 0.2s;
+    }
+    .header-logo-csit:hover {
+      box-shadow: 0 4px 24px rgba(30,60,120,0.18);
+    }
+
+    .header-title {
+      flex: 1;
+      text-align: center;
+      padding: 0 10px;
+    }
+
+    .header-logo-iiser {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #fff;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+      margin-right: 20px; /* enforce clear gap from screen edge */
+      display: block;
+      box-sizing: border-box;
+      max-width: 100%;
+      vertical-align: middle;
+    }
+
+    /* additional container safety: ensure header-flex doesn't overflow */
+    .header-flex { padding-right: 8px; box-sizing: border-box; }
+    @media (max-width: 600px) {
+      .header-flex {
+        flex-direction: column;
+        height: auto;
+        gap: 6px;
+      }
+      .header-title {
+        padding: 0;
+      }
+      .header-logo-csit,
+      .header-logo-iiser {
+        margin: 0;
+      }
+    }
+
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: rgba(52, 73, 94, 0.95);
+      min-width: 160px;
+      box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .dropdown-content a {
+      color: white;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #1abc9c;
+    }
+
+    /* Loader overlay styles */
+    #loadingOverlay {
+      position: fixed;
+      z-index: 9999;
+      inset: 0;
+      background: rgba(20, 30, 50, 0.92);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.3s;
+    }
+    .loader {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      min-width: 100vw;
+    }
+    .logo-spinner {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 110px;
+      height: 110px;
+    }
+    .loader-logo {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      box-shadow: 0 0 16px #fff8;
+      background: #fff;
+      object-fit: cover;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 2;
+      display: block;
+    }
+    .spinner-circle {
+      position: absolute;
+      top: 0; left: 0;
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      border: 6px solid #e0e0e0;
+      border-top: 6px solid #1abc9c;
+      box-sizing: border-box;
+      animation: spin 1s linear infinite;
+      z-index: 1;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
+    }
+  </style>
+</head>
+<body>
+  <!-- Fullscreen canvas for animated "atoms" (keeps everything local) -->
+  <canvas id="molecules" aria-hidden="true"></canvas>
+
+  <!-- Animated reactions background canvas -->
+  <canvas id="reactions-bg" aria-hidden="true"></canvas>
+
+  <header>
+    <div class="header-flex">
+      <a href="index.html" class="header-logo-link">
+        <img src="C:\Users\hemanth\Downloads\csit webpage\photos\LOGO.jpg" alt="CSIT Logo" class="header-logo-csit" />
+      </a>
+      <div class="header-title">
+        <h1 style="margin:0;">Welcome to Chemical Society, IISER TVM</h1>
+        <p style="margin:0;">An initiative from School of Chemistry, IISER TVM</p>
+      </div>
+      <img src="C:\Users\hemanth\Downloads\csit webpage\photos\iiser tvm logo.png" alt="IISER TVM Logo" class="header-logo-iiser" />
+    </div>
+  </header>
+
+  <div id="loadingOverlay" style="display:none;">
+    <div class="loader">
+      <div class="logo-spinner">
+        <img src="PHOTOS/LOGO.jpg" alt="CSIT Logo" class="loader-logo">
+        <span class="spinner-circle"></span>
+      </div>
+    </div>
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <div class="dropdown">
+      <a href="about.html">About</a>
+      <div class="dropdown-content">
+        <a href="founder.html" data-subtab="founder">Founder</a>
+        <a href="organising-team.html" data-subtab="organising-team">CSIT Organising Team</a>
+      </div>
+    </div>
+    <div class="dropdown">
+      <a href="initiatives.html">Initiatives</a>
+      <div class="dropdown-content">
+        <a href="newsletters.html" data-subtab="newsletters">CSIT Newsletters</a>
+        <a href="magazines.html" data-subtab="magazines">CSIT Magazines</a>
+      </div>
+    </div>
+    <a href="gallery.html">Gallery</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <script>
+  // Loader logic for nav links
+  document.addEventListener('DOMContentLoaded', function() {
+    const overlay = document.getElementById('loadingOverlay');
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', function(e) {
+        // Only show loader for real navigation (not #)
+        if (this.getAttribute('href') !== '#') {
+          e.preventDefault();
+          overlay.style.display = 'flex';
+          setTimeout(() => {
+            window.location.href = this.href;
+          }, 1500); // 1.5 seconds delay
+        }
+      });
+    });
+
+    // Add event listeners for About sub-tabs
+    document.querySelectorAll('a[data-subtab]').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        overlay.style.display = 'flex';
+        setTimeout(() => {
+          window.location.href = this.getAttribute('href');
+        }, 1500); // 1.5 seconds delay
+      });
+    });
+  });
+  </script>
+
+  <!-- Carousel -->
+  <div class="carousel">
+    <div class="slides" id="slides">
+      <div class="slide"><img src="PHOTOS/soc.jpg" alt="Slide 1"></div>
+      <div class="slide"><img src="PHOTOS/soc2.jpg" alt="Slide 2"></div>
+      <div class="slide"><img src="PHOTOS/soc2.png" alt="Slide 3"></div>
+    </div>
+    <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
+    <button class="next" onclick="changeSlide(1)">&#10095;</button>
+    <button class="pause-play" onclick="togglePlayPause()" id="playPauseBtn">⏸</button>
+  </div>
+
+  <script>
+    /* -----------------------------
+       Carousel script (unchanged)
+       ----------------------------- */
+    let currentIndex = 0;
+    let playing = true;
+    const slides = document.getElementById("slides");
+    const slideEls = slides.children;
+    const totalSlides = slideEls.length;
+    const playPauseBtn = document.getElementById("playPauseBtn");
+
+    function showSlide(index) {
+      for (let i = 0; i < totalSlides; i++) {
+        slideEls[i].classList.remove('active');
+      }
+      slideEls[index].classList.add('active');
+    }
+
+    function changeSlide(direction) {
+      currentIndex = (currentIndex + direction + totalSlides) % totalSlides;
+      showSlide(currentIndex);
+    }
+
+    function togglePlayPause() {
+      playing = !playing;
+      playPauseBtn.textContent = playing ? "⏸" : "▶";
+    }
+
+    setInterval(() => {
+      if (playing) changeSlide(1);
+    }, 8000); // 8 seconds for Ken Burns effect
+
+    // Show the first slide on load
+    showSlide(currentIndex);
+  </script>
+
+  <main>
+    <div class="tile-container">
+      <section class="tile tile-left">
+        <img src="PHOTOS/LOGO.jpg" alt="Website Logo" class="logo">
+        <h2>Homepage</h2>
+        <p>Official website of CSIT</p>
+        <p>Page is under construction. Stay tuned for more updates.</p>
+      </section>
+      <section class="tile tile-center">
+        <img src="PHOTOS/soc.jpg" alt="Events" class="logo">
+        <h2>Events</h2>
+        <p>Explore our latest events and activities.</p>
+        <p>Check back soon for event highlights!</p>
+      </section>
+      <section class="tile tile-right">
+        <img src="PHOTOS/soc2.jpg" alt="Initiatives" class="logo">
+        <h2>Initiatives</h2>
+        <p>Discover our ongoing initiatives and projects.</p>
+        <p>More details coming soon.</p>
+      </section>
+    </div>
+    <style>
+      .tile-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 32px;
+        margin: 32px auto;
+        max-width: 1200px;
+      }
+      .tile {
+        flex: 1 1 280px;
+        min-width: 260px;
+        max-width: 340px;
+        background-color: rgba(255,255,255,0.92);
+        border-radius: 12px;
+        box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+        padding: 24px 18px 18px 18px;
+        margin: 0;
+        text-align: center;
+        transition: transform 0.18s, box-shadow 0.18s;
+      }
+      .tile:hover {
+        transform: translateY(-6px) scale(1.03);
+        box-shadow: 0 6px 24px rgba(30,60,120,0.13);
+      }
+      .tile .logo {
+        max-width: 90px;
+        margin-bottom: 16px;
+      }
+      @media (max-width: 900px) {
+        .tile-container {
+          flex-direction: column;
+          gap: 20px;
+          align-items: center;
+        }
+        .tile {
+          max-width: 95vw;
+        }
+      }
+    </style>
+
+    <!-- Announcements Section (interactive accordion) -->
+    <section class="announcements-section glass-card">
+      <h2 style="margin-top:0;">Announcements</h2>
+      <div class="announcements-list">
+        <div class="announcement-card glass-card">
+          <div class="announcement-header">
+            <div>
+              <div class="announcement-title">Orientation for New Members</div>
+              <div class="announcement-meta">27 Aug 2025 • Chemistry Hall</div>
+            </div>
+            <div class="chev" aria-hidden>▾</div>
+          </div>
+          <div class="announcement-content">
+            <p>We welcome all new members. A short introduction session and lab safety briefing will be held for everyone joining CSIT this semester. Please bring your ID cards.</p>
+          </div>
+        </div>
+
+        <div class="announcement-card glass-card">
+          <div class="announcement-header">
+            <div>
+              <div class="announcement-title">Spectroscopy Workshop Registration Open</div>
+              <div class="announcement-meta">20 Aug 2025 • Limited seats</div>
+            </div>
+            <div class="chev" aria-hidden>▾</div>
+          </div>
+          <div class="announcement-content">
+            <p>Hands-on spectroscopy workshop for beginners. Register through the forms office or contact the secretary. Materials will be provided.</p>
+          </div>
+        </div>
+
+        <div class="announcement-card glass-card">
+          <div class="announcement-header">
+            <div>
+              <div class="announcement-title">Call for Volunteers: Science Fest</div>
+              <div class="announcement-meta">15 Sep 2025 • Organising Committee</div>
+            </div>
+            <div class="chev" aria-hidden>▾</div>
+          </div>
+          <div class="announcement-content">
+            <p>We are looking for volunteers to help organise the outreach and demo booths. Join the organising team meeting to help plan activities and resources.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <style>
+    /* Announcements styles */
+    .announcements-section {
+      margin: 28px auto 0 auto;
+      max-width: 920px;
+      padding: 18px;
+      border-radius: 14px;
+    }
+    .announcements-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .announcement-card {
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+    .announcement-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(10,20,40,0.12); }
+
+    .announcement-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .announcement-title { font-weight: 700; font-size: 1.02rem; color: #eaf7ff; }
+    .announcement-meta { font-size: 0.85rem; color: #d6e8ff; margin-top: 6px; }
+
+    .chev { font-size: 1.2rem; color: #d6e8ff; transition: transform 0.28s ease; }
+    .announcement-card.open .chev { transform: rotate(180deg); }
+
+    .announcement-content {
+      padding: 0 16px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.45s cubic-bezier(.2,.8,.2,1), padding 0.3s ease;
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+    }
+    .announcement-card.open .announcement-content { padding: 12px 16px; }
+
+    .announcement-content p { margin: 0 0 10px 0; color: #e8f6ff; line-height: 1.4; }
+
+    @media (max-width: 900px) {
+      .announcement-title { font-size: 1rem; }
+      .announcement-header { padding: 12px 10px; }
+      .announcement-content { padding: 0 10px; }
+    }
+    </style>
+
+    <!-- Replaced Updates/Team/Quick Links with floating social icons -->
+    <style>
+    /* Floating social icon bar */
+    .social-bar {
+      position: fixed;
+      right: 18px;
+      top: 220px; /* below header + nav */
+      z-index: 22;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+      pointer-events: auto;
+    }
+    .quick-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.08);
+      box-shadow: 0 6px 18px rgba(10,20,40,0.18);
+      transition: transform 0.15s ease, background 0.15s ease;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      text-decoration: none;
+    }
+    .quick-icon:hover { transform: translateY(-4px) scale(1.03); background: rgba(255,255,255,0.12); }
+    .quick-icon svg { width: 24px; height: 24px; fill: white; }
+
+    /* Small-screen place at left bottom as a horizontal row */
+    @media (max-width: 700px) {
+      .social-bar { right: 12px; top: auto; bottom: 18px; flex-direction: row; }
+    }
+
+    /* Social bar initial hidden state and icon animation */
+    .social-bar { opacity: 0; transform: translateX(0); pointer-events: none; transition: opacity 0.45s ease, transform 0.45s ease; }
+    .social-bar.visible { opacity: 1; pointer-events: auto; }
+
+    .quick-icon { transform: translateX(0); opacity: 0; transition: transform 0.5s cubic-bezier(.2,.9,.2,1), opacity 0.4s ease; }
+    .quick-icon.show { transform: translateX(0); opacity: 1; }
+
+    /* small tweak to ensure off-screen start (we'll set inline transform in JS per-icon) */
+    </style>
+
+    <!-- Social Icon Bar -->
+    <div class="social-bar" aria-hidden="false">
+      <a class="quick-icon" href="https://www.youtube.com/" target="_blank" title="YouTube" rel="noopener noreferrer">
+        <!-- YouTube SVG -->
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2s-.2-1.7-.8-2.4c-.8-.9-1.7-.9-2.1-1-3-.2-7.5-.2-7.5-.2s-4.5 0-7.5.2c-.4 0-1.3.1-2.1 1C.7 4.5.5 6.2.5 6.2S.3 8 .3 9.9v4.3c0 1.9.2 3.7.2 3.7s.2 1.7.8 2.4c.8.9 1.9.9 2.4 1 1.7.1 7.3.2 7.3.2s4.5 0 7.5-.2c.4 0 1.3-.1 2.1-1 .6-.7.8-2.4.8-2.4s.2-1.9.2-3.7V9.9c0-1.9-.2-3.7-.2-3.7zM9.8 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
+      </a>
+      <a class="quick-icon" href="https://twitter.com/" target="_blank" title="Twitter" rel="noopener noreferrer">
+        <!-- Twitter SVG -->
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22.46 6c-.77.35-1.6.58-2.46.69a4.3 4.3 0 0 0 1.88-2.38 8.6 8.6 0 0 1-2.73 1.04 4.28 4.28 0 0 0-7.29 3.9A12.13 12.13 0 0 1 3.16 4.6a4.28 4.28 0 0 0 1.32 5.72 4.22 4.22 0 0 1-1.94-.54v.05a4.28 4.28 0 0 0 3.43 4.2 4.3 4.3 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.97A8.58 8.58 0 0 1 2 19.54a12.1 12.1 0 0 0 6.56 1.92c7.88 0 12.2-6.53 12.2-12.2l-.01-.56A8.7 8.7 0 0 0 22.46 6z"/></svg>
+      </a>
+      <a class="quick-icon" href="https://instagram.com/" target="_blank" title="Instagram" rel="noopener noreferrer">
+        <!-- Instagram SVG -->
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 6.2A4.8 4.8 0 1 0 16.8 13 4.8 4.8 0 0 0 12 8.2zm6.3-.8a1.1 1.1 0 1 1-1.1-1.1 1.1 1.1 0 0 1 1.1 1.1zM12 15.6A3.6 3.6 0 1 1 15.6 12 3.6 3.6 0 0 1 12 15.6z"/></svg>
+      </a>
+      <a class="quick-icon" href="https://facebook.com/" target="_blank" title="Facebook" rel="noopener noreferrer">
+        <!-- Facebook SVG -->
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7h-2.2V12h2.2V9.8c0-2.2 1.3-3.4 3.3-3.4.96 0 1.98.17 1.98.17v2.2h-1.12c-1.1 0-1.43.68-1.43 1.38V12h2.44l-.39 2.9h-2.05v7A10 10 0 0 0 22 12z"/></svg>
+      </a>
+      <a class="quick-icon" href="https://linkedin.com/" target="_blank" title="LinkedIn" rel="noopener noreferrer">
+        <!-- LinkedIn SVG -->
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 .01 0zM3 8.98h4v12H3zM9 8.98h3.82v1.6h.05c.53-1 1.82-2.06 3.74-2.06 4 0 4.74 2.6 4.74 5.98v6.48h-4v-5.75c0-1.37 0-3.12-1.9-3.12-1.9 0-2.19 1.48-2.19 3v5.87H9z"/></svg>
+      </a>
+    </div>
+
+    <script>
+    // ensure loading overlay for quick icons
+    (function(){
+      const overlay = document.getElementById('loadingOverlay');
+      document.querySelectorAll('.quick-icon').forEach(a => {
+        a.addEventListener('click', function(e){
+          // for external links we still show loader briefly
+          e.preventDefault();
+          const href = this.href;
+          overlay.style.display = 'flex';
+          setTimeout(() => { window.open(href, '_blank'); overlay.style.display = 'none'; }, 1200);
+        });
+      });
+    })();
+    </script>
+
+    <script>
+    // Show social bar only when footer is visible and animate icons sequentially
+    (function(){
+      const socialBar = document.querySelector('.social-bar');
+      const icons = Array.from(document.querySelectorAll('.quick-icon'));
+      const footer = document.querySelector('footer');
+      if(!socialBar || !footer || !icons.length) return;
+
+      // Prepare icons to be off-screen based on index (alternate left/right)
+      function prepareIcons() {
+        icons.forEach((el, i) => {
+          const dir = (i % 2 === 0) ? 40 : -40; // px offset
+          el.style.transform = `translateX(${dir}px)`;
+          el.style.opacity = '0';
+        });
+      }
+      prepareIcons();
+
+      let showing = false;
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if(entry.isIntersecting && !showing) {
+            showing = true;
+            socialBar.classList.add('visible');
+            // staggered show
+            icons.forEach((el, i) => {
+              setTimeout(() => {
+                el.classList.add('show');
+                el.style.transform = '';
+                el.style.opacity = '';
+              }, i * 160 + 120);
+            });
+          } else if(!entry.isIntersecting && showing) {
+            showing = false;
+            socialBar.classList.remove('visible');
+            // reset icons
+            icons.forEach((el, i) => {
+              el.classList.remove('show');
+              const dir = (i % 2 === 0) ? 40 : -40;
+              el.style.transform = `translateX(${dir}px)`;
+              el.style.opacity = '0';
+            });
+          }
+        });
+      }, { threshold: 0.1 });
+
+      observer.observe(footer);
+    })();
+    </script>
+
+    <script>
+    // Ensure social bar observer runs after DOM is ready (fix missing footer when script ran too early)
+    document.addEventListener('DOMContentLoaded', function () {
+      const socialBar = document.querySelector('.social-bar');
+      const icons = Array.from(document.querySelectorAll('.quick-icon'));
+      const footer = document.querySelector('footer');
+      if (!socialBar || !footer || !icons.length) return;
+
+      function prepareIcons() {
+        icons.forEach((el, i) => {
+          const dir = (i % 2 === 0) ? 40 : -40; // px offset
+          el.style.transform = `translateX(${dir}px)`;
+          el.style.opacity = '0';
+        });
+      }
+      prepareIcons();
+
+      let showing = false;
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !showing) {
+            showing = true;
+            socialBar.classList.add('visible');
+            icons.forEach((el, i) => {
+              setTimeout(() => {
+                el.classList.add('show');
+                el.style.transform = '';
+                el.style.opacity = '';
+              }, i * 160 + 120);
+            });
+          } else if (!entry.isIntersecting && showing) {
+            showing = false;
+            socialBar.classList.remove('visible');
+            icons.forEach((el, i) => {
+              el.classList.remove('show');
+              const dir = (i % 2 === 0) ? 40 : -40;
+              el.style.transform = `translateX(${dir}px)`; 
+            });
+          }
+        });
+      }, { threshold: 0.1 });
+
+      observer.observe(footer);
+      window.addEventListener('resize', prepareIcons);
+    });
+    </script>
+  </main>
+
+  <footer>
+    <p>&copy; Chemical Society, IISER TVM (CSIT). All rights reserved.</p>
+  </footer>
+
+  <!-- -----------------------------
+       Particles / molecule animation
+       (self-contained, no external libs)
+       ----------------------------- -->
+  <script>
+  (function () {
+    const canvas = document.getElementById('molecules');
+    const ctx = canvas.getContext('2d', { alpha: true });
+
+    // Configuration (tune for performance)
+    const cfg = {
+      particleCount: 70,
+      minRadius: 1.8,
+      maxRadius: 4.4,
+      maxSpeed: 0.45,
+      linkDistance: 110,
+      linkAlpha: 0.12,
+      repelDistance: 80,
+      colors: [
+        'rgba(170,255,199,0.95)',
+        'rgba(170,210,255,0.95)',
+        'rgba(255,220,170,0.95)',
+        'rgba(230,180,255,0.95)'
+      ]
+    };
+
+    let DPR = Math.max(window.devicePixelRatio || 1, 1);
+    let width = 0, height = 0;
+    let particles = [];
+    let last = performance.now();
+    let mouse = { x: -9999, y: -9999, active: false };
+
+    function resize() {
+      DPR = Math.max(window.devicePixelRatio || 1, 1);
+      width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+      height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+      canvas.style.width = width + 'px';
+      canvas.style.height = height + 'px';
+      canvas.width = Math.floor(width * DPR);
+      canvas.height = Math.floor(height * DPR);
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    }
+
+    function rand(a, b) { return a + Math.random() * (b - a); }
+
+    class P {
+      constructor() { this.reset(true); }
+      reset(initial=false) {
+        this.r = rand(cfg.minRadius, cfg.maxRadius);
+        this.x = rand(this.r, width - this.r);
+        this.y = rand(this.r, height - this.r);
+        const a = Math.random() * Math.PI * 2;
+        const s = rand(0.05, cfg.maxSpeed);
+        this.vx = Math.cos(a) * s;
+        this.vy = Math.sin(a) * s;
+        this.col = cfg.colors[Math.floor(Math.random() * cfg.colors.length)];
+        this.alpha = rand(0.6, 1);
+        if (!initial) { /* slightly nudge on respawn */ this.x = rand(this.r, width - this.r); this.y = rand(this.r, height - this.r); }
+      }
+      step(delta) {
+        this.x += this.vx * delta;
+        this.y += this.vy * delta;
+
+        // bounce
+        if (this.x <= this.r) { this.x = this.r; this.vx *= -1; }
+        if (this.y <= this.r) { this.y = this.r; this.vy *= -1; }
+        if (this.x >= width - this.r) { this.x = width - this.r; this.vx *= -1; }
+        if (this.y >= height - this.r) { this.y = height - this.r; this.vy *= -1; }
+
+        // small jitter
+        this.vx += rand(-0.02, 0.02) * 0.1;
+        this.vy += rand(-0.02, 0.02) * 0.1;
+
+        // clamp speed
+        const sp = Math.hypot(this.vx, this.vy);
+        if (sp > cfg.maxSpeed) { this.vx *= cfg.maxSpeed / sp; this.vy *= cfg.maxSpeed / sp; }
+      }
+      draw() {
+        // outer glow
+        const g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r * 4);
+        g.addColorStop(0, this.col);
+        g.addColorStop(0.5, this.col.replace('0.95', '0.12'));
+        g.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r * 4, 0, Math.PI * 2);
+        ctx.fill();
+
+        // core
+        ctx.beginPath();
+        ctx.fillStyle = this.col;
+        ctx.globalAlpha = this.alpha;
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      }
+    }
+
+    function initParticles() {
+      particles = [];
+      for (let i = 0; i < cfg.particleCount; i++) particles.push(new P());
+    }
+
+    function drawLinks() {
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const a = particles[i], b = particles[j];
+          const dx = a.x - b.x, dy = a.y - b.y;
+          const d2 = dx*dx + dy*dy;
+          const max2 = cfg.linkDistance * cfg.linkDistance;
+          if (d2 <= max2) {
+            const t = 1 - (d2 / max2);
+            ctx.strokeStyle = `rgba(200,230,255,${(cfg.linkAlpha * t).toFixed(3)})`;
+            ctx.lineWidth = Math.max(0.3, t * 1.6);
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function repelFromMouse() {
+      if (!mouse.active) return;
+      for (const p of particles) {
+        const dx = p.x - mouse.x, dy = p.y - mouse.y;
+        const d2 = dx*dx + dy*dy;
+        const r2 = cfg.repelDistance * cfg.repelDistance;
+        if (d2 < r2 && d2 > 0.01) {
+          const d = Math.sqrt(d2);
+          const f = (cfg.repelDistance - d) / cfg.repelDistance;
+          const push = 0.9 * f;
+          p.vx += (dx/d) * push;
+          p.vy += (dy/d) * push;
+        }
+      }
+    }
+
+    // main animation
+    function animate(now) {
+      const delta = Math.min(1.6, (now - last) / 16.666);
+      last = now;
+
+      // clear and soft fade (for subtle trails)
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = 'rgba(3,6,23,0.04)';
+      ctx.fillRect(0,0,width,height);
+
+      // update
+      for (const p of particles) p.step(delta);
+
+      // draw links and particles
+      drawLinks();
+      for (const p of particles) p.draw();
+
+      repelFromMouse();
+
+      requestAnimationFrame(animate);
+    }
+
+    // pointer handling
+    function onPointerMove(e) {
+      mouse.active = true;
+      const r = canvas.getBoundingClientRect();
+      mouse.x = (e.clientX - r.left);
+      mouse.y = (e.clientY - r.top);
+    }
+    function onPointerLeave() {
+      mouse.active = false;
+      mouse.x = -9999; mouse.y = -9999;
+    }
+
+    // initialize & handle resize
+    function start() {
+      resize();
+      initParticles();
+      last = performance.now();
+      requestAnimationFrame(animate);
+    }
+    window.addEventListener('resize', () => {
+      // preserve relative positions
+      const prevW = width, prevH = height;
+      resize();
+      const sx = width / Math.max(prevW, 1);
+      const sy = height / Math.max(prevH, 1);
+      for (const p of particles) { p.x *= sx; p.y *= sy; }
+    });
+
+    function resize() {
+      DPR = Math.max(window.devicePixelRatio || 1, 1);
+      width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+      height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+      canvas.style.width = width + 'px';
+      canvas.style.height = height + 'px';
+      canvas.width = Math.floor(width * DPR);
+      canvas.height = Math.floor(height * DPR);
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    }
+
+    // attach pointer listeners to canvas area
+    canvas.addEventListener('mousemove', onPointerMove);
+    canvas.addEventListener('mouseleave', onPointerLeave);
+    canvas.addEventListener('mouseenter', onPointerMove);
+
+    // start after small timeout so layout settles
+    setTimeout(start, 60);
+
+    // expose simple debug API (optional)
+    window.__moleculesCFG = cfg;
+
+  })();
+  </script>
+
+  <!-- Animated "reaction" bubbles for background -->
+  <script>
+  (function() {
+    const canvas = document.getElementById('reactions-bg');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let width = window.innerWidth, height = window.innerHeight;
+    let DPR = window.devicePixelRatio || 1;
+    let bubbles = [];
+    const COLORS = [
+      'rgba(0,200,255,0.18)',
+      'rgba(255,120,0,0.18)',
+      'rgba(0,255,180,0.18)',
+      'rgba(255,0,120,0.18)',
+      'rgba(255,255,0,0.18)'
+    ];
+    function resize() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width * DPR;
+      canvas.height = height * DPR;
+      canvas.style.width = width + 'px';
+      canvas.style.height = height + 'px';
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    }
+    function randomBubble() {
+      const r = 18 + Math.random() * 32;
+      return {
+        x: Math.random() * width,
+        y: height + r + Math.random() * 80,
+        r,
+        color: COLORS[Math.floor(Math.random()*COLORS.length)],
+        speed: 0.7 + Math.random() * 1.7,
+        dx: (Math.random()-0.5) * 0.7,
+        alpha: 0.2 + Math.random()*0.5,
+        t: 0
+      };
+    }
+    function spawnBubbles() {
+      while (bubbles.length < 18) {
+        bubbles.push(randomBubble());
+      }
+    }
+    function animate() {
+      ctx.clearRect(0,0,width,height);
+      for (let i = 0; i < bubbles.length; i++) {
+        const b = bubbles[i];
+        b.y -= b.speed;
+        b.x += b.dx + Math.sin(b.t/13)*0.7;
+        b.t += 1 + Math.random()*0.7;
+        ctx.save();
+        ctx.globalAlpha = b.alpha * (1 - (height-b.y)/height);
+        ctx.beginPath();
+        ctx.arc(b.x, b.y, b.r, 0, Math.PI*2);
+        ctx.fillStyle = b.color;
+        ctx.shadowColor = b.color.replace('0.18','0.38');
+        ctx.shadowBlur = 16;
+        ctx.fill();
+        ctx.restore();
+        // fade out and respawn
+        if (b.y + b.r < -40 || b.x < -60 || b.x > width+60) {
+          bubbles[i] = randomBubble();
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+    window.addEventListener('resize', resize);
+    resize();
+    spawnBubbles();
+    animate();
+  })();
+  </script>
+
+  <script>
+    // Announcements accordion behavior
+    (function(){
+      const containers = document.querySelectorAll('.announcement-card');
+      function closeAll(except) {
+        containers.forEach(c => {
+          if (c === except) return;
+          c.classList.remove('open');
+          const content = c.querySelector('.announcement-content');
+          content.style.maxHeight = null;
+        });
+      }
+      containers.forEach(c => {
+        const header = c.querySelector('.announcement-header');
+        const content = c.querySelector('.announcement-content');
+        header.addEventListener('click', () => {
+          const isOpen = c.classList.contains('open');
+          if (!isOpen) {
+            closeAll(c);
+            c.classList.add('open');
+            content.style.maxHeight = content.scrollHeight + 'px';
+          } else {
+            c.classList.remove('open');
+            content.style.maxHeight = null;
+          }
+        });
+        // ensure initial collapsed state
+        content.style.maxHeight = null;
+      });
+    })();
+  </script>
+</body>
+</html>
