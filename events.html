@@ -1,0 +1,1834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Events — CSIT | Chemical Society of IISER TVM</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="PHOTOS/LOGO.jpg">
+    <link rel="shortcut icon" type="image/x-icon" href="PHOTOS/LOGO.jpg">
+    <!-- Google Fonts for Clean Science Look -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Social Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1565c0;
+            --accent: #4fc3f7;
+            --bg: #f6f8fa;
+            --dark: #181c24;
+            --header-bg: #fff;
+            --nav-bg: #f6f8fa;
+            --main-bg: #fff;
+            --footer-bg: #f6f8fa;
+            --text: #181c24;
+            --icon-bg: #fff;
+            --toggle-bg: #e3e6ed;
+            --toggle-icon: #1565c0;
+        }
+        body.dark-mode {
+            --primary: #4fc3f7;
+            --accent: #1565c0;
+            --bg: #181c24;
+            --header-bg: #181c24;
+            --nav-bg: #181c24;
+            --main-bg: #222a36;
+            --footer-bg: #181c24;
+            --text: #e3e6ed;
+            --icon-bg: #222a36;
+            --toggle-bg: #222a36;
+            --toggle-icon: #4fc3f7;
+        }
+        body {
+            margin: 0;
+            font-family: 'Roboto', Arial, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            min-height: 100vh;
+            transition: background 0.3s, color 0.3s;
+            overflow-x: hidden;
+            max-width: 100vw;
+        }
+        #chem-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+        header {
+            /* Remove background and box-shadow for seamless look */
+            background: none !important;
+            box-shadow: none !important;
+            padding: 0.5rem 0 0.5rem 0;
+            position: relative;
+            z-index: 2;
+        }
+        .header-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 2vw;
+            position: relative;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-direction: column;
+        }
+        .logo img {
+            width: 72px;
+            height: auto;
+            margin-bottom: 8px;
+        }
+        .logo-title {
+            font-family: 'Merriweather', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #181c24;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+        body.dark-mode .logo-title {
+            color: #fff;
+        }
+        @media (max-width: 900px) {
+            .logo-title { font-size: 1.3rem; }
+        }
+        @media (max-width: 600px) {
+            .logo-title { font-size: 1rem; }
+        }
+        
+        nav {
+            background: var(--nav-bg);
+            box-shadow: 0 1px 8px #1565c012;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            padding: 0.7rem 0;
+            position: relative;
+            z-index: 2;
+            flex-wrap: wrap;
+        }
+        nav a {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 1.08rem;
+            padding: 0.4rem 1.2rem;
+            border-radius: 20px;
+            transition: background 0.2s, color 0.2s;
+            font-weight: 500;
+        }
+        nav a:hover, nav a.active {
+            background: var(--accent);
+            color: #fff;
+        }
+        
+        /* SpaceX-style Navigation Countdown */
+        .nav-countdown {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(76, 195, 247, 0.2);
+            border-radius: 12px;
+            padding: 8px 16px;
+            margin-left: 8px;
+            text-align: center;
+            backdrop-filter: blur(4px);
+            transition: all 0.3s ease;
+            min-width: 200px;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .nav-countdown:hover {
+            border-color: var(--accent);
+            box-shadow: 0 4px 20px rgba(76, 195, 247, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .countdown-label {
+            font-size: 0.7rem;
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+        
+        .countdown-timer {
+            font-family: 'Montserrat', monospace;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+        
+        .countdown-event-name {
+            font-size: 0.65rem;
+            color: var(--text);
+            opacity: 0.8;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 180px;
+        }
+
+        /* Loading overlay */
+        #loadingOverlay {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(8, 12, 20, 0.9);
+            z-index: 2000;
+            backdrop-filter: blur(6px);
+        }
+        .logo-spinner {
+            width: 200px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .loader-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #fff;
+            padding: 8px;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 0 20px rgba(79, 195, 247, 0.8);
+        }
+        
+        /* Atomic orbital animations */
+        .atomic-orbit {
+            position: absolute;
+            border: 2px solid rgba(79, 195, 247, 0.3);
+            border-radius: 50%;
+            animation: rotate 3s linear infinite;
+        }
+        .atomic-orbit.orbit-1 {
+            width: 120px;
+            height: 120px;
+            animation-duration: 2s;
+        }
+        .atomic-orbit.orbit-2 {
+            width: 160px;
+            height: 160px;
+            animation-duration: 3s;
+            transform: rotateX(60deg) rotateY(30deg);
+        }
+        .atomic-orbit.orbit-3 {
+            width: 200px;
+            height: 200px;
+            animation-duration: 4s;
+            transform: rotateX(-45deg) rotateY(-20deg);
+        }
+        
+        .electron {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent);
+        }
+        .electron.e1 {
+            top: -4px;
+            left: calc(50% - 4px);
+            animation: orbit1 2s linear infinite;
+        }
+        .electron.e2 {
+            top: calc(50% - 4px);
+            right: -4px;
+            animation: orbit2 3s linear infinite;
+        }
+        .electron.e3 {
+            bottom: -4px;
+            left: calc(50% - 4px);
+            animation: orbit3 4s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes orbit1 {
+            0% { transform: rotate(0deg) translateX(60px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(60px) rotate(-360deg); }
+        }
+        @keyframes orbit2 {
+            0% { transform: rotate(0deg) translateX(80px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(80px) rotate(-360deg); }
+        }
+        @keyframes orbit3 {
+            0% { transform: rotate(0deg) translateX(100px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(100px) rotate(-360deg); }
+        }
+        
+        /* Nucleus pulse animation */
+        .nucleus-pulse {
+            position: absolute;
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            border: 3px solid var(--primary);
+            animation: pulse 2s ease-in-out infinite;
+            z-index: 5;
+        }
+        @keyframes pulse {
+            0%, 100% { 
+                transform: scale(1);
+                opacity: 0.8;
+                box-shadow: 0 0 20px rgba(21, 101, 192, 0.4);
+            }
+            50% { 
+                transform: scale(1.1);
+                opacity: 1;
+                box-shadow: 0 0 30px rgba(21, 101, 192, 0.8);
+            }
+        }
+
+        main {
+            margin: 2rem auto 2rem auto;
+            max-width: 1100px;
+            padding: 22px;
+            z-index: 20;
+            position: relative;
+            overflow-x: hidden;
+            max-width: 100vw;
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            text-shadow: 0 2px 10px rgba(79, 195, 247, 0.3);
+        }
+
+        /* IST Clock Widget - Floating and Collapsible */
+        .ist-clock {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            display: none; /* Hidden */
+        }
+
+        .clock-toggle {
+            width: 50px;
+            height: 50px;
+            background: rgba(21, 101, 192, 0.9);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .clock-toggle:hover {
+            background: rgba(21, 101, 192, 1);
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(21, 101, 192, 0.4);
+        }
+
+        .clock-toggle i {
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .clock-content {
+            position: absolute;
+            right: 60px;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 15px 20px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            min-width: 180px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(20px);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .ist-clock.expanded .clock-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+
+        .ist-clock.expanded .clock-toggle {
+            background: rgba(79, 195, 247, 0.9);
+        }
+
+        .clock-content h4 {
+            margin: 0 0 8px 0;
+            color: var(--primary);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .clock-time {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 5px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .clock-date {
+            font-size: 0.85rem;
+            color: var(--text);
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .ist-clock {
+                right: 20px;
+                bottom: 20px;
+            }
+            
+            .clock-toggle {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .clock-content {
+                right: 55px;
+                min-width: 160px;
+                padding: 12px 15px;
+            }
+            
+            .clock-time {
+                font-size: 1.1rem;
+            }
+        }
+
+        .events-container {
+            background: transparent;
+            padding: 22px;
+            border-radius: 0;
+            backdrop-filter: none;
+            box-shadow: none;
+            border: none;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .event-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(79, 195, 247, 0.2);
+            border-color: var(--accent);
+        }
+
+        .event-card.expanded {
+            grid-column: 1 / -1;
+            max-width: none;
+        }
+
+        /* Disabled event cards for "to be announced" events */
+        .event-card.disabled {
+            background: rgba(128, 128, 128, 0.1);
+            border: 1px solid rgba(128, 128, 128, 0.2);
+            opacity: 0.6;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .event-card.disabled:hover {
+            transform: none;
+            box-shadow: none;
+            border-color: rgba(128, 128, 128, 0.2);
+        }
+
+        .event-card.disabled .event-title {
+            color: #888;
+        }
+
+        .event-card.disabled .event-date {
+            color: #666;
+        }
+
+        .event-card.disabled .event-preview {
+            color: #777;
+            opacity: 0.6;
+        }
+
+        .event-card.disabled .event-icon {
+            background: linear-gradient(135deg, #666, #888);
+            opacity: 0.7;
+        }
+
+        .event-card.disabled .event-btn {
+            background: #555;
+            color: #888;
+            border-color: #444;
+            cursor: not-allowed;
+        }
+
+        .event-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .event-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .event-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .event-date {
+            font-size: 0.9rem;
+            color: var(--accent);
+            margin: 0;
+        }
+
+        .event-preview {
+            color: var(--text);
+            opacity: 0.8;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .event-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.3s ease;
+            padding: 0;
+        }
+
+        .event-card.expanded .event-details {
+            max-height: 1000px;
+            padding: 1.5rem 0;
+        }
+
+        .event-content {
+            color: var(--text);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .event-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .meta-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.8rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .meta-label {
+            font-weight: 600;
+            color: var(--accent);
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .meta-value {
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+
+        .event-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .event-btn {
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .event-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79, 195, 247, 0.3);
+        }
+
+        .expand-indicator {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .expand-indicator::before {
+            content: '+';
+            font-size: 1.2rem;
+            color: var(--accent);
+            transition: transform 0.3s ease;
+        }
+
+        .event-card.expanded .expand-indicator::before {
+            transform: rotate(45deg);
+        }
+
+        .status-badge {
+            position: absolute;
+            top: -5px;
+            left: 1rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-upcoming {
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+            color: white;
+        }
+
+        .status-ongoing {
+            background: linear-gradient(135deg, #FF9800, #FFC107);
+            color: white;
+        }
+
+        .status-past {
+            background: linear-gradient(135deg, #9E9E9E, #BDBDBD);
+            color: white;
+        }
+
+        footer {
+            background: var(--footer-bg);
+            border-top: 2px solid var(--accent);
+            box-shadow: 0 -2px 16px #1565c012;
+            text-align: center;
+            padding: 1.5rem 0 1rem 0;
+            position: relative;
+            margin-top: 3rem;
+            z-index: 2;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .footer-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-logo {
+            background: transparent;
+            padding: 4px 8px;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.3s;
+            box-shadow: 0 2px 8px rgba(21, 101, 192, 0.2);
+        }
+
+        .footer-logo img {
+            height: 36px;
+            width: auto;
+            display: block;
+            border-radius: 8px;
+        }
+
+        .footer-logo:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(21, 101, 192, 0.4);
+        }
+
+        /* Social Media Icons */
+        .social-bar {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 300ms ease;
+        }
+
+        .social-bar.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .quick-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.06);
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .quick-icon:hover {
+            transform: translateY(-2px);
+        }
+
+        .quick-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+            transition: fill 0.3s;
+        }
+
+        .quick-icon.youtube { background: rgba(255, 0, 0, 0.9); }
+        .quick-icon.twitter { background: rgba(29, 161, 242, 0.9); }
+        .quick-icon.instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+        .quick-icon.linkedin { background: rgba(0, 119, 181, 0.9); }
+
+        @media (max-width: 768px) {
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .event-meta {
+                grid-template-columns: 1fr;
+            }
+            
+            .event-actions {
+                flex-direction: column;
+            }
+            
+            .social-bar {
+                right: 15px;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .nav-countdown {
+                order: -1;
+                margin: 0 auto 0.5rem auto;
+                width: 100%;
+                max-width: 300px;
+            }
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .footer-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .nav-countdown {
+                min-width: 160px;
+                padding: 6px 12px;
+            }
+            .countdown-timer {
+                font-size: 0.95rem;
+            }
+        }
+        
+        /* Countdown Timer Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Upcoming Events Countdown Box */
+        .event-countdown-container {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(4px);
+            border-radius: 16px;
+            border: 1px solid rgba(76, 195, 247, 0.1);
+            padding: 20px;
+            margin: 24px auto;
+            max-width: 800px;
+            text-align: center;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.5s forwards;
+        }
+        
+        .countdown-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 8px;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .event-info {
+            margin-bottom: 16px;
+        }
+        
+        .event-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+        
+        .event-venue {
+            font-size: 0.95rem;
+            color: var(--accent);
+            margin-bottom: 4px;
+        }
+        
+        .event-date {
+            font-size: 0.9rem;
+            color: var(--text);
+            opacity: 0.8;
+        }
+        
+        .countdown-display {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .time-unit {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(76, 195, 247, 0.2);
+            border-radius: 12px;
+            padding: 12px 16px;
+            min-width: 80px;
+            text-align: center;
+        }
+        
+        .time-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text);
+            display: block;
+            font-family: 'Montserrat', monospace;
+        }
+        
+        .time-label {
+            font-size: 0.8rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+        
+        .no-event-message {
+            font-size: 1.1rem;
+            color: var(--text);
+            opacity: 0.7;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body style="background: #181c24; margin: 0; overflow: hidden;" class="dark-mode">
+    <!-- Loading overlay -->
+    <div id="loadingOverlay">
+        <div class="logo-spinner">
+            <!-- Nucleus (logo) -->
+            <img src="C:\Users\gsk10\Desktop\checkweb\Logo.png" alt="CSIT Logo" class="loader-logo">
+            <div class="nucleus-pulse"></div>
+            
+            <!-- Electron orbital paths -->
+            <div class="atomic-orbit orbit-1">
+                <div class="electron e1"></div>
+            </div>
+            <div class="atomic-orbit orbit-2">
+                <div class="electron e2"></div>
+            </div>
+            <div class="atomic-orbit orbit-3">
+                <div class="electron e3"></div>
+            </div>
+        </div>
+    </div>
+    
+    <canvas id="chem-bg"></canvas>
+    
+    <header>
+        <div class="header-content" style="justify-content: center; align-items: center;">
+            <div class="logo" style="flex-direction: row; align-items: center; gap: 18px;">
+                <!-- Club Icon (clickable, links to homepage) -->
+                <a href="check.html">
+                    <img src="C:\Users\gsk10\Desktop\checkweb\Logo.png" alt="Club Icon" style="width:72px; height:auto;">
+                </a>
+                <span class="logo-title">Chemical Society of IISER Thiruvananthapuram</span>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <a href="check.html">Home</a>
+        <a href="about.html">About us</a>
+        <a href="events.html" class="active">Events</a>
+        <a href="initiatives.html">Initiatives</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="contactus.html">Contact us</a>
+        
+        <!-- SpaceX-style countdown timer in navigation -->
+        <a href="events.html#upcoming-events" class="nav-countdown" id="navCountdown" style="display: none;">
+            <div class="countdown-label">Next Event</div>
+            <div class="countdown-timer">
+                <span id="navDays">00</span>D <span id="navHours">00</span>H <span id="navMinutes">00</span>M <span id="navSeconds">00</span>S
+            </div>
+            <div class="countdown-event-name" id="navEventName">Loading...</div>
+        </a>
+    </nav>
+
+    <div class="social-bar" aria-hidden="false">
+        <a class="quick-icon youtube" href="https://www.youtube.com/@chemicalsocietyiisertvm9694" target="_blank" rel="noopener noreferrer" title="YouTube">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2s-.2-1.7-.8-2.4c-.8-.9-1.7-.9-2.1-1-3-.2-7.5-.2-7.5-.2s-4.5 0-7.5.2c-.4 0-1.3.1-2.1 1C.7 4.5.5 6.2.5 6.2S.3 8 .3 9.9v4.3c0 1.9.2 3.7.2 3.7s.2 1.7.8 2.4c.8.9 1.9.9 2.4 1 1.7.1 7.3.2 7.3.2s4.5 0 7.5-.2c.4 0 1.3-.1 2.1-1 .6-.7.8-2.4.8-2.4s.2-1.9.2-3.7V9.9c0-1.9-.2-3.7-.2-3.7zM9.8 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
+        </a>
+        <a class="quick-icon twitter" href="https://x.com/csit_iisertvm?lang=en" target="_blank" rel="noopener noreferrer" title="Twitter">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22.46 6c-.77.35-1.6.58-2.46.69a4.3 4.3 0 0 0 1.88-2.38 8.6 8.6 0 0 1-2.73 1.04 4.28 4.28 0 0 0-7.29 3.9A12.13 12.13 0 0 1 3.16 4.6a4.28 4.28 0 0 0 1.32 5.72 4.22 4.22 0 0 1-1.94-.54v.05a4.28 4.28 0 0 0 3.43 4.2 4.3 4.3 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.97A8.58 8.58 0 0 1 2 19.54a12.1 12.1 0 0 0 6.56 1.92c7.88 0 12.2-6.53 12.2-12.2l-.01-.56A8.7 8.7 0 0 0 22.46 6z"/></svg>
+        </a>
+        <a class="quick-icon instagram" href="https://www.instagram.com/csit_iisertvm/?hl=en" target="_blank" rel="noopener noreferrer" title="Instagram">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 6.2A4.8 4.8 0 1 0 16.8 13 4.8 4.8 0 0 0 12 8.2zm6.3-.8a1.1 1.1 0 1 1-1.1-1.1 1.1 1.1 0 0 1 1.1 1.1zM12 15.6A3.6 3.6 0 1 1 15.6 12 3.6 3.6 0 0 1 12 15.6z"/></svg>
+        </a>
+        <a class="quick-icon linkedin" href="https://www.linkedin.com/in/chemical-society-of-iiser-thiruvananthapuram-csit-0284b7203/?originalSubdomain=in" target="_blank" rel="noopener noreferrer" title="LinkedIn">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 20.4h-3.6v-5.6c0-1.3-.03-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.3V9h3.4v1.6h.05c.5-.9 1.7-1.8 3.5-1.8 3.7 0 4.4 2.4 4.4 5.6v6h-.25zM5.3 7.4a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zM7.1 20.4H3.5V9h3.6v11.4z"/></svg>
+        </a>
+    </div>
+
+    <main>
+        <!-- IST Clock Widget - Floating and Collapsible -->
+        <div class="ist-clock" id="istClock">
+            <div class="clock-toggle" id="clockToggle">
+                <i class="fas fa-clock"></i>
+            </div>
+            <div class="clock-content">
+                <h4>Indian Standard Time</h4>
+                <div class="clock-time" id="clockTime">--:--:--</div>
+                <div class="clock-date" id="clockDate">Loading...</div>
+            </div>
+        </div>
+
+        <div class="events-container">
+            <h1 class="page-title">CSIT Events</h1>
+            
+            <!-- Event Countdown Timer -->
+            <div class="event-countdown-container">
+                <div id="eventCountdown">
+                    <div class="countdown-title">Next Upcoming Event</div>
+                    <div class="event-info">
+                        <div class="event-name" id="eventTitle">Loading...</div>
+                        <div class="event-venue" id="eventVenue">📍 Venue</div>
+                        <div class="event-date" id="eventDate">Date</div>
+                    </div>
+                    <div class="countdown-display">
+                        <div class="time-unit">
+                            <span class="time-value" id="days">00</span>
+                            <div class="time-label">Days</div>
+                        </div>
+                        <div class="time-unit">
+                            <span class="time-value" id="hours">00</span>
+                            <div class="time-label">Hours</div>
+                        </div>
+                        <div class="time-unit">
+                            <span class="time-value" id="minutes">00</span>
+                            <div class="time-label">Minutes</div>
+                        </div>
+                        <div class="time-unit">
+                            <span class="time-value" id="seconds">00</span>
+                            <div class="time-label">Seconds</div>
+                        </div>
+                    </div>
+                </div>
+                <div id="noUpcomingEvent" style="display: none;">
+                    <div class="no-event-message">No upcoming events scheduled</div>
+                </div>
+            </div>
+            
+            <div class="events-grid">
+                <!-- Upcoming Event -->
+                <div class="event-card" data-status="upcoming">
+                    <div class="status-badge status-upcoming">Upcoming</div>
+                    <div class="expand-indicator"></div>
+                    
+                    <div class="event-header">
+                        <div class="event-icon">🧪</div>
+                        <div>
+                            <h3 class="event-title">ChemExpo 2025</h3>
+                            <p class="event-date">March 15, 2025</p>
+                        </div>
+                    </div>
+                    
+                    <p class="event-preview">
+                        Annual chemistry exhibition showcasing innovative research and interactive experiments for students and faculty.
+                    </p>
+                    
+                    <div class="event-details">
+                        <div class="event-content">
+                            <p>ChemExpo 2025 is our flagship annual event that brings together chemistry enthusiasts, researchers, and students from across the region. This comprehensive exhibition features:</p>
+                            <ul>
+                                <li>Interactive chemistry demonstrations</li>
+                                <li>Research poster presentations by students</li>
+                                <li>Industrial chemistry showcases</li>
+                                <li>Hands-on workshops and experiments</li>
+                                <li>Keynote speeches by renowned chemists</li>
+                                <li>Chemistry quiz competitions with prizes</li>
+                            </ul>
+                            <p>Join us for an exciting day of discovery and learning in the fascinating world of chemistry!</p>
+                        </div>
+                        
+                        <div class="event-meta">
+                            <div class="meta-item">
+                                <div class="meta-label">📍 Venue</div>
+                                <div class="meta-value">Academic Complex, IISER TVM</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">⏰ Time</div>
+                                <div class="meta-value">9:00 AM - 5:00 PM</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">🎫 Registration</div>
+                                <div class="meta-value">Free for students</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">👥 Expected Participants</div>
+                                <div class="meta-value">200+ students and faculty</div>
+                            </div>
+                        </div>
+                        
+                        <div class="event-actions">
+                            <a href="#" class="event-btn btn-primary">
+                                <i class="fas fa-user-plus"></i> Register Now
+                            </a>
+                            <a href="#" class="event-btn btn-secondary">
+                                <i class="fas fa-info-circle"></i> More Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ongoing Event -->
+                <div class="event-card" data-status="ongoing">
+                    <div class="status-badge status-ongoing">Ongoing</div>
+                    <div class="expand-indicator"></div>
+                    
+                    <div class="event-header">
+                        <div class="event-icon">🔬</div>
+                        <div>
+                            <h3 class="event-title">Lab Safety Workshop Series</h3>
+                            <p class="event-date">January 20 - February 28, 2025</p>
+                        </div>
+                    </div>
+                    
+                    <p class="event-preview">
+                        Comprehensive workshop series covering essential laboratory safety protocols and best practices.
+                    </p>
+                    
+                    <div class="event-details">
+                        <div class="event-content">
+                            <p>Our ongoing Lab Safety Workshop Series is designed to ensure all chemistry students are well-versed in laboratory safety protocols. The series covers:</p>
+                            <ul>
+                                <li>Chemical handling and storage procedures</li>
+                                <li>Personal protective equipment (PPE) usage</li>
+                                <li>Emergency response protocols</li>
+                                <li>Waste disposal guidelines</li>
+                                <li>Equipment maintenance and safety checks</li>
+                                <li>Risk assessment techniques</li>
+                            </ul>
+                            <p>Each session includes hands-on training and certification upon completion.</p>
+                        </div>
+                        
+                        <div class="event-meta">
+                            <div class="meta-item">
+                                <div class="meta-label">📍 Venue</div>
+                                <div class="meta-value">Chemistry Labs, Building B</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">⏰ Schedule</div>
+                                <div class="meta-value">Tuesdays & Thursdays, 2:00-4:00 PM</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">🎫 Enrollment</div>
+                                <div class="meta-value">Open to all chemistry students</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">📜 Certification</div>
+                                <div class="meta-value">Lab Safety Certificate provided</div>
+                            </div>
+                        </div>
+                        
+                        <div class="event-actions">
+                            <a href="#" class="event-btn btn-primary">
+                                <i class="fas fa-calendar-check"></i> Join Session
+                            </a>
+                            <a href="#" class="event-btn btn-secondary">
+                                <i class="fas fa-download"></i> Download Schedule
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Future Event -->
+                <div class="event-card disabled">
+                    <div class="expand-indicator"></div>
+                    
+                    <div class="event-header">
+                        <div class="event-icon">�</div>
+                        <div>
+                            <h3 class="event-title">Event 3</h3>
+                            <p class="event-date">To be announced</p>
+                        </div>
+                    </div>
+                    
+                    <p class="event-preview">
+                        Details for this exciting chemistry event will be announced soon. Stay tuned for updates!
+                    </p>
+                    
+                    <div class="event-details">
+                        <div class="event-content">
+                            <p>We are currently planning an exciting chemistry event for our community. More details including:</p>
+                            <ul>
+                                <li>Event theme and activities</li>
+                                <li>Date and time</li>
+                                <li>Venue information</li>
+                                <li>Registration details</li>
+                                <li>Speaker lineup</li>
+                                <li>Special features</li>
+                            </ul>
+                            <p>Will be announced soon. Keep checking our website and social media for updates!</p>
+                        </div>
+                        
+                        <div class="event-meta">
+                            <div class="meta-item">
+                                <div class="meta-label">📍 Venue</div>
+                                <div class="meta-value">To be announced</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">⏰ Time</div>
+                                <div class="meta-value">To be announced</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">� Registration</div>
+                                <div class="meta-value">Details coming soon</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">� Updates</div>
+                                <div class="meta-value">Follow our social media</div>
+                            </div>
+                        </div>
+                        
+                        <div class="event-actions">
+                            <a href="#" class="event-btn btn-secondary">
+                                <i class="fas fa-bell"></i> Get Notified
+                            </a>
+                            <a href="#" class="event-btn btn-secondary">
+                                <i class="fas fa-share-alt"></i> Share
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Another Upcoming Event -->
+                <div class="event-card disabled">
+                    <div class="expand-indicator"></div>
+                    
+                    <div class="event-header">
+                        <div class="event-icon">�</div>
+                        <div>
+                            <h3 class="event-title">Event 4</h3>
+                            <p class="event-date">To be announced</p>
+                        </div>
+                    </div>
+                    
+                    <p class="event-preview">
+                        Details for this exciting chemistry event will be announced soon. Stay tuned for updates!
+                    </p>
+                    
+                    <div class="event-details">
+                        <div class="event-content">
+                            <p>We are currently planning an exciting chemistry event for our community. More details including:</p>
+                            <ul>
+                                <li>Event theme and activities</li>
+                                <li>Date and time</li>
+                                <li>Venue information</li>
+                                <li>Registration details</li>
+                                <li>Speaker lineup</li>
+                                <li>Special features</li>
+                            </ul>
+                            <p>Will be announced soon. Keep checking our website and social media for updates!</p>
+                        </div>
+                        
+                        <div class="event-meta">
+                            <div class="meta-item">
+                                <div class="meta-label">📍 Venue</div>
+                                <div class="meta-value">To be announced</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">⏰ Time</div>
+                                <div class="meta-value">To be announced</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">� Registration</div>
+                                <div class="meta-value">Details coming soon</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">� Updates</div>
+                                <div class="meta-value">Follow our social media</div>
+                            </div>
+                        </div>
+                        
+                        <div class="event-actions">
+                            <a href="#" class="event-btn btn-secondary">
+                                <i class="fas fa-bell"></i> Get Notified
+                            </a>
+                            <a href="#" class="event-btn btn-secondary">
+                                <i class="fas fa-share-alt"></i> Share
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Research Symposium -->
+                <div class="event-card disabled">
+                    <div class="expand-indicator"></div>
+                    
+                    <div class="event-header">
+                        <div class="event-icon">�</div>
+                        <div>
+                            <h3 class="event-title">Event 5</h3>
+                            <p class="event-date">To be announced</p>
+                        </div>
+                    </div>
+                    
+                    <p class="event-preview">
+                        Details for this exciting chemistry event will be announced soon. Stay tuned for updates!
+                    </p>
+                    
+                    <div class="event-details">
+                        <div class="event-content">
+                            <p>We are currently planning an exciting chemistry event for our community. More details including:</p>
+                            <ul>
+                                <li>Event theme and activities</li>
+                                <li>Date and time</li>
+                                <li>Venue information</li>
+                                <li>Registration details</li>
+                                <li>Speaker lineup</li>
+                                <li>Special features</li>
+                            </ul>
+                            <p>Will be announced soon. Keep checking our website and social media for updates!</p>
+                        </div>
+                        
+                        <div class="event-meta">
+                            <div class="meta-item">
+                                <div class="meta-label">📍 Venue</div>
+                                <div class="meta-value">To be announced</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">⏰ Time</div>
+                                <div class="meta-value">To be announced</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">🎫 Registration</div>
+                                <div class="meta-value">Details coming soon</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">📧 Updates</div>
+                                <div class="meta-value">Follow our social media</div>
+                            </div>
+                        </div>
+                        
+                        <div class="event-actions">
+                            <a href="#" class="event-btn btn-secondary">
+                                <i class="fas fa-bell"></i> Get Notified
+                            </a>
+                            <a href="#" class="event-btn btn-secondary">
+                                <i class="fas fa-share-alt"></i> Share
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fun Chemistry Event -->
+                <div class="event-card disabled">
+                    <div class="expand-indicator"></div>
+                    
+                    <div class="event-header">
+                        <div class="event-icon">�</div>
+                        <div>
+                            <h3 class="event-title">Event 6</h3>
+                            <p class="event-date">To be announced</p>
+                        </div>
+                    </div>
+                    
+                    <p class="event-preview">
+                        Details for this exciting chemistry event will be announced soon. Stay tuned for updates!
+                    </p>
+                    
+                    <div class="event-details">
+                        <div class="event-content">
+                            <p>We are currently planning an exciting chemistry event for our community. More details including:</p>
+                            <ul>
+                                <li>Event theme and activities</li>
+                                <li>Date and time</li>
+                                <li>Venue information</li>
+                                <li>Registration details</li>
+                                <li>Speaker lineup</li>
+                                <li>Special features</li>
+                            </ul>
+                            <p>Will be announced soon. Keep checking our website and social media for updates!</p>
+                        </div>
+                        
+                        <div class="event-meta">
+                            <div class="meta-item">
+                                <div class="meta-label">📍 Venue</div>
+                                <div class="meta-value">To be announced</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">⏰ Time</div>
+                                <div class="meta-value">To be announced</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">� Registration</div>
+                                <div class="meta-value">Details coming soon</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">� Updates</div>
+                                <div class="meta-value">Follow our social media</div>
+                            </div>
+                        </div>
+                        
+                        <div class="event-actions">
+                            <a href="#" class="event-btn btn-secondary">
+                                <i class="fas fa-bell"></i> Get Notified
+                            </a>
+                            <a href="#" class="event-btn btn-secondary">
+                                <i class="fas fa-share-alt"></i> Share
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div>
+                &copy; Chemical Society, IISER TVM (CSIT). All rights reserved.
+            </div>
+            <a href="https://www.iisertvm.ac.in/" target="_blank" rel="noopener noreferrer" class="footer-logo">
+                <img src="C:\Users\gsk10\Desktop\checkweb\iiser tvm logo.png" alt="IISER TVM Logo">
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        // Chemistry-inspired animated background: molecules and bonds
+        const canvas = document.getElementById('chem-bg');
+        const ctx = canvas.getContext('2d');
+        let w = window.innerWidth, h = window.innerHeight;
+        
+        function resize() {
+            w = window.innerWidth;
+            h = window.innerHeight;
+            canvas.width = w;
+            canvas.height = h;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        // Generate molecule nodes
+        const nodes = [];
+        const bonds = [];
+        const nodeCount = Math.floor(w * h / 22000);
+        for (let i = 0; i < nodeCount; i++) {
+            nodes.push({
+                x: Math.random() * w,
+                y: Math.random() * h,
+                r: 7 + Math.random() * 5,
+                dx: (Math.random() - 0.5) * 0.18,
+                dy: (Math.random() - 0.5) * 0.18,
+                color: Math.random() > 0.5 ? '#4fc3f7' : '#1565c0'
+            });
+        }
+        
+        // Generate bonds between close nodes
+        for (let i = 0; i < nodes.length; i++) {
+            for (let j = i + 1; j < nodes.length; j++) {
+                const dist = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
+                if (dist < 140) {
+                    bonds.push({ a: i, b: j, strength: 0.5 + Math.random() * 0.5 });
+                }
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, w, h);
+
+            // Draw bonds
+            for (let bond of bonds) {
+                const n1 = nodes[bond.a], n2 = nodes[bond.b];
+                ctx.save();
+                ctx.strokeStyle = 'rgba(76,195,247,' + (0.10 * bond.strength) + ')';
+                ctx.lineWidth = 1.5 * bond.strength;
+                ctx.beginPath();
+                ctx.moveTo(n1.x, n1.y);
+                ctx.lineTo(n2.x, n2.y);
+                ctx.stroke();
+                ctx.restore();
+            }
+
+            // Draw nodes (atoms)
+            for (let node of nodes) {
+                node.x += node.dx;
+                node.y += node.dy;
+                // Bounce off edges
+                if (node.x < node.r || node.x > w - node.r) node.dx *= -1;
+                if (node.y < node.r || node.y > h - node.r) node.dy *= -1;
+
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, node.r, 0, Math.PI * 2);
+                ctx.fillStyle = node.color;
+                ctx.globalAlpha = 0.6;
+                ctx.shadowColor = node.color;
+                ctx.shadowBlur = 10;
+                ctx.fill();
+                ctx.restore();
+            }
+
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // Force dark mode
+        document.body.classList.add('dark-mode');
+        
+        // Restore normal page flow after initial load
+        setTimeout(() => {
+            document.body.style.overflow = '';
+        }, 100);
+
+        // Loading functionality
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        
+        function showLoading() {
+            if (loadingOverlay) {
+                loadingOverlay.style.display = 'flex';
+                loadingOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    loadingOverlay.style.opacity = '1';
+                }, 10);
+            }
+        }
+
+        function hideLoading() {
+            if (loadingOverlay) {
+                loadingOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    loadingOverlay.style.display = 'none';
+                    // Restore normal body styles after loading
+                    document.body.style.overflow = '';
+                }, 300);
+            }
+        }
+
+        // Add loading to navigation links
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.href && this.href !== '#') {
+                    e.preventDefault();
+                    showLoading();
+                    setTimeout(() => {
+                        window.location.href = this.href;
+                    }, 1200);
+                }
+            });
+        });
+
+        // Add loading to social media icons
+        document.querySelectorAll('.quick-icon').forEach(icon => {
+            icon.addEventListener('click', function(e) {
+                e.preventDefault();
+                showLoading();
+                const href = this.href;
+                setTimeout(() => {
+                    window.open(href, '_blank');
+                    hideLoading();
+                }, 1200);
+            });
+        });
+
+        // Add loading to footer logo
+        document.querySelector('.footer-logo')?.addEventListener('click', function() {
+            showLoading();
+            setTimeout(hideLoading, 1500);
+        });
+
+        // Events data (same as home page)
+        const events = [
+            { date: '2025-08-29', time: '17:00', title: 'Freshers Event', venue: 'LHC KAUMUDI' },
+            { date: '2025-09-29', time: '10:00', title: 'Chemical Biology Symposium', venue: 'To be announced later' }
+        ];
+
+        // Global variable to store IST offset
+        let istOffset = 0;
+
+        // Function to get Indian Standard Time from internet source
+        async function getISTTime() {
+            try {
+                // Try to get time from world time API
+                const response = await fetch('https://worldtimeapi.org/api/timezone/Asia/Kolkata');
+                const data = await response.json();
+                const istTime = new Date(data.datetime);
+                
+                // Calculate offset between IST and local time
+                const localTime = new Date();
+                istOffset = istTime.getTime() - localTime.getTime();
+                
+                return istTime;
+            } catch (error) {
+                console.log('Failed to fetch IST from API, using fallback method');
+                // Fallback: Calculate IST manually (UTC + 5:30)
+                const now = new Date();
+                const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+                const istTime = new Date(utc + (5.5 * 3600000)); // IST is UTC+5:30
+                
+                istOffset = istTime.getTime() - now.getTime();
+                return istTime;
+            }
+        }
+
+        // Function to get current IST time
+        function getCurrentIST() {
+            const localTime = new Date();
+            return new Date(localTime.getTime() + istOffset);
+        }
+
+        // Update IST Clock display
+        function updateClock() {
+            const now = getCurrentIST();
+            const timeStr = now.toLocaleTimeString('en-IN', { 
+                hour12: true, 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit' 
+            });
+            const dateStr = now.toLocaleDateString('en-IN', { 
+                weekday: 'short', 
+                day: 'numeric', 
+                month: 'short', 
+                year: 'numeric' 
+            });
+            
+            const clockTime = document.getElementById('clockTime');
+            const clockDate = document.getElementById('clockDate');
+            
+            if (clockTime) clockTime.textContent = timeStr;
+            if (clockDate) clockDate.textContent = dateStr;
+        }
+
+        // Clock toggle functionality
+        function initializeClockToggle() {
+            const clockToggle = document.getElementById('clockToggle');
+            const istClock = document.getElementById('istClock');
+            
+            if (clockToggle && istClock) {
+                clockToggle.addEventListener('click', function() {
+                    istClock.classList.toggle('expanded');
+                });
+                
+                // Close when clicking outside
+                document.addEventListener('click', function(event) {
+                    if (!istClock.contains(event.target)) {
+                        istClock.classList.remove('expanded');
+                    }
+                });
+            }
+        }
+
+        // Event Countdown Timer Functionality
+        function findNextEvent() {
+            const now = getCurrentIST(); // Use IST instead of local time
+            
+            // Find the next upcoming event (considering both date and time)
+            const upcomingEvents = events.filter(event => {
+                const eventDateTime = new Date(`${event.date}T${event.time}:00`);
+                return eventDateTime > now;
+            }).sort((a, b) => {
+                const aDateTime = new Date(`${a.date}T${a.time}:00`);
+                const bDateTime = new Date(`${b.date}T${b.time}:00`);
+                return aDateTime - bDateTime;
+            });
+            
+            return upcomingEvents[0] || null;
+        }
+
+        function updateCountdown() {
+            const nextEvent = findNextEvent();
+            const countdownContainer = document.getElementById('eventCountdown');
+            const noEventContainer = document.getElementById('noUpcomingEvent');
+            const navCountdown = document.getElementById('navCountdown');
+            
+            if (!nextEvent) {
+                if (countdownContainer) countdownContainer.style.display = 'none';
+                if (noEventContainer) noEventContainer.style.display = 'block';
+                if (navCountdown) navCountdown.style.display = 'none';
+                return;
+            }
+            
+            if (countdownContainer) countdownContainer.style.display = 'block';
+            if (noEventContainer) noEventContainer.style.display = 'none';
+            if (navCountdown) navCountdown.style.display = 'block';
+            
+            // Create event date with specific time
+            const eventDateTime = new Date(`${nextEvent.date}T${nextEvent.time}:00`);
+            const now = getCurrentIST(); // Use IST instead of local time
+            const timeLeft = eventDateTime.getTime() - now.getTime();
+            
+            if (timeLeft <= 0) {
+                // Event is today or past, find next event
+                const eventTitle = document.getElementById('eventTitle');
+                const eventVenue = document.getElementById('eventVenue');
+                const eventDateEl = document.getElementById('eventDate');
+                const navEventName = document.getElementById('navEventName');
+                
+                if (eventTitle) eventTitle.textContent = nextEvent.title;
+                if (eventVenue) eventVenue.textContent = nextEvent.venue;
+                if (eventDateEl) eventDateEl.textContent = 'Event is happening today!';
+                if (navEventName) navEventName.textContent = nextEvent.title;
+                
+                const timeElements = ['days', 'hours', 'minutes', 'seconds', 'navDays', 'navHours', 'navMinutes', 'navSeconds'];
+                timeElements.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.textContent = '00';
+                });
+                return;
+            }
+            
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+            
+            // Update main countdown
+            const eventTitle = document.getElementById('eventTitle');
+            const eventVenue = document.getElementById('eventVenue');
+            const eventDateEl = document.getElementById('eventDate');
+            
+            if (eventTitle) eventTitle.textContent = nextEvent.title;
+            if (eventVenue) eventVenue.textContent = `📍 ${nextEvent.venue}`;
+            
+            // Format time for display
+            const timeFormatted = new Date(`2000-01-01T${nextEvent.time}:00`).toLocaleTimeString('en-US', { 
+                hour: 'numeric', 
+                minute: '2-digit', 
+                hour12: true 
+            });
+            
+            if (eventDateEl) eventDateEl.textContent = `Event: ${eventDateTime.toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            })} at ${timeFormatted} IST`;
+            
+            const daysEl = document.getElementById('days');
+            const hoursEl = document.getElementById('hours');
+            const minutesEl = document.getElementById('minutes');
+            const secondsEl = document.getElementById('seconds');
+            
+            if (daysEl) daysEl.textContent = String(days).padStart(2, '0');
+            if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
+            if (minutesEl) minutesEl.textContent = String(minutes).padStart(2, '0');
+            if (secondsEl) secondsEl.textContent = String(seconds).padStart(2, '0');
+            
+            // Update navigation countdown
+            const navDays = document.getElementById('navDays');
+            const navHours = document.getElementById('navHours');
+            const navMinutes = document.getElementById('navMinutes');
+            const navSeconds = document.getElementById('navSeconds');
+            const navEventName = document.getElementById('navEventName');
+            
+            if (navDays) navDays.textContent = String(days).padStart(2, '0');
+            if (navHours) navHours.textContent = String(hours).padStart(2, '0');
+            if (navMinutes) navMinutes.textContent = String(minutes).padStart(2, '0');
+            if (navSeconds) navSeconds.textContent = String(seconds).padStart(2, '0');
+            if (navEventName) navEventName.textContent = nextEvent.title;
+        }
+
+        // Initialize IST time, countdown and clock
+        async function initializeTimer() {
+            await getISTTime(); // Fetch IST offset first
+            updateCountdown();
+            updateClock(); // Initialize clock display
+            initializeClockToggle(); // Initialize clock toggle functionality
+            setInterval(() => {
+                updateCountdown();
+                updateClock(); // Update clock every second
+            }, 1000);
+        }
+
+        // Start the timer initialization
+        initializeTimer();
+
+        // Event card expansion functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const eventCards = document.querySelectorAll('.event-card');
+            
+            eventCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    // Don't expand if clicking on disabled cards
+                    if (this.classList.contains('disabled')) return;
+                    
+                    // Don't expand if clicking on action buttons
+                    if (e.target.closest('.event-actions')) return;
+                    
+                    const isExpanded = this.classList.contains('expanded');
+                    
+                    // Close all other cards
+                    eventCards.forEach(otherCard => {
+                        if (otherCard !== this) {
+                            otherCard.classList.remove('expanded');
+                        }
+                    });
+                    
+                    // Toggle current card
+                    if (isExpanded) {
+                        this.classList.remove('expanded');
+                    } else {
+                        this.classList.add('expanded');
+                        // Smooth scroll to the card
+                        setTimeout(() => {
+                            this.scrollIntoView({ 
+                                behavior: 'smooth', 
+                                block: 'nearest' 
+                            });
+                        }, 300);
+                    }
+                });
+            });
+
+            // Social icons visibility
+            const socialBar = document.querySelector('.social-bar');
+            const footer = document.querySelector('footer');
+
+            if (socialBar && footer) {
+                const observer = new IntersectionObserver(entries => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            socialBar.classList.add('visible');
+                        } else {
+                            socialBar.classList.remove('visible');
+                        }
+                    });
+                }, { threshold: 0.1 });
+                
+                observer.observe(footer);
+            }
+        });
+
+        // Prevent action button clicks from expanding cards
+        document.querySelectorAll('.event-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                // Add your action button functionality here
+                console.log('Action button clicked:', this.textContent.trim());
+            });
+        });
+    </script>
+</body>
+</html>
