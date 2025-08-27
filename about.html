@@ -177,7 +177,7 @@
 			text-overflow: ellipsis;
 			max-width: 180px;
 		}		/* place main just below header + nav */
-		main{margin: 2rem auto 2rem auto; max-width:1100px; padding:22px; z-index:20; position:relative}
+		main{margin: 2rem auto 2rem auto; max-width:1100px; padding:22px; z-index:20; position:relative; min-height: 70vh}
 		
 		/* Loading overlay */
 		#loadingOverlay {position: fixed; inset:0; display:flex; align-items:center; justify-content:center; background: rgba(8,12,20,0.7); z-index: 2000;}
@@ -190,17 +190,20 @@
 		.logo-spinner.to-header .spinner-ring { width:54px; height:54px; border-width:4px; }
 
 		/* Internal tabs for founder/organising team */
-		.about-container{background:transparent;padding:22px;border-radius:0;backdrop-filter:none;box-shadow:none;border:none}
+		.about-container{background:transparent;padding:22px;border-radius:0;backdrop-filter:none;box-shadow:none;border:none;min-height:60vh;overflow:hidden}
 		.tab-nav{display:flex;justify-content:center;gap:12px;margin-bottom:24px;border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:12px}
 		.tab-btn{background:rgba(255,255,255,0.06);color:#eaf7ff;border:none;padding:12px 24px;border-radius:8px;cursor:pointer;transition:all 0.2s ease;font-family:'Montserrat',sans-serif;font-size:0.95rem}
 		.tab-btn:hover{background:rgba(255,255,255,0.12);transform:translateY(-2px)}
 		.tab-btn.active{background:var(--primary);color:white;box-shadow:0 4px 12px rgba(21,101,192,0.3)}
 		
-		.tab-content{display:none}
-		.tab-content.active{display:block}
+		.tab-content{display:none;transition:opacity 0.3s ease}
+		.tab-content.active{display:block;opacity:1}
 		
-		/* Founder content styles */
-		.founder-card{background:rgba(255,255,255,0.02);padding:22px;border-radius:14px;backdrop-filter:blur(2px);box-shadow:0 4px 15px rgba(0,0,0,0.1);border:1px solid rgba(255,255,255,0.02)}
+		/* Dynamic height adjustment for tab content */
+		.tab-content-wrapper{overflow:hidden;transition:height 0.4s ease}
+		
+		/* Founder content styles - compact */
+		.founder-card{background:rgba(255,255,255,0.02);padding:22px;border-radius:14px;backdrop-filter:blur(2px);box-shadow:0 4px 15px rgba(0,0,0,0.1);border:1px solid rgba(255,255,255,0.02);max-height:none}
 		.founder-head{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
 		.founder-head img{width:120px;height:120px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,255,0.06)}
 		.founder-bio{color:#eaf7ff;flex:1;min-width:300px}
@@ -508,29 +511,30 @@
 				<button class="tab-btn" data-tab="organising-team">Organising Team</button>
 			</div>
 
-			<!-- Founder Tab Content -->
-			<div class="tab-content active" id="founder">
-				<article class="founder-card">
-					<div class="founder-head">
-						<img src="about us pictures/jnmoortthy.jpeg" alt="Founder">
-						<div class="founder-bio">
-							<h2>Founder: Prof. J.N. Moorthy</h2>
-							<p><strong>About:</strong> Prof. J.N. Moorthy is the Director of IISER Thiruvananthapuram since April 2019. He is an organic chemist with interests in organic photochemistry, supramolecular chemistry, organic materials and mechanistic organic chemistry. He has been awarded the prestigious Shanti Swarup Bhatnagar Prize and the J. C. Bose National Fellowship. He is an elected fellow of Indian Academy of Science (FASc.) and Indian National Science Academy (FNA), and a fellow of the Royal Society of Chemistry (FRSC).</p>
+			<div class="tab-content-wrapper">
+				<!-- Founder Tab Content -->
+				<div class="tab-content active" id="founder">
+					<article class="founder-card">
+						<div class="founder-head">
+							<img src="about us pictures/jnmoortthy.jpeg" alt="Founder">
+							<div class="founder-bio">
+								<h2>Founder: Prof. J.N. Moorthy</h2>
+								<p><strong>About:</strong> Prof. J.N. Moorthy is the Director of IISER Thiruvananthapuram since April 2019. He is an organic chemist with interests in organic photochemistry, supramolecular chemistry, organic materials and mechanistic organic chemistry. He has been awarded the prestigious Shanti Swarup Bhatnagar Prize and the J. C. Bose National Fellowship. He is an elected fellow of Indian Academy of Science (FASc.) and Indian National Science Academy (FNA), and a fellow of the Royal Society of Chemistry (FRSC).</p>
+							</div>
 						</div>
-					</div>
 
-					<hr style="border-color: rgba(255,255,255,0.06); margin:18px 0">
+						<hr style="border-color: rgba(255,255,255,0.06); margin:18px 0">
 
-					<section>
-						<h3 style="margin-top:0;">Message from the Founder</h3>
-						<p>Welcome to the CSIT student chapter. Our goal is to encourage curiosity, hands-on experimentation and communicate chemistry to a broader audience. We organise workshops, competitions and outreach events that blend fun with learning.</p>
-					</section>
+						<section>
+							<h3 style="margin-top:0;">Message from the Founder</h3>
+							<p>Welcome to the CSIT student chapter. Our goal is to encourage curiosity, hands-on experimentation and communicate chemistry to a broader audience. We organise workshops, competitions and outreach events that blend fun with learning.</p>
+						</section>
 
-				</article>
-			</div>
+					</article>
+				</div>
 
-			<!-- Organising Team Tab Content -->
-			<div class="tab-content" id="organising-team">
+				<!-- Organising Team Tab Content -->
+				<div class="tab-content" id="organising-team">
 				<h3 style="text-align:center;margin-bottom:20px">CSIT — Organising Team</h3>
 				<p style="text-align:center;margin-bottom:30px">Click a member card to expand full bio and contact.</p>
 
@@ -584,6 +588,7 @@
 					</div>
 				</div>
 			</div>
+			</div> <!-- Close tab-content-wrapper -->
 		</div>
 	</main>
 
@@ -611,6 +616,21 @@
 		document.addEventListener('DOMContentLoaded', function(){
 			const tabBtns = document.querySelectorAll('.tab-btn');
 			const tabContents = document.querySelectorAll('.tab-content');
+			const wrapper = document.querySelector('.tab-content-wrapper');
+			
+			// Function to adjust wrapper height based on active content
+			function adjustWrapperHeight() {
+				const activeContent = document.querySelector('.tab-content.active');
+				if (activeContent && wrapper) {
+					// Force a reflow to get accurate height
+					activeContent.style.display = 'block';
+					const contentHeight = activeContent.scrollHeight;
+					wrapper.style.height = contentHeight + 'px';
+				}
+			}
+			
+			// Initial height adjustment
+			setTimeout(adjustWrapperHeight, 100);
 			
 			tabBtns.forEach(btn => {
 				btn.addEventListener('click', function(){
@@ -623,6 +643,9 @@
 					// Add active class to clicked button and corresponding content
 					this.classList.add('active');
 					document.getElementById(targetTab).classList.add('active');
+					
+					// Adjust wrapper height after switching tabs
+					setTimeout(adjustWrapperHeight, 50);
 				});
 			});
 
@@ -635,6 +658,9 @@
 					// close others in this container
 					container.querySelectorAll('.member-item.open').forEach(i => { if(i!==item){ i.classList.remove('open'); } });
 					if(!isOpen) item.classList.add('open'); else item.classList.remove('open');
+					
+					// Adjust wrapper height when accordion items are opened/closed
+					setTimeout(adjustWrapperHeight, 100);
 				});
 			});
 		});
@@ -903,75 +929,6 @@
     // Initialize countdown and update every second
     updateCountdown();
     setInterval(updateCountdown, 1000);
-
-		// loader animation to header
-		window.addEventListener('load', function(){
-			const loader = document.getElementById('loaderLogo');
-			const overlay = document.getElementById('loadingOverlay');
-			loader.classList.add('to-header');
-			setTimeout(()=>{ overlay.style.transition='opacity 400ms ease'; overlay.style.opacity='0'; setTimeout(()=>{ overlay.style.display='none'; },500); }, 1000);
-		});
-
-		// Tab switching functionality
-		document.addEventListener('DOMContentLoaded', function(){
-			const tabBtns = document.querySelectorAll('.tab-btn');
-			const tabContents = document.querySelectorAll('.tab-content');
-			
-			tabBtns.forEach(btn => {
-				btn.addEventListener('click', function(){
-					const targetTab = this.getAttribute('data-tab');
-					
-					// Remove active class from all buttons and contents
-					tabBtns.forEach(b => b.classList.remove('active'));
-					tabContents.forEach(c => c.classList.remove('active'));
-					
-					// Add active class to clicked button and corresponding content
-					this.classList.add('active');
-					document.getElementById(targetTab).classList.add('active');
-				});
-			});
-
-			// Accordion behavior for organising team
-			document.querySelectorAll('.accordion').forEach(container => {
-				container.addEventListener('click', function(e){
-					const item = e.target.closest('.member-item');
-					if(!item) return;
-					const isOpen = item.classList.contains('open');
-					// close others in this container
-					container.querySelectorAll('.member-item.open').forEach(i => { if(i!==item){ i.classList.remove('open'); } });
-					if(!isOpen) item.classList.add('open'); else item.classList.remove('open');
-				});
-			});
-		});
-
-		// Nav link loader
-		document.addEventListener('DOMContentLoaded', function(){
-			const overlay = document.getElementById('loadingOverlay');
-			document.querySelectorAll('nav a').forEach(link => {
-				link.addEventListener('click', function(e){
-					if(this.getAttribute('href') && this.getAttribute('href') !== '#'){
-						e.preventDefault();
-						overlay.style.display = 'flex';
-						overlay.style.opacity = '1';
-						const loader = document.getElementById('loaderLogo');
-						loader.classList.remove('to-header');
-						loader.style.left = '50%'; loader.style.top = '50%'; loader.style.transform = 'translate(-50%,-50%)';
-						setTimeout(()=>{ loader.classList.add('to-header'); }, 30);
-						setTimeout(()=>{ window.location.href = this.href; }, 1100);
-					}
-				});
-			});
-
-			// Social icons loader
-			document.querySelectorAll('.quick-icon').forEach(a => {
-				a.addEventListener('click', function(e){
-					e.preventDefault();
-					overlay.style.display = 'flex'; overlay.style.opacity = '1';
-					const href = this.href;
-					setTimeout(()=>{ window.open(href, '_blank'); overlay.style.display='none'; }, 900);
-				});
-			});
-		});
 	</script>
 </body>
 </html>
