@@ -1963,10 +1963,10 @@
         icon.addEventListener('click', function(e) {
             e.preventDefault();
             showLoading();
-            const href = this.href;
+            const nav_link = this.href;
             setTimeout(() => {
                 hideLoading();
-                window.open(href, '_blank');
+                window.open(nav_link, '_blank');
             }, 1200);
         });
     });
