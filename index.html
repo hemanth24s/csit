@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>CSIT - Chemical Society of IISER Thiruvananthapuram</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=1200, initial-scale=0.5, maximum-scale=1.0, user-scalable=yes">
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="Logo.png">
     <link rel="shortcut icon" type="image/x-icon" href="Logo.png">
@@ -59,6 +59,7 @@
             transition: background 0.3s, color 0.3s;
             overflow-x: hidden;
             position: relative;
+            min-width: 1200px;
         }
         #chem-bg {
             position: fixed;
@@ -2631,7 +2632,7 @@
                 document.querySelectorAll('.quick-icon').forEach(a => {
                     a.addEventListener('click', function(e){
                         e.preventDefault();
-                        const nav_link this.href;
+                        const nav_link = this.href;
                         setTimeout(()=>{ window.open(nav_link, '_blank'); }, 200);
                     });
                 });
