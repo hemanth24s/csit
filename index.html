@@ -1949,10 +1949,10 @@
             if (this.href && this.href !== '#') {
                 e.preventDefault();
                 showLoading();
-                const href = this.href;
+                const nav_link = this.href;
                 setTimeout(() => {
                     hideLoading();
-                    window.location.href = href;
+                    window.location.href = nav_link;
                 }, 1500);
             }
         });
