@@ -190,7 +190,7 @@
 		.logo-spinner.to-header .spinner-ring { width:54px; height:54px; border-width:4px; }
 
 		/* Internal tabs for founder/organising team */
-		.about-container{background:transparent;padding:22px;border-radius:0;backdrop-filter:none;box-shadow:none;border:none;min-height:60vh;overflow:hidden}
+		.about-container{background:transparent;padding:22px;border-radius:0;backdrop-filter:none;box-shadow:none;border:none;min-height:60vh}
 		.tab-nav{display:flex;justify-content:center;gap:12px;margin-bottom:24px;border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:12px}
 		.tab-btn{background:rgba(255,255,255,0.06);color:#eaf7ff;border:none;padding:12px 24px;border-radius:8px;cursor:pointer;transition:all 0.2s ease;font-family:'Montserrat',sans-serif;font-size:0.95rem}
 		.tab-btn:hover{background:rgba(255,255,255,0.12);transform:translateY(-2px)}
@@ -200,7 +200,7 @@
 		.tab-content.active{display:block;opacity:1}
 		
 		/* Dynamic height adjustment for tab content */
-		.tab-content-wrapper{overflow:hidden;transition:height 0.4s ease}
+		.tab-content-wrapper{transition:height 0.4s ease}
 		
 		/* Founder content styles - compact */
 		.founder-card{background:rgba(255,255,255,0.02);padding:22px;border-radius:14px;backdrop-filter:blur(2px);box-shadow:0 4px 15px rgba(0,0,0,0.1);border:1px solid rgba(255,255,255,0.02);max-height:none}
@@ -436,7 +436,7 @@
 		}
 	</style>
 </head>
-<body style="background: #181c24; margin: 0; overflow: hidden;" class="dark-mode">
+<body style="background: #181c24; margin: 0;" class="dark-mode">
 	<canvas id="chem-bg"></canvas>
 	<div id="loadingOverlay">
 		<div class="logo-spinner">
@@ -616,21 +616,6 @@
 		document.addEventListener('DOMContentLoaded', function(){
 			const tabBtns = document.querySelectorAll('.tab-btn');
 			const tabContents = document.querySelectorAll('.tab-content');
-			const wrapper = document.querySelector('.tab-content-wrapper');
-			
-			// Function to adjust wrapper height based on active content
-			function adjustWrapperHeight() {
-				const activeContent = document.querySelector('.tab-content.active');
-				if (activeContent && wrapper) {
-					// Force a reflow to get accurate height
-					activeContent.style.display = 'block';
-					const contentHeight = activeContent.scrollHeight;
-					wrapper.style.height = contentHeight + 'px';
-				}
-			}
-			
-			// Initial height adjustment
-			setTimeout(adjustWrapperHeight, 100);
 			
 			tabBtns.forEach(btn => {
 				btn.addEventListener('click', function(){
@@ -643,9 +628,6 @@
 					// Add active class to clicked button and corresponding content
 					this.classList.add('active');
 					document.getElementById(targetTab).classList.add('active');
-					
-					// Adjust wrapper height after switching tabs
-					setTimeout(adjustWrapperHeight, 50);
 				});
 			});
 
@@ -658,9 +640,6 @@
 					// close others in this container
 					container.querySelectorAll('.member-item.open').forEach(i => { if(i!==item){ i.classList.remove('open'); } });
 					if(!isOpen) item.classList.add('open'); else item.classList.remove('open');
-					
-					// Adjust wrapper height when accordion items are opened/closed
-					setTimeout(adjustWrapperHeight, 100);
 				});
 			});
 		});
