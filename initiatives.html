@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Initiatives — CSIT | Chemical Society of IISER TVM</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="PHOTOS/LOGO.jpg">
+    <link rel="shortcut icon" type="image/x-icon" href="PHOTOS/LOGO.jpg">
+    <!-- Google Fonts for Clean Science Look -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Social Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1565c0;
+            --accent: #4fc3f7;
+            --bg: #f6f8fa;
+            --dark: #181c24;
+            --header-bg: #fff;
+            --nav-bg: #f6f8fa;
+            --main-bg: #fff;
+            --footer-bg: #f6f8fa;
+            --text: #181c24;
+            --icon-bg: #fff;
+            --toggle-bg: #e3e6ed;
+            --toggle-icon: #1565c0;
+        }
+        body.dark-mode {
+            --primary: #4fc3f7;
+            --accent: #1565c0;
+            --bg: #181c24;
+            --header-bg: #181c24;
+            --nav-bg: #181c24;
+            --main-bg: #222a36;
+            --footer-bg: #181c24;
+            --text: #e3e6ed;
+            --icon-bg: #222a36;
+            --toggle-bg: #222a36;
+            --toggle-icon: #4fc3f7;
+        }
+        body {
+            margin: 0;
+            font-family: 'Roboto', Arial, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            min-height: 100vh;
+            transition: background 0.3s, color 0.3s;
+            overflow-x: hidden;
+            max-width: 100vw;
+        }
+        #chem-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+        header {
+            /* Remove background and box-shadow for seamless look */
+            background: none !important;
+            box-shadow: none !important;
+            padding: 0.5rem 0 0.5rem 0;
+            position: relative;
+            z-index: 2;
+        }
+        .header-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 2vw;
+            position: relative;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-direction: column;
+        }
+        .logo img {
+            width: 72px;
+            height: auto;
+            margin-bottom: 8px;
+        }
+        .logo-title {
+            font-family: 'Merriweather', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #181c24;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+        body.dark-mode .logo-title {
+            color: #fff;
+        }
+        @media (max-width: 900px) {
+            .logo-title { font-size: 1.3rem; }
+        }
+        @media (max-width: 600px) {
+            .logo-title { font-size: 1rem; }
+        }
+        
+        nav {
+            background: var(--nav-bg);
+            box-shadow: 0 1px 8px #1565c012;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            padding: 0.7rem 0;
+            position: relative;
+            z-index: 2;
+            flex-wrap: wrap;
+        }
+        nav a {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 1.08rem;
+            padding: 0.4rem 1.2rem;
+            border-radius: 20px;
+            transition: background 0.2s, color 0.2s;
+            font-weight: 500;
+        }
+        nav a:hover, nav a.active {
+            background: var(--accent);
+            color: #fff;
+        }
+        
+        /* SpaceX-style Navigation Countdown */
+        .nav-countdown {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(76, 195, 247, 0.2);
+            border-radius: 12px;
+            padding: 8px 16px;
+            margin-left: 8px;
+            text-align: center;
+            backdrop-filter: blur(4px);
+            transition: all 0.3s ease;
+            min-width: 200px;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .nav-countdown:hover {
+            border-color: var(--accent);
+            box-shadow: 0 4px 20px rgba(76, 195, 247, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .countdown-label {
+            font-size: 0.7rem;
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+        
+        .countdown-timer {
+            font-family: 'Montserrat', monospace;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+        
+        .countdown-event-name {
+            font-size: 0.65rem;
+            color: var(--text);
+            opacity: 0.8;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 180px;
+        }
+
+        /* Loading overlay */
+        #loadingOverlay {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(8, 12, 20, 0.9);
+            z-index: 2000;
+            backdrop-filter: blur(6px);
+        }
+        .logo-spinner {
+            width: 200px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .loader-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #fff;
+            padding: 8px;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 0 20px rgba(79, 195, 247, 0.8);
+        }
+        
+        /* Atomic orbital animations */
+        .atomic-orbit {
+            position: absolute;
+            border: 2px solid rgba(79, 195, 247, 0.3);
+            border-radius: 50%;
+            animation: rotate 3s linear infinite;
+        }
+        .atomic-orbit.orbit-1 {
+            width: 120px;
+            height: 120px;
+            animation-duration: 2s;
+        }
+        .atomic-orbit.orbit-2 {
+            width: 160px;
+            height: 160px;
+            animation-duration: 3s;
+            transform: rotateX(60deg) rotateY(30deg);
+        }
+        .atomic-orbit.orbit-3 {
+            width: 200px;
+            height: 200px;
+            animation-duration: 4s;
+            transform: rotateX(-45deg) rotateY(-20deg);
+        }
+        
+        .electron {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent);
+        }
+        .electron.e1 {
+            top: -4px;
+            left: calc(50% - 4px);
+            animation: orbit1 2s linear infinite;
+        }
+        .electron.e2 {
+            top: calc(50% - 4px);
+            right: -4px;
+            animation: orbit2 3s linear infinite;
+        }
+        .electron.e3 {
+            bottom: -4px;
+            left: calc(50% - 4px);
+            animation: orbit3 4s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes orbit1 {
+            0% { transform: rotate(0deg) translateX(60px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(60px) rotate(-360deg); }
+        }
+        @keyframes orbit2 {
+            0% { transform: rotate(0deg) translateX(80px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(80px) rotate(-360deg); }
+        }
+        @keyframes orbit3 {
+            0% { transform: rotate(0deg) translateX(100px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(100px) rotate(-360deg); }
+        }
+        
+        /* Nucleus pulse animation */
+        .nucleus-pulse {
+            position: absolute;
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            border: 3px solid var(--primary);
+            animation: pulse 2s ease-in-out infinite;
+            z-index: 5;
+        }
+        @keyframes pulse {
+            0%, 100% { 
+                transform: scale(1);
+                opacity: 0.8;
+                box-shadow: 0 0 20px rgba(21, 101, 192, 0.4);
+            }
+            50% { 
+                transform: scale(1.1);
+                opacity: 1;
+                box-shadow: 0 0 30px rgba(21, 101, 192, 0.8);
+            }
+        }
+
+        main {
+            margin: 2rem auto 2rem auto;
+            max-width: 1100px;
+            padding: 22px;
+            z-index: 20;
+            position: relative;
+            overflow-x: hidden;
+            max-width: 100vw;
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(79, 195, 247, 0.3);
+        }
+
+        .page-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--text);
+            opacity: 0.8;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .initiatives-container {
+            background: transparent;
+            padding: 22px;
+            border-radius: 0;
+            backdrop-filter: none;
+            box-shadow: none;
+            border: none;
+        }
+
+        .initiatives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .initiative-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .initiative-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(79, 195, 247, 0.15);
+            border-color: var(--accent);
+        }
+
+        .initiative-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .initiative-card:hover::before {
+            opacity: 1;
+        }
+
+        .initiative-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .initiative-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            flex-shrink: 0;
+            box-shadow: 0 8px 20px rgba(79, 195, 247, 0.3);
+        }
+
+        .initiative-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0 0 0.5rem 0;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .initiative-category {
+            font-size: 0.9rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .initiative-description {
+            color: var(--text);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .initiative-features {
+            margin-bottom: 1.5rem;
+        }
+
+        .initiative-features h4 {
+            color: var(--accent);
+            font-size: 1rem;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .features-list li {
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+            opacity: 0.9;
+        }
+
+        .features-list li::before {
+            content: '⚡';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        .initiative-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text);
+            opacity: 0.7;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .initiative-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .initiative-btn {
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 25px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .initiative-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(79, 195, 247, 0.3);
+        }
+
+        .status-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-active {
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+            color: white;
+        }
+
+        .status-planning {
+            background: linear-gradient(135deg, #FF9800, #FFC107);
+            color: white;
+        }
+
+        .status-ongoing {
+            background: linear-gradient(135deg, #2196F3, #03A9F4);
+            color: white;
+        }
+
+        footer {
+            background: var(--footer-bg);
+            border-top: 2px solid var(--accent);
+            box-shadow: 0 -2px 16px #1565c012;
+            text-align: center;
+            padding: 1.5rem 0 1rem 0;
+            position: relative;
+            margin-top: 3rem;
+            z-index: 2;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .footer-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-logo {
+            background: transparent;
+            padding: 4px 8px;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.3s;
+            box-shadow: 0 2px 8px rgba(21, 101, 192, 0.2);
+        }
+
+        .footer-logo img {
+            height: 36px;
+            width: auto;
+            display: block;
+            border-radius: 8px;
+        }
+
+        .footer-logo:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(21, 101, 192, 0.4);
+        }
+
+        /* Social Media Icons */
+        .social-bar {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 300ms ease;
+        }
+
+        .social-bar.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .quick-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.06);
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .quick-icon:hover {
+            transform: translateY(-2px);
+        }
+
+        .quick-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+            transition: fill 0.3s;
+        }
+
+        .quick-icon.youtube { background: rgba(255, 0, 0, 0.9); }
+        .quick-icon.twitter { background: rgba(29, 161, 242, 0.9); }
+        .quick-icon.instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+        .quick-icon.linkedin { background: rgba(0, 119, 181, 0.9); }
+
+        @media (max-width: 768px) {
+            .initiatives-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .initiative-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .initiative-actions {
+                flex-direction: column;
+            }
+            
+            .social-bar {
+                right: 15px;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .initiative-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .nav-countdown {
+                order: -1;
+                margin: 0 auto 0.5rem auto;
+                width: 100%;
+                max-width: 300px;
+            }
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .footer-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .nav-countdown {
+                min-width: 160px;
+                padding: 6px 12px;
+            }
+            .countdown-timer {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body style="background: #181c24; margin: 0; overflow: hidden;" class="dark-mode">
+    <!-- Loading overlay -->
+    <div id="loadingOverlay">
+        <div class="logo-spinner">
+            <!-- Nucleus (logo) -->
+            <img src="C:\Users\gsk10\Desktop\checkweb\Logo.png" alt="CSIT Logo" class="loader-logo">
+            <div class="nucleus-pulse"></div>
+            
+            <!-- Electron orbital paths -->
+            <div class="atomic-orbit orbit-1">
+                <div class="electron e1"></div>
+            </div>
+            <div class="atomic-orbit orbit-2">
+                <div class="electron e2"></div>
+            </div>
+            <div class="atomic-orbit orbit-3">
+                <div class="electron e3"></div>
+            </div>
+        </div>
+    </div>
+    
+    <canvas id="chem-bg"></canvas>
+    
+    <header>
+        <div class="header-content" style="justify-content: center; align-items: center;">
+            <div class="logo" style="flex-direction: row; align-items: center; gap: 18px;">
+                <!-- Club Icon (clickable, links to homepage) -->
+                <a href="index.html">
+                    <img src="C:\Users\gsk10\Desktop\checkweb\Logo.png" alt="Club Icon" style="width:72px; height:auto;">
+                </a>
+                <span class="logo-title">Chemical Society of IISER Thiruvananthapuram</span>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About us</a>
+        <a href="events.html">Events</a>
+        <a href="initiatives.html" class="active">Initiatives</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="contactus.html">Contact us</a>
+        
+        <!-- SpaceX-style countdown timer in navigation -->
+        <a href="events.html#upcoming-events" class="nav-countdown" id="navCountdown" style="display: none;">
+            <div class="countdown-label">Next Event</div>
+            <div class="countdown-timer">
+                <span id="navDays">00</span>D <span id="navHours">00</span>H <span id="navMinutes">00</span>M <span id="navSeconds">00</span>S
+            </div>
+            <div class="countdown-event-name" id="navEventName">Loading...</div>
+        </a>
+    </nav>
+
+    <div class="social-bar" aria-hidden="false">
+        <a class="quick-icon youtube" href="https://www.youtube.com/@chemicalsocietyiisertvm9694" target="_blank" rel="noopener noreferrer" title="YouTube">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2s-.2-1.7-.8-2.4c-.8-.9-1.7-.9-2.1-1-3-.2-7.5-.2-7.5-.2s-4.5 0-7.5.2c-.4 0-1.3.1-2.1 1C.7 4.5.5 6.2.5 6.2S.3 8 .3 9.9v4.3c0 1.9.2 3.7.2 3.7s.2 1.7.8 2.4c.8.9 1.9.9 2.4 1 1.7.1 7.3.2 7.3.2s4.5 0 7.5-.2c.4 0 1.3-.1 2.1-1 .6-.7.8-2.4.8-2.4s.2-1.9.2-3.7V9.9c0-1.9-.2-3.7-.2-3.7zM9.8 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
+        </a>
+        <a class="quick-icon twitter" href="https://x.com/csit_iisertvm?lang=en" target="_blank" rel="noopener noreferrer" title="Twitter">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22.46 6c-.77.35-1.6.58-2.46.69a4.3 4.3 0 0 0 1.88-2.38 8.6 8.6 0 0 1-2.73 1.04 4.28 4.28 0 0 0-7.29 3.9A12.13 12.13 0 0 1 3.16 4.6a4.28 4.28 0 0 0 1.32 5.72 4.22 4.22 0 0 1-1.94-.54v.05a4.28 4.28 0 0 0 3.43 4.2 4.3 4.3 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.97A8.58 8.58 0 0 1 2 19.54a12.1 12.1 0 0 0 6.56 1.92c7.88 0 12.2-6.53 12.2-12.2l-.01-.56A8.7 8.7 0 0 0 22.46 6z"/></svg>
+        </a>
+        <a class="quick-icon instagram" href="https://www.instagram.com/csit_iisertvm/?hl=en" target="_blank" rel="noopener noreferrer" title="Instagram">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 6.2A4.8 4.8 0 1 0 16.8 13 4.8 4.8 0 0 0 12 8.2zm6.3-.8a1.1 1.1 0 1 1-1.1-1.1 1.1 1.1 0 0 1 1.1 1.1zM12 15.6A3.6 3.6 0 1 1 15.6 12 3.6 3.6 0 0 1 12 15.6z"/></svg>
+        </a>
+        <a class="quick-icon linkedin" href="https://www.linkedin.com/in/chemical-society-of-iiser-thiruvananthapuram-csit-0284b7203/?originalSubdomain=in" target="_blank" rel="noopener noreferrer" title="LinkedIn">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 20.4h-3.6v-5.6c0-1.3-.03-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.3V9h3.4v1.6h.05c.5-.9 1.7-1.8 3.5-1.8 3.7 0 4.4 2.4 4.4 5.6v6h-.25zM5.3 7.4a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zM7.1 20.4H3.5V9h3.6v11.4z"/></svg>
+        </a>
+    </div>
+
+    <main>
+        <div class="initiatives-container">
+            <h1 class="page-title">Our Initiatives</h1>
+            <p class="page-subtitle">
+                Driving innovation and community impact through chemistry-focused programs that inspire, educate, and create positive change.
+            </p>
+            
+            <div class="initiatives-grid">
+                <!-- Science Outreach Initiative -->
+                <div class="initiative-card">
+                    
+                    <div class="initiative-header">
+                        <div>
+                            <h3 class="initiative-title">ChemFacts</h3>
+                            <div class="initiative-category">The official communications magazine of CSIT</div>
+                        </div>
+                    </div>
+                    
+                    <div class="initiative-description">
+                        ChemFacts (Formerly known as Synthesis) is the official communications magazine of CSIT. It aims to bridge the gap between complex chemical concepts and the students through engaging articles, interviews, and visual content.
+                    </div>
+            
+                    </div>
+                    
+                    </div>
+                    
+                </div>
+
+                <!-- Research Mentorship Initiative -->
+                <div class="initiative-card">
+                    
+                    <div class="initiative-header">
+                        <div>
+                            <h3 class="initiative-title">Journal club of CSIT</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="initiative-description">
+                        The Journal Club of CSIT is a platform for students to engage with current research in chemistry through discussions, presentations, and collaborative learning. It aims to foster a culture of scientific inquiry and critical thinking.
+                    </div>
+                </div>
+
+                <!-- Green Chemistry Initiative -->
+                <div class="initiative-card">
+                    
+                    <div class="initiative-header">
+                        <div>
+                            <h3 class="initiative-title">CSIT Alumini Database</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="initiative-description">
+                        The CSIT Alumni Database is a comprehensive platform that connects current students with alumni working in various fields of chemistry. It aims to facilitate networking, mentorship, and career opportunities for students.
+                    </div>
+                </div>
+
+                <!-- Industry Connect Initiative -->
+                <div class="initiative-card">
+                    
+                    <div class="initiative-header">
+                        <div>
+                            <h3 class="initiative-title">CSIT Outreach Program</h3>
+                            <div class="initiative-category">A platform for CSIT's outreach activities</div>
+                        </div>
+                    </div>
+                    
+                    <div class="initiative-description">
+                        The CSIT Outreach Program is dedicated to promoting chemistry education and awareness in the local community through workshops, school visits, and public lectures. It aims to inspire the next generation of scientists and foster a love for chemistry.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div>
+                &copy; Chemical Society, IISER TVM (CSIT). All rights reserved.
+            </div>
+            <a href="https://www.iisertvm.ac.in/" target="_blank" rel="noopener noreferrer" class="footer-logo">
+                <img src="C:\Users\gsk10\Desktop\checkweb\iiser tvm logo.png" alt="IISER TVM Logo">
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        // Chemistry-inspired animated background: molecules and bonds
+        const canvas = document.getElementById('chem-bg');
+        const ctx = canvas.getContext('2d');
+        let w = window.innerWidth, h = window.innerHeight;
+        
+        function resize() {
+            w = window.innerWidth;
+            h = window.innerHeight;
+            canvas.width = w;
+            canvas.height = h;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        // Generate molecule nodes
+        const nodes = [];
+        const bonds = [];
+        const nodeCount = Math.floor(w * h / 22000);
+        for (let i = 0; i < nodeCount; i++) {
+            nodes.push({
+                x: Math.random() * w,
+                y: Math.random() * h,
+                r: 7 + Math.random() * 5,
+                dx: (Math.random() - 0.5) * 0.18,
+                dy: (Math.random() - 0.5) * 0.18,
+                color: Math.random() > 0.5 ? '#4fc3f7' : '#1565c0'
+            });
+        }
+        
+        // Generate bonds between close nodes
+        for (let i = 0; i < nodes.length; i++) {
+            for (let j = i + 1; j < nodes.length; j++) {
+                const dist = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
+                if (dist < 140) {
+                    bonds.push({ a: i, b: j, strength: 0.5 + Math.random() * 0.5 });
+                }
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, w, h);
+
+            // Draw bonds
+            for (let bond of bonds) {
+                const n1 = nodes[bond.a], n2 = nodes[bond.b];
+                ctx.save();
+                ctx.strokeStyle = 'rgba(76,195,247,' + (0.10 * bond.strength) + ')';
+                ctx.lineWidth = 1.5 * bond.strength;
+                ctx.beginPath();
+                ctx.moveTo(n1.x, n1.y);
+                ctx.lineTo(n2.x, n2.y);
+                ctx.stroke();
+                ctx.restore();
+            }
+
+            // Draw nodes (atoms)
+            for (let node of nodes) {
+                node.x += node.dx;
+                node.y += node.dy;
+                // Bounce off edges
+                if (node.x < node.r || node.x > w - node.r) node.dx *= -1;
+                if (node.y < node.r || node.y > h - node.r) node.dy *= -1;
+
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, node.r, 0, Math.PI * 2);
+                ctx.fillStyle = node.color;
+                ctx.globalAlpha = 0.6;
+                ctx.shadowColor = node.color;
+                ctx.shadowBlur = 10;
+                ctx.fill();
+                ctx.restore();
+            }
+
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // Force dark mode
+        document.body.classList.add('dark-mode');
+        
+        // Restore normal page flow after initial load
+        setTimeout(() => {
+            document.body.style.overflow = '';
+        }, 100);
+
+        // Loading functionality
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        
+        function showLoading() {
+            if (loadingOverlay) {
+                loadingOverlay.style.display = 'flex';
+                loadingOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    loadingOverlay.style.opacity = '1';
+                }, 10);
+            }
+        }
+
+        function hideLoading() {
+            if (loadingOverlay) {
+                loadingOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    loadingOverlay.style.display = 'none';
+                    // Restore normal body styles after loading
+                    document.body.style.overflow = '';
+                }, 300);
+            }
+        }
+
+        // Add loading to navigation links
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.href && this.href !== '#') {
+                    e.preventDefault();
+                    showLoading();
+                    setTimeout(() => {
+                        window.location.href = this.href;
+                    }, 1200);
+                }
+            });
+        });
+
+        // Add loading to social media icons
+        document.querySelectorAll('.quick-icon').forEach(icon => {
+            icon.addEventListener('click', function(e) {
+                e.preventDefault();
+                showLoading();
+                const href = this.href;
+                setTimeout(() => {
+                    window.open(href, '_blank');
+                    hideLoading();
+                }, 1200);
+            });
+        });
+
+        // Add loading to footer logo
+        document.querySelector('.footer-logo')?.addEventListener('click', function() {
+            showLoading();
+            setTimeout(hideLoading, 1500);
+        });
+
+        // Events data for countdown
+        const events = [
+            { date: '2025-08-29', time: '17:00', title: 'Freshers Event', venue: 'LHC KAUMUDI' },
+            { date: '2025-09-29', time: '10:00', title: 'Chemical Biology Symposium', venue: 'To be announced later' }
+        ];
+
+        // Global variable to store IST offset
+        let istOffset = 0;
+
+        // Function to get Indian Standard Time from internet source
+        async function getISTTime() {
+            try {
+                const response = await fetch('https://worldtimeapi.org/api/timezone/Asia/Kolkata');
+                const data = await response.json();
+                const istTime = new Date(data.datetime);
+                const localTime = new Date();
+                istOffset = istTime.getTime() - localTime.getTime();
+                return istTime;
+            } catch (error) {
+                console.log('Failed to fetch IST from API, using fallback method');
+                const now = new Date();
+                const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+                const istTime = new Date(utc + (5.5 * 3600000));
+                istOffset = istTime.getTime() - now.getTime();
+                return istTime;
+            }
+        }
+
+        // Function to get current IST time
+        function getCurrentIST() {
+            const localTime = new Date();
+            return new Date(localTime.getTime() + istOffset);
+        }
+
+        // Event Countdown Timer Functionality
+        function findNextEvent() {
+            const now = getCurrentIST(); // Use IST instead of local time
+            const currentDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            
+            const upcomingEvents = events.filter(event => {
+                const eventDate = new Date(event.date);
+                return eventDate >= currentDate;
+            }).sort((a, b) => new Date(a.date) - new Date(b.date));
+            
+            return upcomingEvents[0] || null;
+        }
+
+        function updateCountdown() {
+            const nextEvent = findNextEvent();
+            const navCountdown = document.getElementById('navCountdown');
+            
+            if (!nextEvent) {
+                if (navCountdown) navCountdown.style.display = 'none';
+                return;
+            }
+            
+            if (navCountdown) navCountdown.style.display = 'block';
+            
+            const eventDate = new Date(nextEvent.date);
+            const now = new Date();
+            const timeLeft = eventDate.getTime() - now.getTime();
+            
+            if (timeLeft <= 0) {
+                const navEventName = document.getElementById('navEventName');
+                if (navEventName) navEventName.textContent = nextEvent.title;
+                
+                const timeElements = ['navDays', 'navHours', 'navMinutes', 'navSeconds'];
+                timeElements.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.textContent = '00';
+                });
+                return;
+            }
+            
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+            
+            const navDays = document.getElementById('navDays');
+            const navHours = document.getElementById('navHours');
+            const navMinutes = document.getElementById('navMinutes');
+            const navSeconds = document.getElementById('navSeconds');
+            const navEventName = document.getElementById('navEventName');
+            
+            if (navDays) navDays.textContent = String(days).padStart(2, '0');
+            if (navHours) navHours.textContent = String(hours).padStart(2, '0');
+            if (navMinutes) navMinutes.textContent = String(minutes).padStart(2, '0');
+            if (navSeconds) navSeconds.textContent = String(seconds).padStart(2, '0');
+            if (navEventName) navEventName.textContent = nextEvent.title;
+        }
+
+        // Initialize countdown and update every second
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        // Social icons visibility and animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const socialBar = document.querySelector('.social-bar');
+            const footer = document.querySelector('footer');
+
+            if (socialBar && footer) {
+                const observer = new IntersectionObserver(entries => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            socialBar.classList.add('visible');
+                            // Animate social icons
+                            Array.from(socialBar.children).forEach((icon, index) => {
+                                icon.style.transition = 'transform 450ms ease, opacity 350ms ease';
+                                icon.style.transform = (index % 2 === 0) ? 'translateX(-30px)' : 'translateX(30px)';
+                                icon.style.opacity = '0';
+                                setTimeout(() => {
+                                    icon.style.transform = 'translateX(0)';
+                                    icon.style.opacity = '1';
+                                }, 150 + index * 120);
+                            });
+                        } else {
+                            socialBar.classList.remove('visible');
+                            Array.from(socialBar.children).forEach(icon => {
+                                icon.style.opacity = '0';
+                            });
+                        }
+                    });
+                }, { threshold: 0.1 });
+                
+                observer.observe(footer);
+            }
+
+            // Add click animations to initiative cards
+            const initiativeCards = document.querySelectorAll('.initiative-card');
+            initiativeCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            // Add click effects to buttons
+            const buttons = document.querySelectorAll('.initiative-btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Create ripple effect
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.cssText = `
+                        position: absolute;
+                        left: ${x}px;
+                        top: ${y}px;
+                        width: ${size}px;
+                        height: ${size}px;
+                        border-radius: 50%;
+                        background: rgba(255, 255, 255, 0.3);
+                        transform: scale(0);
+                        animation: ripple 0.6s ease-out;
+                        pointer-events: none;
+                    `;
+                    
+                    this.style.position = 'relative';
+                    this.style.overflow = 'hidden';
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                    
+                    console.log('Button clicked:', this.textContent.trim());
+                });
+            });
+        });
+
+        // Add ripple animation CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(2);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
