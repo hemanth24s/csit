@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Navigation Debug Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        nav { margin: 20px 0; }
+        nav a { 
+            display: inline-block; 
+            margin: 5px 10px; 
+            padding: 10px 15px; 
+            background: #007bff; 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 5px; 
+        }
+        nav a:hover { background: #0056b3; }
+        .debug { 
+            background: #f8f9fa; 
+            border: 1px solid #dee2e6; 
+            padding: 15px; 
+            margin: 20px 0; 
+            border-radius: 5px; 
+        }
+        #loadingOverlay {
+            position: fixed;
+            top: 0; left: 0; 
+            width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            color: white;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Navigation Debug Test</h1>
+    
+    <div class="debug">
+        <h3>Test Instructions:</h3>
+        <ol>
+            <li>Open browser console (F12)</li>
+            <li>Click on any navigation link below</li>
+            <li>Check console for debug messages</li>
+            <li>Verify if navigation works</li>
+        </ol>
+    </div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About us</a>
+        <a href="events.html">Events</a>
+        <a href="initiatives.html">Initiatives</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="contactus.html">Contact us</a>
+    </nav>
+
+    <div class="debug">
+        <h3>Debug Output:</h3>
+        <div id="debugOutput">Click a navigation link to see debug info...</div>
+    </div>
+
+    <div id="loadingOverlay">
+        <div>Loading...</div>
+    </div>
+
+    <script>
+        const debugOutput = document.getElementById('debugOutput');
+        
+        function addDebug(message) {
+            console.log(message);
+            debugOutput.innerHTML += '<br>' + new Date().toLocaleTimeString() + ': ' + message;
+        }
+        
+        document.addEventListener('DOMContentLoaded', function(){
+            addDebug('Page loaded, initializing navigation...');
+            
+            const overlay = document.getElementById('loadingOverlay');
+            addDebug('Loading overlay found: ' + !!overlay);
+            
+            const navLinks = document.querySelectorAll('nav a');
+            addDebug('Found ' + navLinks.length + ' navigation links');
+            
+            navLinks.forEach((link, index) => {
+                addDebug('Setting up link ' + (index + 1) + ': ' + link.href);
+                
+                link.addEventListener('click', function(e){
+                    const href = this.getAttribute('href');
+                    addDebug('🔴 CLICK DETECTED on: ' + href);
+                    
+                    if(href && href !== '#' && href !== '' && !href.startsWith('javascript:')){
+                        e.preventDefault();
+                        addDebug('🔵 Navigation prevented, showing loading...');
+                        
+                        if (overlay) {
+                            overlay.style.display = 'flex';
+                            overlay.style.opacity = '1';
+                            addDebug('🟢 Loading overlay shown');
+                        }
+                        
+                        addDebug('🟡 Setting timer for navigation to: ' + href);
+                        
+                        const navigateTimer = setTimeout(() => { 
+                            addDebug('🟢 TIMER EXECUTING - Navigating to: ' + href);
+                            window.location.href = href; 
+                        }, 1000);
+                        
+                        // Fallback
+                        setTimeout(() => {
+                            if (window.location.href.indexOf(href) === -1) {
+                                addDebug('🔴 FALLBACK TRIGGERED - Force navigating to: ' + href);
+                                clearTimeout(navigateTimer);
+                                window.location.href = href;
+                            }
+                        }, 1500);
+                    } else {
+                        addDebug('🔴 Link ignored (invalid href): ' + href);
+                    }
+                });
+            });
+            
+            addDebug('✅ Navigation setup complete');
+        });
+    </script>
+</body>
+</html>

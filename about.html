@@ -586,7 +586,7 @@
 <body style="background: #181c24; margin: 0;" class="dark-mode">
 	<canvas id="chem-bg"></canvas>
 	<div id="loadingOverlay">
-		<div class="logo-spinner">
+		<div class="logo-spinner" id="loaderLogo">
 			<!-- Nucleus (logo) -->
 			<img src="Logo.png" alt="CSIT Logo" class="loader-logo">
 			<div class="nucleus-pulse"></div>
@@ -951,20 +951,87 @@
 			}
 		});
 
-		// Nav link loader
+		// Enhanced Nav link loader with multiple fallbacks
 		document.addEventListener('DOMContentLoaded', function(){
 			const overlay = document.getElementById('loadingOverlay');
-			document.querySelectorAll('nav a').forEach(link => {
+			
+			console.log('🚀 Navigation system initializing...'); // Debug
+			console.log('📍 Current page:', window.location.href); // Debug
+			console.log('📦 Overlay found:', !!overlay); // Debug
+			
+			// Get all navigation links
+			const navLinks = document.querySelectorAll('nav a');
+			console.log('🔗 Found navigation links:', navLinks.length); // Debug
+			
+			navLinks.forEach((link, index) => {
+				const href = link.getAttribute('href');
+				console.log(`📌 Link ${index + 1}: ${href}`); // Debug
+				
 				link.addEventListener('click', function(e){
-					if(this.getAttribute('href') && this.getAttribute('href') !== '#'){
+					const targetHref = this.getAttribute('href');
+					const fullUrl = this.href; // This gets the absolute URL
+					
+					console.log('🖱️ CLICK on link:', targetHref); // Debug
+					console.log('🌐 Full URL:', fullUrl); // Debug
+					
+					// Check if it's a valid navigation link
+					if(targetHref && 
+					   targetHref !== '#' && 
+					   targetHref !== '' && 
+					   !targetHref.startsWith('javascript:') &&
+					   (targetHref.endsWith('.html') || !targetHref.includes('.'))) {
+						
 						e.preventDefault();
-						overlay.style.display = 'flex';
-						overlay.style.opacity = '1';
-						const loader = document.getElementById('loaderLogo');
-						loader.classList.remove('to-header');
-						loader.style.left = '50%'; loader.style.top = '50%'; loader.style.transform = 'translate(-50%,-50%)';
-						setTimeout(()=>{ loader.classList.add('to-header'); }, 30);
-						setTimeout(()=>{ window.location.href = this.href; }, 1100);
+						console.log('✋ Default prevented, handling navigation...'); // Debug
+						
+						// Show loading overlay
+						if (overlay) {
+							overlay.style.display = 'flex';
+							overlay.style.opacity = '1';
+							console.log('⏳ Loading overlay shown'); // Debug
+						}
+						
+						// Multiple navigation attempts for reliability
+						let navigationCompleted = false;
+						
+						// Primary navigation (fast)
+						setTimeout(() => {
+							if (!navigationCompleted) {
+								console.log('🚀 Primary navigation executing...'); // Debug
+								navigationCompleted = true;
+								window.location.href = fullUrl;
+							}
+						}, 200);
+						
+						// Secondary navigation (medium delay)
+						setTimeout(() => {
+							if (!navigationCompleted) {
+								console.log('🔄 Secondary navigation executing...'); // Debug
+								navigationCompleted = true;
+								window.location.href = targetHref;
+							}
+						}, 800);
+						
+						// Emergency fallback (longer delay)
+						setTimeout(() => {
+							if (!navigationCompleted) {
+								console.log('🆘 Emergency navigation executing...'); // Debug
+								navigationCompleted = true;
+								window.location.replace(fullUrl);
+							}
+						}, 1500);
+						
+						// Ultimate fallback (if nothing else works)
+						setTimeout(() => {
+							if (window.location.pathname.includes('about.html')) {
+								console.log('🔥 Ultimate fallback - force reload...'); // Debug
+								window.location.replace(targetHref);
+							}
+						}, 2500);
+						
+					} else {
+						console.log('❌ Link ignored:', targetHref); // Debug
+						// Let default behavior happen for invalid links
 					}
 				});
 			});
