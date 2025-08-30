@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tab Debug Test</title>
+    <style>
+        .tab-nav { display: flex; gap: 10px; margin: 20px; }
+        .tab-btn { 
+            padding: 10px 20px; 
+            background: #f0f0f0; 
+            border: none; 
+            cursor: pointer; 
+            border-radius: 5px;
+        }
+        .tab-btn.active { background: #007bff; color: white; }
+        .tab-content { 
+            display: none; 
+            padding: 20px; 
+            margin: 20px; 
+            border: 1px solid #ddd; 
+        }
+        .tab-content.active { display: block; }
+    </style>
+</head>
+<body>
+    <h1>Tab Functionality Debug Test</h1>
+    
+    <div class="tab-nav">
+        <button class="tab-btn active" data-tab="founder">Founder</button>
+        <button class="tab-btn" data-tab="organising-team">Organising Team</button>
+    </div>
+
+    <div class="tab-content active" id="founder">
+        <h3>Founder Tab Content</h3>
+        <p>This is the founder tab content for testing.</p>
+    </div>
+
+    <div class="tab-content" id="organising-team">
+        <h3>Organising Team Tab Content</h3>
+        <p>This is the organising team tab content for testing.</p>
+    </div>
+
+    <script>
+        console.log('Test page loaded');
+        
+        document.addEventListener('DOMContentLoaded', function(){
+            console.log('DOM content loaded');
+            
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            console.log('Found tab buttons:', tabBtns.length);
+            console.log('Found tab contents:', tabContents.length);
+            
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function(){
+                    console.log('Tab clicked:', this.getAttribute('data-tab'));
+                    
+                    const targetTab = this.getAttribute('data-tab');
+                    
+                    // Remove active class from all buttons and contents
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked button and corresponding content
+                    this.classList.add('active');
+                    const targetElement = document.getElementById(targetTab);
+                    if (targetElement) {
+                        targetElement.classList.add('active');
+                        console.log('Successfully switched to:', targetTab);
+                    } else {
+                        console.error('Target element not found:', targetTab);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

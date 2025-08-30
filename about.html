@@ -3,6 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=1200, initial-scale=0.5, maximum-scale=1.0, user-scalable=yes">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="referrer" content="no-referrer-when-downgrade">
 	<title>About — CSIT | Chemical Society of IISER TVM</title>
 	<!-- Favicon -->
 	<link rel="icon" type="image/x-icon" href="Logo.png">
@@ -836,32 +838,61 @@
 			setTimeout(()=>{ overlay.style.transition='opacity 400ms ease'; overlay.style.opacity='0'; setTimeout(()=>{ overlay.style.display='none'; },500); }, 1000);
 		});
 
-		// Tab switching functionality
+		// Tab switching functionality with enhanced error handling
 		document.addEventListener('DOMContentLoaded', function(){
-			const tabBtns = document.querySelectorAll('.tab-btn');
-			const tabContents = document.querySelectorAll('.tab-content');
-			
-			tabBtns.forEach(btn => {
-				btn.addEventListener('click', function(){
-					const targetTab = this.getAttribute('data-tab');
-					
-					// Remove active class from all buttons and contents
-					tabBtns.forEach(b => b.classList.remove('active'));
-					tabContents.forEach(c => c.classList.remove('active'));
-					
-					// Add active class to clicked button and corresponding content
-					this.classList.add('active');
-					document.getElementById(targetTab).classList.add('active');
+			try {
+				console.log('Tab functionality initializing...'); // Debug line
+				
+				const tabBtns = document.querySelectorAll('.tab-btn');
+				const tabContents = document.querySelectorAll('.tab-content');
+				
+				console.log('Found tab buttons:', tabBtns.length); // Debug line
+				console.log('Found tab contents:', tabContents.length); // Debug line
+				
+				if (tabBtns.length === 0) {
+					console.error('No tab buttons found!');
+					return;
+				}
+				
+				tabBtns.forEach((btn, index) => {
+					btn.addEventListener('click', function(e){
+						try {
+							e.preventDefault();
+							console.log('Tab clicked:', this.getAttribute('data-tab')); // Debug line
+							
+							const targetTab = this.getAttribute('data-tab');
+							
+							// Remove active class from all buttons and contents
+							tabBtns.forEach(b => b.classList.remove('active'));
+							tabContents.forEach(c => c.classList.remove('active'));
+							
+							// Add active class to clicked button and corresponding content
+							this.classList.add('active');
+							const targetElement = document.getElementById(targetTab);
+							if (targetElement) {
+								targetElement.classList.add('active');
+								console.log('Successfully switched to tab:', targetTab); // Debug line
+							} else {
+								console.error('Target element not found:', targetTab); // Debug line
+							}
+						} catch (error) {
+							console.error('Error in tab click handler:', error);
+						}
+					});
 				});
-			});
 
-			// Modal functionality for member cards
-			document.querySelectorAll('.member-item').forEach(item => {
-				item.addEventListener('click', function(e){
-					e.stopPropagation();
-					openMemberModal(this);
+				// Modal functionality for member cards
+				document.querySelectorAll('.member-item').forEach(item => {
+					item.addEventListener('click', function(e){
+						e.stopPropagation();
+						openMemberModal(this);
+					});
 				});
-			});
+				
+				console.log('Tab functionality initialized successfully');
+			} catch (error) {
+				console.error('Error initializing tab functionality:', error);
+			}
 		});
 
 		// Function to open member modal
@@ -1185,5 +1216,7 @@
     updateCountdown();
     setInterval(updateCountdown, 1000);
 	</script>
+	<!-- External JavaScript for tab functionality (for better CSP compatibility) -->
+	<script src="about-tabs.js"></script>
 </body>
 </html>
