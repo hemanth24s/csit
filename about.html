@@ -943,8 +943,8 @@
 				a.addEventListener('click', function(e){
 					e.preventDefault();
 					overlay.style.display = 'flex'; overlay.style.opacity = '1';
-					const href = this.href;
-				setTimeout(()=>{ window.open(href, '_blank'); overlay.style.display='none'; }, 900);
+					const nav_link = this.href;
+				setTimeout(()=>{ window.open(nav_link, '_blank'); overlay.style.display='none'; }, 900);
 			});
 		});
 		});
@@ -982,7 +982,7 @@
 				if (this.href && this.href !== '#') {
 					e.preventDefault();
 					showLoading();
-					const href = this.href;
+					const nav_link = this.href;
 					setTimeout(() => {
 						hideLoading();
 						window.location.href = href;
@@ -996,10 +996,10 @@
 			icon.addEventListener('click', function(e) {
 				e.preventDefault();
 				showLoading();
-				const href = this.href;
+				const nav_link = this.href;
 				setTimeout(() => {
 					hideLoading();
-					window.open(href, '_blank');
+					window.open(nav_link, '_blank');
 				}, 1200);
 			});
 		});
