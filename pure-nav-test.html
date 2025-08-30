@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Navigation Test - No JavaScript</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; }
+        nav { 
+            background: #007bff; 
+            padding: 15px; 
+            border-radius: 8px; 
+            margin: 20px 0; 
+        }
+        nav a { 
+            display: inline-block; 
+            margin: 0 10px; 
+            padding: 10px 15px; 
+            background: rgba(255,255,255,0.2); 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            transition: background 0.2s;
+        }
+        nav a:hover { background: rgba(255,255,255,0.3); }
+        nav a.active { background: rgba(255,255,255,0.4); font-weight: bold; }
+        .info { 
+            background: #e7f3ff; 
+            border: 1px solid #b3d7ff; 
+            padding: 15px; 
+            margin: 20px 0; 
+            border-radius: 5px; 
+        }
+        .test-results {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Pure HTML Navigation Test</h1>
+        
+        <div class="info">
+            <h3>📋 Test Purpose:</h3>
+            <p>This page uses <strong>pure HTML navigation</strong> with no JavaScript interference. 
+            If these links work on your custom domain but the main site doesn't, it confirms the issue is with JavaScript/loading animations.</p>
+        </div>
+
+        <nav>
+            <a href="index.html">🏠 Home</a>
+            <a href="about.html" class="active">👥 About us</a>
+            <a href="events.html">📅 Events</a>
+            <a href="initiatives.html">🚀 Initiatives</a>
+            <a href="gallery.html">🖼️ Gallery</a>
+            <a href="contactus.html">📞 Contact us</a>
+        </nav>
+
+        <div class="test-results">
+            <h3>✅ Test Results:</h3>
+            <ol>
+                <li><strong>If these links work:</strong> The issue is with JavaScript navigation in your main site</li>
+                <li><strong>If these links don't work:</strong> There's a deeper server/domain configuration issue</li>
+                <li><strong>Expected behavior:</strong> Clicking any link should navigate immediately without any loading animation</li>
+            </ol>
+        </div>
+
+        <div class="info">
+            <h3>🔧 Recommended Solutions Based on Test:</h3>
+            <ul>
+                <li><strong>Option 1:</strong> Disable JavaScript navigation entirely on custom domain</li>
+                <li><strong>Option 2:</strong> Fix reverse proxy headers (CSP, CORS)</li>
+                <li><strong>Option 3:</strong> Use different loading animation approach</li>
+            </ul>
+        </div>
+
+        <div class="test-results">
+            <h3>🌐 Current Page Info:</h3>
+            <p><strong>Domain:</strong> <span id="domain"></span></p>
+            <p><strong>Full URL:</strong> <span id="fullUrl"></span></p>
+            <p><strong>Protocol:</strong> <span id="protocol"></span></p>
+        </div>
+    </div>
+
+    <script>
+        // Only show domain info, no navigation interference
+        document.getElementById('domain').textContent = window.location.hostname;
+        document.getElementById('fullUrl').textContent = window.location.href;
+        document.getElementById('protocol').textContent = window.location.protocol;
+    </script>
+</body>
+</html>

@@ -951,28 +951,29 @@
 			}
 		});
 
-		// Enhanced Nav link loader with multiple fallbacks
+		// Domain-aware navigation system with bypass for custom domains
 		document.addEventListener('DOMContentLoaded', function(){
 			const overlay = document.getElementById('loadingOverlay');
+			const isGitHubDomain = window.location.hostname.includes('github.io') || window.location.hostname.includes('github.com');
+			const isLocalDomain = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 			
-			console.log('🚀 Navigation system initializing...'); // Debug
-			console.log('📍 Current page:', window.location.href); // Debug
-			console.log('📦 Overlay found:', !!overlay); // Debug
+			console.log('🌐 Current domain:', window.location.hostname);
+			console.log('📍 Is GitHub domain:', isGitHubDomain);
+			console.log('🏠 Is local domain:', isLocalDomain);
 			
 			// Get all navigation links
 			const navLinks = document.querySelectorAll('nav a');
-			console.log('🔗 Found navigation links:', navLinks.length); // Debug
+			console.log('🔗 Found navigation links:', navLinks.length);
 			
 			navLinks.forEach((link, index) => {
 				const href = link.getAttribute('href');
-				console.log(`📌 Link ${index + 1}: ${href}`); // Debug
+				console.log(`📌 Link ${index + 1}: ${href}`);
 				
 				link.addEventListener('click', function(e){
 					const targetHref = this.getAttribute('href');
-					const fullUrl = this.href; // This gets the absolute URL
+					const fullUrl = this.href;
 					
-					console.log('🖱️ CLICK on link:', targetHref); // Debug
-					console.log('🌐 Full URL:', fullUrl); // Debug
+					console.log('🖱️ CLICK detected on:', targetHref);
 					
 					// Check if it's a valid navigation link
 					if(targetHref && 
@@ -981,56 +982,33 @@
 					   !targetHref.startsWith('javascript:') &&
 					   (targetHref.endsWith('.html') || !targetHref.includes('.'))) {
 						
+						// For custom domains (non-GitHub), use direct navigation without animation
+						if (!isGitHubDomain && !isLocalDomain) {
+							console.log('🚀 Custom domain detected - Direct navigation');
+							e.preventDefault();
+							window.location.href = targetHref;
+							return;
+						}
+						
+						// For GitHub domains, use the loading animation
 						e.preventDefault();
-						console.log('✋ Default prevented, handling navigation...'); // Debug
+						console.log('✋ GitHub domain - Using loading animation');
 						
 						// Show loading overlay
 						if (overlay) {
 							overlay.style.display = 'flex';
 							overlay.style.opacity = '1';
-							console.log('⏳ Loading overlay shown'); // Debug
+							console.log('⏳ Loading overlay shown');
 						}
 						
-						// Multiple navigation attempts for reliability
-						let navigationCompleted = false;
-						
-						// Primary navigation (fast)
+						// Navigate with short delay for animation
 						setTimeout(() => {
-							if (!navigationCompleted) {
-								console.log('🚀 Primary navigation executing...'); // Debug
-								navigationCompleted = true;
-								window.location.href = fullUrl;
-							}
-						}, 200);
-						
-						// Secondary navigation (medium delay)
-						setTimeout(() => {
-							if (!navigationCompleted) {
-								console.log('🔄 Secondary navigation executing...'); // Debug
-								navigationCompleted = true;
-								window.location.href = targetHref;
-							}
-						}, 800);
-						
-						// Emergency fallback (longer delay)
-						setTimeout(() => {
-							if (!navigationCompleted) {
-								console.log('🆘 Emergency navigation executing...'); // Debug
-								navigationCompleted = true;
-								window.location.replace(fullUrl);
-							}
-						}, 1500);
-						
-						// Ultimate fallback (if nothing else works)
-						setTimeout(() => {
-							if (window.location.pathname.includes('about.html')) {
-								console.log('🔥 Ultimate fallback - force reload...'); // Debug
-								window.location.replace(targetHref);
-							}
-						}, 2500);
+							console.log('� Navigating to:', targetHref);
+							window.location.href = targetHref;
+						}, 600);
 						
 					} else {
-						console.log('❌ Link ignored:', targetHref); // Debug
+						console.log('❌ Link ignored:', targetHref);
 						// Let default behavior happen for invalid links
 					}
 				});
@@ -1285,5 +1263,31 @@
 	</script>
 	<!-- External JavaScript for tab functionality (for better CSP compatibility) -->
 	<script src="about-tabs.js"></script>
+	
+	<!-- Emergency navigation fix for custom domains -->
+	<script>
+		// Emergency fix: If navigation is still broken on custom domain,
+		// completely disable JavaScript navigation
+		if (!window.location.hostname.includes('github.io') && 
+		    !window.location.hostname.includes('github.com') &&
+		    !window.location.hostname.includes('localhost') &&
+		    !window.location.hostname.includes('127.0.0.1')) {
+			
+			console.log('🚨 EMERGENCY MODE: Disabling JavaScript navigation for custom domain');
+			
+			// Override the navigation system
+			document.addEventListener('DOMContentLoaded', function(){
+				// Remove all click event listeners from nav links
+				document.querySelectorAll('nav a').forEach(link => {
+					// Clone the element to remove all event listeners
+					const newLink = link.cloneNode(true);
+					link.parentNode.replaceChild(newLink, link);
+					console.log('🔄 Reset link:', newLink.href);
+				});
+				
+				console.log('✅ Pure HTML navigation enabled for custom domain');
+			});
+		}
+	</script>
 </body>
 </html>
