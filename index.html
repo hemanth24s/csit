@@ -711,6 +711,111 @@
             }
         }
         
+        /* Home Carousel Styles */
+        .home-carousel {
+            position: relative;
+            max-width: 900px;
+            margin: 3rem auto 2rem auto;
+            background: none;
+            border-radius: 18px;
+            box-shadow: 0 4px 24px rgba(21, 101, 192, 0.2);
+            overflow: hidden;
+        }
+        
+        .home-carousel-title {
+            text-align: center;
+            font-size: 2rem;
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .home-carousel-image {
+            width: 100%;
+            height: 420px;
+            object-fit: cover;
+            display: block;
+            border-radius: 18px;
+            transition: opacity 0.5s;
+        }
+        
+        .home-carousel-desc {
+            text-align: center;
+            font-size: 1.15rem;
+            color: var(--text);
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            padding: 0 20px;
+            line-height: 1.6;
+        }
+        
+        .home-carousel-controls {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            z-index: 2;
+            padding: 0 20px;
+        }
+        
+        .home-carousel-btn {
+            background: var(--accent);
+            border: none;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(21, 101, 192, 0.3);
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .home-carousel-btn:hover {
+            background: var(--primary);
+            opacity: 1;
+            transform: scale(1.1);
+        }
+        
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .carousel-dot.active {
+            background: var(--accent);
+            transform: scale(1.2);
+        }
+        
+        @media (max-width: 900px) {
+            .home-carousel-image { height: 280px; }
+            .home-carousel-title { font-size: 1.6rem; }
+        }
+        
+        @media (max-width: 600px) {
+            .home-carousel-image { height: 220px; }
+            .home-carousel-title { font-size: 1.4rem; }
+            .home-carousel-desc { font-size: 1rem; }
+        }
+        
         /* Carousel Animation Styles */
         .animated-slide {
             position: relative;
@@ -1789,6 +1894,20 @@
             CSIT aims to foster curiosity, collaboration, and innovation through events, outreach, and research initiatives, creating a vibrant environment for learning and discovery.
         </div>
 
+        <!-- Home Carousel Section -->
+        <div class="home-carousel">
+            <h2 class="home-carousel-title">CSIT Highlights</h2>
+            <div class="home-carousel-content">
+                <img id="homeCarouselImage" class="home-carousel-image" src="" alt="CSIT Activity">
+                <div class="home-carousel-controls">
+                    <button class="home-carousel-btn" onclick="prevHomeSlide()" id="prevHomeBtn">‹</button>
+                    <button class="home-carousel-btn" onclick="nextHomeSlide()" id="nextHomeBtn">›</button>
+                </div>
+                <div class="carousel-indicators" id="homeCarouselIndicators"></div>
+                <div class="home-carousel-desc" id="homeCarouselDesc"></div>
+            </div>
+        </div>
+
 
         <div class="calendar-container">
             <h2 class="calendar-title" id="calendarTitle" style="cursor:pointer;">Upcoming Events</h2>
@@ -2637,6 +2756,112 @@
                         setTimeout(()=>{ window.open(nav_link, '_blank'); }, 200);
                     });
                 });
+
+                // Home Carousel Functionality
+                const homeCarouselImages = [
+                    {
+                        src: 'spectra 25 images/image1.JPG',
+                        desc: 'CSIT Annual Symposium - Bringing together renowned researchers and emerging scientists'
+                    },
+                    {
+                        src: 'spectra 25 images/image2.JPG', 
+                        desc: 'Interactive Research Sessions - Showcasing cutting-edge chemical research'
+                    },
+                    {
+                        src: 'spectra 25 images/image3.JPG',
+                        desc: 'Student Presentations - Platform for young researchers to share their work'
+                    },
+                    {
+                        src: 'spectra 25 images/image4.JPG',
+                        desc: 'Workshop Sessions - Hands-on learning experiences in modern chemistry'
+                    },
+                    {
+                        src: 'spectra 25 images/image5.JPG',
+                        desc: 'Networking Events - Building connections in the chemical sciences community'
+                    },
+                    {
+                        src: 'spectra 25 images/image6.JPG',
+                        desc: 'Award Ceremonies - Recognizing excellence in chemical research and innovation'
+                    }
+                ];
+
+                let currentHomeSlide = 0;
+                let homeCarouselTimer = null;
+
+                function initHomeCarousel() {
+                    const imageEl = document.getElementById('homeCarouselImage');
+                    const descEl = document.getElementById('homeCarouselDesc');
+                    const indicatorsEl = document.getElementById('homeCarouselIndicators');
+                    
+                    if (!imageEl || !descEl || !indicatorsEl) return;
+
+                    // Create indicators
+                    indicatorsEl.innerHTML = '';
+                    homeCarouselImages.forEach((_, index) => {
+                        const dot = document.createElement('div');
+                        dot.className = 'carousel-dot';
+                        if (index === 0) dot.classList.add('active');
+                        dot.addEventListener('click', () => goToHomeSlide(index));
+                        indicatorsEl.appendChild(dot);
+                    });
+
+                    // Initialize first slide
+                    updateHomeSlide();
+                    
+                    // Start auto-advance
+                    startHomeCarouselTimer();
+                }
+
+                function updateHomeSlide() {
+                    const imageEl = document.getElementById('homeCarouselImage');
+                    const descEl = document.getElementById('homeCarouselDesc');
+                    const indicatorsEl = document.getElementById('homeCarouselIndicators');
+                    
+                    if (!imageEl || !descEl || !indicatorsEl) return;
+
+                    const currentImage = homeCarouselImages[currentHomeSlide];
+                    imageEl.src = currentImage.src;
+                    imageEl.alt = currentImage.desc;
+                    descEl.textContent = currentImage.desc;
+
+                    // Update indicators
+                    const dots = indicatorsEl.querySelectorAll('.carousel-dot');
+                    dots.forEach((dot, index) => {
+                        dot.classList.toggle('active', index === currentHomeSlide);
+                    });
+                }
+
+                function nextHomeSlide() {
+                    currentHomeSlide = (currentHomeSlide + 1) % homeCarouselImages.length;
+                    updateHomeSlide();
+                    restartHomeCarouselTimer();
+                }
+
+                function prevHomeSlide() {
+                    currentHomeSlide = (currentHomeSlide - 1 + homeCarouselImages.length) % homeCarouselImages.length;
+                    updateHomeSlide();
+                    restartHomeCarouselTimer();
+                }
+
+                function goToHomeSlide(index) {
+                    currentHomeSlide = index;
+                    updateHomeSlide();
+                    restartHomeCarouselTimer();
+                }
+
+                function startHomeCarouselTimer() {
+                    homeCarouselTimer = setInterval(nextHomeSlide, 4000); // Change slide every 4 seconds
+                }
+
+                function restartHomeCarouselTimer() {
+                    if (homeCarouselTimer) {
+                        clearInterval(homeCarouselTimer);
+                    }
+                    startHomeCarouselTimer();
+                }
+
+                // Initialize carousel when page loads
+                initHomeCarousel();
             }
         });
         </script>
