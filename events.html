@@ -1506,9 +1506,9 @@
             icon.addEventListener('click', function(e) {
                 e.preventDefault();
                 showLoading();
-                const href = this.href;
+                const nav_link= this.href;
                 setTimeout(() => {
-                    window.open(href, '_blank');
+                    window.open(nav_link, '_blank');
                     hideLoading();
                 }, 1200);
             });
@@ -1523,6 +1523,7 @@
         // Events data (same as home page)
         const events = [
             { date: '2025-09-02', time: '18:00', title: 'Bienvenue 2025', venue: 'IISER TVM Campus' },
+            { date: '2025-10-05', time: '09:00', title: 'i2-Chemical biology and Biomaterial conference (i-ChemBioMat)', venue: 'IISER TVM Campus', sponsor: 'RSC' },
             { date: '2025-09-29', time: '10:00', title: 'Chemical Biology Symposium', venue: 'To be announced later' }
         ];
 
