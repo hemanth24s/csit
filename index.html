@@ -735,9 +735,11 @@
             width: 100%;
             height: 420px;
             object-fit: cover;
+            object-position: center;
             display: block;
             border-radius: 18px;
-            transition: opacity 0.5s;
+            transition: opacity 0.5s ease-in-out;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
         }
         
         .home-carousel-desc {
@@ -2760,28 +2762,36 @@
                 // Home Carousel Functionality
                 const homeCarouselImages = [
                     {
-                        src: 'spectra 25 images/image1.JPG',
-                        desc: 'CSIT Annual Symposium - Bringing together renowned researchers and emerging scientists'
+                        src: 'index/bienvenue 2023 aug 10.jpg',
+                        desc: 'Bienvenue 2023 - CSIT\'s flagship annual event fostering chemical sciences community'
                     },
                     {
-                        src: 'spectra 25 images/image2.JPG', 
-                        desc: 'Interactive Research Sessions - Showcasing cutting-edge chemical research'
+                        src: 'index/image 1.jpg', 
+                        desc: 'CSIT Events - Engaging activities that bring together students and faculty'
                     },
                     {
-                        src: 'spectra 25 images/image3.JPG',
-                        desc: 'Student Presentations - Platform for young researchers to share their work'
+                        src: 'index/image 2.jpg',
+                        desc: 'Research Presentations - Platform for showcasing innovative chemical research'
                     },
                     {
-                        src: 'spectra 25 images/image4.JPG',
-                        desc: 'Workshop Sessions - Hands-on learning experiences in modern chemistry'
+                        src: 'index/image 3.jpg',
+                        desc: 'Academic Excellence - Promoting learning and discovery in chemical sciences'
                     },
                     {
-                        src: 'spectra 25 images/image5.JPG',
-                        desc: 'Networking Events - Building connections in the chemical sciences community'
+                        src: 'index/image 4.jpg',
+                        desc: 'Student Engagement - Building a vibrant community of young researchers'
                     },
                     {
-                        src: 'spectra 25 images/image6.JPG',
-                        desc: 'Award Ceremonies - Recognizing excellence in chemical research and innovation'
+                        src: 'index/image 5.jpg',
+                        desc: 'Scientific Collaboration - Fostering partnerships in chemical research'
+                    },
+                    {
+                        src: 'index/image 6.jpg',
+                        desc: 'Innovation Hub - Where creativity meets scientific excellence'
+                    },
+                    {
+                        src: 'index/image 7.jpg',
+                        desc: 'CSIT Community - United in advancing chemical sciences at IISER TVM'
                     }
                 ];
 
