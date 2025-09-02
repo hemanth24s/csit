@@ -342,19 +342,29 @@
 		.section-title{font-size:1.25rem;margin:8px 0 12px 0;color:#eaf7ff;text-align:center;font-weight:600}
 		.accordion{margin-top:8px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;align-items:start}
 		
-		/* Faculty Coordinator Section - Two Card Layout */
+		/* Faculty Coordinator Section - Two Card Flexbox Layout */
 		.accordion[data-section="faculty-coordinator"] {
-			display: grid !important;
-			grid-template-columns: 1fr 1fr !important;
+			display: flex !important;
+			flex-wrap: wrap !important;
 			gap: 30px !important;
 			max-width: 1000px !important;
 			margin: 0 auto !important;
+			justify-content: center !important;
 		}
 		
-		@media (max-width: 768px) {
+		.accordion[data-section="faculty-coordinator"] .member-item {
+			flex: 1 !important;
+			min-width: 400px !important;
+			max-width: 480px !important;
+		}
+		
+		@media (max-width: 900px) {
 			.accordion[data-section="faculty-coordinator"] {
-				grid-template-columns: 1fr !important;
-				gap: 20px !important;
+				flex-direction: column !important;
+			}
+			.accordion[data-section="faculty-coordinator"] .member-item {
+				min-width: 100% !important;
+				max-width: 100% !important;
 			}
 		}
 		
@@ -873,9 +883,34 @@
 
 				<div class="section">
 					<div class="section-title">Faculty Coordinator</div>
-					<div class="accordion" data-section="faculty-coordinator" style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 1000px; margin: 0 auto;">
-						<div class="member-item" data-name="Dr. Rajendra Kurapati" style="text-align: center;"><div class="member-head" style="flex-direction: column; text-align: center;"><img src="about us pictures/rkurapati.jpg" alt="Dr. Rajendra Kurapati"><div class="member-name">Dr. Rajendra Kurapati</div><div class="member-role">Faculty Coordinator</div></div></div><div class="member-details" style="text-align: center;"><p>Dr. Rajendra Kurapati serves as the Faculty Coordinator of CSIT, bringing together students and faculty interested in chemistry outreach and research collaborations. His research focuses on biomaterials, materials chemistry, 2D materials, biodegradation of nanomaterials, nanotoxicology, drug delivery, antimicrobial coatings, and biomimetics. He leads the Biomaterials Lab at IISER TVM, where cutting-edge research in biomaterial applications is conducted.</p><div class="contact-line">Email: rkurapati@iisertvm.ac.in</div><div class="contact-line">Lab: Biomaterials Lab</div><div class="contact-line">Office: School of Chemistry, IISER TVM</div></div></div>
-						<div class="member-item" data-name="Prof. Ajay Venugopal" style="text-align: center;"><div class="member-head" style="flex-direction: column; text-align: center;"><img src="about us pictures/HOD image1.jpg" alt="Prof. Ajay Venugopal"><div class="member-name">Prof. Ajay Venugopal</div><div class="member-role">Head of Department</div></div></div><div class="member-details" style="text-align: center;"><p>Prof. Ajay Venugopal serves as the Head of Department, School of Chemistry at IISER TVM. He is a Professor specializing in Main Group Chemistry, leading the Main Group Chemistry Lab. His expertise lies in the synthesis and characterization of novel main group compounds with applications in catalysis and materials science. Under his leadership, the School of Chemistry has grown significantly, fostering excellence in both teaching and research.</p><div class="contact-line">Email: venugopal@iisertvm.ac.in</div><div class="contact-line">Lab: Main Group Chemistry Lab</div><div class="contact-line">Website: maingroupchemistrylab.com</div><div class="contact-line">Office: School of Chemistry, IISER TVM</div></div></div>
+					<div class="accordion" data-section="faculty-coordinator" style="display: flex; flex-wrap: wrap; gap: 30px; max-width: 1000px; margin: 0 auto; justify-content: center;">
+						<div class="member-item" data-name="Dr. Rajendra Kurapati" style="text-align: center; flex: 1; min-width: 400px;">
+							<div class="member-head" style="flex-direction: column; text-align: center;">
+								<img src="about us pictures/rkurapati.jpg" alt="Dr. Rajendra Kurapati">
+								<div class="member-name">Dr. Rajendra Kurapati</div>
+								<div class="member-role">Faculty Coordinator</div>
+							</div>
+							<div class="member-details" style="text-align: center;">
+								<p>Dr. Rajendra Kurapati serves as the Faculty Coordinator of CSIT, bringing together students and faculty interested in chemistry outreach and research collaborations. His research focuses on biomaterials, materials chemistry, 2D materials, biodegradation of nanomaterials, nanotoxicology, drug delivery, antimicrobial coatings, and biomimetics. He leads the Biomaterials Lab at IISER TVM, where cutting-edge research in biomaterial applications is conducted.</p>
+								<div class="contact-line">Email: rkurapati@iisertvm.ac.in</div>
+								<div class="contact-line">Lab: Biomaterials Lab</div>
+								<div class="contact-line">Office: School of Chemistry, IISER TVM</div>
+							</div>
+						</div>
+						<div class="member-item" data-name="Prof. Ajay Venugopal" style="text-align: center; flex: 1; min-width: 400px;">
+							<div class="member-head" style="flex-direction: column; text-align: center;">
+								<img src="about us pictures/HOD image1.jpg" alt="Prof. Ajay Venugopal">
+								<div class="member-name">Prof. Ajay Venugopal</div>
+								<div class="member-role">Head of Department</div>
+							</div>
+							<div class="member-details" style="text-align: center;">
+								<p>Prof. Ajay Venugopal serves as the Head of Department, School of Chemistry at IISER TVM. He is a Professor specializing in Main Group Chemistry, leading the Main Group Chemistry Lab. His expertise lies in the synthesis and characterization of novel main group compounds with applications in catalysis and materials science. Under his leadership, the School of Chemistry has grown significantly, fostering excellence in both teaching and research.</p>
+								<div class="contact-line">Email: venugopal@iisertvm.ac.in</div>
+								<div class="contact-line">Lab: Main Group Chemistry Lab</div>
+								<div class="contact-line">Website: maingroupchemistrylab.com</div>
+								<div class="contact-line">Office: School of Chemistry, IISER TVM</div>
+							</div>
+						</div>
 					</div>
 				</div>
 
