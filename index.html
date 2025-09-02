@@ -2533,7 +2533,7 @@
 
     <!-- Home Page Image Section -->
     <div class="home-page-image-section">
-        <img src="index/home page image1.jpg" alt="CSIT Home Page">
+        <img src="./index/home page image1.jpg" alt="CSIT Home Page">
     </div>
 
     <div class="main-content">
@@ -2990,39 +2990,6 @@
                     <span class="indicator" onclick="goToResearchSlide(6)"></span>
                     <span class="indicator" onclick="goToResearchSlide(7)"></span>
                 </div>
-            </div>
-
-            <!-- Research Field Comparison Tool -->
-            <div class="research-comparison-tool">
-                <h3>Compare Research Fields</h3>
-                <p class="comparison-description">Explore the distinctive approaches and methodologies across different research domains to understand their unique contributions to modern chemistry</p>
-                <div class="comparison-controls">
-                    <select id="field1Select" class="faculty-select">
-                        <option value="">Select First Field</option>
-                        <option value="physical-organic">Physical Organic Chemistry</option>
-                        <option value="medicinal">Medicinal Chemistry</option>
-                        <option value="photochemistry">Photochemistry & Nanomaterials</option>
-                        <option value="supramolecular">Supramolecular Chemistry</option>
-                        <option value="biomaterials">Biomaterials & 2D Materials</option>
-                        <option value="catalysis">Catalysis & Sustainable Chemistry</option>
-                        <option value="theoretical">Theoretical & Computational Chemistry</option>
-                        <option value="materials">Materials Chemistry</option>
-                    </select>
-                    <span class="vs-text">VS</span>
-                    <select id="field2Select" class="faculty-select">
-                        <option value="">Select Second Field</option>
-                        <option value="physical-organic">Physical Organic Chemistry</option>
-                        <option value="medicinal">Medicinal Chemistry</option>
-                        <option value="photochemistry">Photochemistry & Nanomaterials</option>
-                        <option value="supramolecular">Supramolecular Chemistry</option>
-                        <option value="biomaterials">Biomaterials & 2D Materials</option>
-                        <option value="catalysis">Catalysis & Sustainable Chemistry</option>
-                        <option value="theoretical">Theoretical & Computational Chemistry</option>
-                        <option value="materials">Materials Chemistry</option>
-                    </select>
-                    <button id="compareBtn" class="compare-btn" onclick="compareResearchFields()">Compare</button>
-                </div>
-                <div id="comparisonResult" class="comparison-result" style="display: none;"></div>
             </div>
         </div>
     </main>
@@ -3859,31 +3826,38 @@
                 // Home Carousel Functionality
                 const homeCarouselImages = [
                     {
-                        src: 'index/bienvenue 2023 aug 10.jpg',
+                        src: './index/bienvenue 2023 aug 10.jpg',
+                        fallback: 'index/bienvenue 2023 aug 10.jpg',
                         desc: 'Bienvenue 2023 - CSIT\'s flagship annual event fostering chemical sciences community'
                     },
                     {
-                        src: 'index/image 1.jpg', 
+                        src: './index/image 1.jpg',
+                        fallback: 'index/image 1.jpg',
                         desc: 'CSIT Events - Engaging activities that bring together students and faculty'
                     },
                     {
-                        src: 'index/image 2.jpg',
+                        src: './index/image 2.jpg',
+                        fallback: 'index/image 2.jpg',
                         desc: 'Research Presentations - Platform for showcasing innovative chemical research'
                     },
                     {
-                        src: 'index/image 3.jpg',
+                        src: './index/image 3.jpg',
+                        fallback: 'index/image 3.jpg',
                         desc: 'Academic Excellence - Promoting learning and discovery in chemical sciences'
                     },
                     {
-                        src: 'index/image 5.jpg',
+                        src: './index/image 5.jpg',
+                        fallback: 'index/image 5.jpg',
                         desc: 'Scientific Collaboration - Fostering partnerships in chemical research'
                     },
                     {
-                        src: 'index/image 6.jpg',
+                        src: './index/image 6.jpg',
+                        fallback: 'index/image 6.jpg',
                         desc: 'Innovation Hub - Where creativity meets scientific excellence'
                     },
                     {
-                        src: 'index/image 7.jpg',
+                        src: './index/image 7.jpg',
+                        fallback: 'index/image 7.jpg',
                         desc: 'CSIT Community - United in advancing chemical sciences at IISER TVM'
                     }
                 ];
@@ -3929,21 +3903,75 @@
                     // Wait for fade-out to complete, then update content
                     setTimeout(() => {
                         const currentImage = homeCarouselImages[currentHomeSlide];
-                        imageEl.src = currentImage.src;
-                        imageEl.alt = currentImage.desc;
-                        descEl.textContent = currentImage.desc;
                         
-                        // Remove fade-out and add fade-in
-                        imageEl.classList.remove('fade-out');
-                        descEl.classList.remove('fade-out');
-                        imageEl.classList.add('fade-in');
-                        descEl.classList.add('fade-in');
-                        
-                        // Remove fade-in class after animation
-                        setTimeout(() => {
-                            imageEl.classList.remove('fade-in');
-                            descEl.classList.remove('fade-in');
-                        }, 600);
+                        // Create a new image to test loading
+                        const testImg = new Image();
+                        testImg.onload = function() {
+                            // Image loaded successfully
+                            imageEl.src = currentImage.src;
+                            imageEl.alt = currentImage.desc;
+                            descEl.textContent = currentImage.desc;
+                            
+                            // Remove fade-out and add fade-in
+                            imageEl.classList.remove('fade-out');
+                            descEl.classList.remove('fade-out');
+                            imageEl.classList.add('fade-in');
+                            descEl.classList.add('fade-in');
+                            
+                            // Remove fade-in class after animation
+                            setTimeout(() => {
+                                imageEl.classList.remove('fade-in');
+                                descEl.classList.remove('fade-in');
+                            }, 600);
+                        };
+                        testImg.onerror = function() {
+                            // Try alternative path if first fails
+                            const altPath = currentImage.fallback;
+                            const testImg2 = new Image();
+                            testImg2.onload = function() {
+                                imageEl.src = altPath;
+                                imageEl.alt = currentImage.desc;
+                                descEl.textContent = currentImage.desc;
+                                
+                                // Remove fade-out and add fade-in
+                                imageEl.classList.remove('fade-out');
+                                descEl.classList.remove('fade-out');
+                                imageEl.classList.add('fade-in');
+                                descEl.classList.add('fade-in');
+                                
+                                // Remove fade-in class after animation
+                                setTimeout(() => {
+                                    imageEl.classList.remove('fade-in');
+                                    descEl.classList.remove('fade-in');
+                                }, 600);
+                            };
+                            testImg2.onerror = function() {
+                                // Log path information for debugging
+                                console.log('Base URL:', window.location.origin);
+                                console.log('Current path:', window.location.pathname);
+                                console.log('Attempted paths:', currentImage.src, altPath);
+                                
+                                // Show placeholder or error message
+                                console.warn('Failed to load image:', currentImage.src, 'and fallback:', altPath);
+                                imageEl.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkNTSVQgSW1hZ2U8L3RleHQ+PC9zdmc+';
+                                imageEl.alt = 'CSIT Image Placeholder';
+                                descEl.textContent = currentImage.desc;
+                                
+                                // Remove fade-out and add fade-in
+                                imageEl.classList.remove('fade-out');
+                                descEl.classList.remove('fade-out');
+                                imageEl.classList.add('fade-in');
+                                descEl.classList.add('fade-in');
+                                
+                                // Remove fade-in class after animation
+                                setTimeout(() => {
+                                    imageEl.classList.remove('fade-in');
+                                    descEl.classList.remove('fade-in');
+                                }, 600);
+                            };
+                            testImg2.src = altPath;
+                        };
+                        testImg.src = currentImage.src;
                         
                         // Update indicators
                         const dots = indicatorsEl.querySelectorAll('.carousel-dot');
@@ -4461,73 +4489,6 @@
             
             document.head.insertAdjacentHTML('beforeend', modalStyles);
             document.body.appendChild(modal);
-        }
-
-        function compareResearchFields() {
-            const field1 = document.getElementById('field1Select').value;
-            const field2 = document.getElementById('field2Select').value;
-            const resultDiv = document.getElementById('comparisonResult');
-            
-            if (!field1 || !field2) {
-                alert('Please select both research fields to compare');
-                return;
-            }
-            
-            if (field1 === field2) {
-                alert('Please select different research fields');
-                return;
-            }
-            
-            const f1 = researchFieldData[field1];
-            const f2 = researchFieldData[field2];
-            
-            resultDiv.innerHTML = `
-                <h4>Research Field Comparison: ${f1.name} vs ${f2.name}</h4>
-                <div class="comparison-grid">
-                    <div class="comparison-column">
-                        <h5>${f1.name}</h5>
-                        <p><strong>Focus:</strong> ${f1.description}</p>
-                        <p><strong>Faculty Count:</strong> ${f1.faculty.length} members</p>
-                        <p><strong>Applications:</strong> ${f1.applications}</p>
-                        <p><strong>Impact:</strong> ${f1.impact}</p>
-                    </div>
-                    <div class="comparison-column">
-                        <h5>${f2.name}</h5>
-                        <p><strong>Focus:</strong> ${f2.description}</p>
-                        <p><strong>Faculty Count:</strong> ${f2.faculty.length} members</p>
-                        <p><strong>Applications:</strong> ${f2.applications}</p>
-                        <p><strong>Impact:</strong> ${f2.impact}</p>
-                    </div>
-                </div>
-                <div class="research-gaps">
-                    <h5>Potential Collaboration Areas:</h5>
-                    <p>${generateFieldCollaboration(f1, f2)}</p>
-                </div>
-            `;
-            
-            resultDiv.style.display = 'block';
-        }
-
-        function generateFieldCollaboration(field1, field2) {
-            const collaborations = {
-                'Physical Organic Chemistry-Medicinal Chemistry': 'Combining molecular understanding with drug design for targeted therapeutics and personalized medicine approaches',
-                'Physical Organic Chemistry-Photochemistry & Nanomaterials': 'Developing light-responsive biomolecules and hybrid organic-inorganic materials for advanced applications',
-                'Physical Organic Chemistry-Theoretical & Computational Chemistry': 'Integrating experimental observations with computational predictions for mechanism elucidation and design',
-                'Medicinal Chemistry-Photochemistry & Nanomaterials': 'Creating photoactivated drug delivery systems and diagnostic imaging agents using nanomaterials',
-                'Medicinal Chemistry-Supramolecular Chemistry': 'Designing self-assembling drug carriers and host-guest therapeutic systems',
-                'Medicinal Chemistry-Biomaterials & 2D Materials': 'Developing biocompatible drug delivery platforms and antimicrobial medical devices',
-                'Photochemistry & Nanomaterials-Supramolecular Chemistry': 'Engineering light-harvesting assemblies and photoresponsive supramolecular devices',
-                'Photochemistry & Nanomaterials-Materials Chemistry': 'Creating advanced optical materials and energy conversion devices with tailored properties',
-                'Supramolecular Chemistry-Biomaterials & 2D Materials': 'Designing bio-inspired hierarchical materials and responsive biomedical systems',
-                'Catalysis & Sustainable Chemistry-Materials Chemistry': 'Developing heterogeneous catalysts and sustainable material synthesis pathways',
-                'Theoretical & Computational Chemistry-Materials Chemistry': 'Predicting material properties and designing novel compounds through computational approaches'
-            };
-            
-            const key1 = `${field1.name}-${field2.name}`;
-            const key2 = `${field2.name}-${field1.name}`;
-            
-            return collaborations[key1] || collaborations[key2] || 
-                   `Interdisciplinary research combining ${field1.name.toLowerCase()} and ${field2.name.toLowerCase()} could lead to breakthrough innovations in chemical sciences and technology applications.`;
         }
 
         // Auto-advance carousel
