@@ -2358,6 +2358,145 @@
                 min-width: 280px;
             }
         }
+
+        /* Event Statistics Section */
+        .event-stats-section {
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            margin: 40px 0;
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .stat-card.completed::before {
+            background: linear-gradient(90deg, #10b981, #059669);
+        }
+
+        .stat-card.ongoing::before {
+            background: linear-gradient(90deg, #f59e0b, #d97706);
+        }
+
+        .stat-card.planned::before {
+            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+        }
+
+        .stat-card.members::before {
+            background: linear-gradient(90deg, #8b5cf6, #7c3aed);
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #2d3748;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #4a5568;
+            margin-bottom: 15px;
+        }
+
+        .stat-description {
+            font-size: 1rem;
+            color: #718096;
+            line-height: 1.5;
+        }
+
+        /* Counter animation */
+        .stat-number.counting {
+            animation: countUp 2s ease-out;
+        }
+
+        @keyframes countUp {
+            from {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive adjustments for stats */
+        @media (max-width: 768px) {
+            .event-stats-section {
+                padding: 40px 15px;
+            }
+            
+            .stats-container {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+            }
+            
+            .stat-card {
+                padding: 30px 20px;
+            }
+            
+            .stat-number {
+                font-size: 2.5rem;
+            }
+            
+            .stat-label {
+                font-size: 1.2rem;
+            }
+        }
     </style>
 </head>
 <body style="background: #181c24; margin: 0; overflow-x: hidden;" class="dark-mode">;
@@ -2694,6 +2833,39 @@
         <div class="csit-desc" style="max-width:700px; margin:16px auto 0 auto; font-size:1.18rem; color:var(--text); text-align:center;">
             The Chemical Society of IISER Thiruvananthapuram (CSIT) is a dynamic community of students and faculty passionate about chemical sciences. 
             CSIT aims to foster curiosity, collaboration, and innovation through events, outreach, and research initiatives, creating a vibrant environment for learning and discovery.
+        </div>
+
+        <!-- Event Statistics Section -->
+        <div class="event-stats-section">
+            <div class="stats-container">
+                <div class="stat-card completed">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-number" data-target="25">0</div>
+                    <div class="stat-label">Events Completed</div>
+                    <div class="stat-description">Successfully organized workshops, seminars, and competitions</div>
+                </div>
+                
+                <div class="stat-card ongoing">
+                    <div class="stat-icon">🚀</div>
+                    <div class="stat-number" data-target="8">0</div>
+                    <div class="stat-label">Ongoing Projects</div>
+                    <div class="stat-description">Active research collaborations and society initiatives</div>
+                </div>
+                
+                <div class="stat-card planned">
+                    <div class="stat-icon">📅</div>
+                    <div class="stat-number" data-target="12">0</div>
+                    <div class="stat-label">Events Planned</div>
+                    <div class="stat-description">Upcoming conferences, workshops, and academic activities</div>
+                </div>
+                
+                <div class="stat-card members">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-number" data-target="200">0</div>
+                    <div class="stat-label">Active Members</div>
+                    <div class="stat-description">Passionate chemistry enthusiasts and researchers</div>
+                </div>
+            </div>
         </div>
 
         <!-- Home Carousel Section -->
@@ -4381,6 +4553,80 @@
                 carouselContainer.addEventListener('mouseenter', stopResearchCarousel);
                 carouselContainer.addEventListener('mouseleave', startResearchCarousel);
             }
+
+            // Initialize statistics counters
+            initializeStatsCounters();
+        });
+
+        // Statistics Counter Animation
+        function initializeStatsCounters() {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            const statsSection = document.querySelector('.event-stats-section');
+            
+            // Create intersection observer to trigger animation when stats come into view
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounters();
+                        observer.unobserve(entry.target); // Only animate once
+                    }
+                });
+            }, {
+                threshold: 0.5 // Trigger when 50% of the section is visible
+            });
+            
+            if (statsSection) {
+                observer.observe(statsSection);
+            }
+        }
+
+        function animateCounters() {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            
+            statNumbers.forEach(statNumber => {
+                const target = parseInt(statNumber.getAttribute('data-target'));
+                const duration = 2000; // 2 seconds
+                const startTime = performance.now();
+                
+                statNumber.classList.add('counting');
+                
+                function updateCounter(currentTime) {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    
+                    // Easing function for smooth animation
+                    const easeOutCubic = 1 - Math.pow(1 - progress, 3);
+                    const currentValue = Math.floor(target * easeOutCubic);
+                    
+                    statNumber.textContent = currentValue + '+';
+                    
+                    if (progress < 1) {
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        statNumber.textContent = target + '+';
+                    }
+                }
+                
+                requestAnimationFrame(updateCounter);
+            });
+        }
+
+        // Add hover effects for stat cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const statCards = document.querySelectorAll('.stat-card');
+            
+            statCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    const icon = this.querySelector('.stat-icon');
+                    icon.style.transform = 'scale(1.2) rotate(10deg)';
+                    icon.style.transition = 'transform 0.3s ease';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    const icon = this.querySelector('.stat-icon');
+                    icon.style.transform = 'scale(1) rotate(0deg)';
+                });
+            });
         });
         </script>
 </body>
