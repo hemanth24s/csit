@@ -3027,7 +3027,7 @@
         <div class="home-carousel">
             <h2 class="home-carousel-title">CSIT Highlights</h2>
             <div class="home-carousel-content">
-                <img id="homeCarouselImage" class="home-carousel-image" src="" alt="CSIT Activity">
+                <img id="homeCarouselImage" class="home-carousel-image" src="" alt="CSIT Activity" onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkNTSVQgSW1hZ2U8L3RleHQ+PC9zdmc+';">,
                 <div class="home-carousel-controls">
                     <button class="home-carousel-btn" onclick="prevHomeSlide()" id="prevHomeBtn" title="Previous Image">‹</button>
                     <button class="home-carousel-btn" onclick="nextHomeSlide()" id="nextHomeBtn" title="Next Image">›</button>
@@ -3228,18 +3228,6 @@
     // Curtain Opening Animation
     window.addEventListener('load', function() {
         const curtainOverlay = document.getElementById('curtainOverlay');
-        
-        // Initialize base path detection early
-        detectBasePath(function(basePath) {
-            console.log('🎯 Base path detected:', basePath);
-            console.log('📊 Environment Analysis:');
-            console.log('   🌐 Current URL:', window.location.href);
-            console.log('   🏠 Origin:', window.location.origin);
-            console.log('   📂 Pathname:', window.location.pathname);
-            console.log('   🔍 Base Path:', basePath);
-            console.log('   📝 User Agent:', navigator.userAgent);
-            console.log('   🖥️ Viewport:', window.innerWidth + 'x' + window.innerHeight);
-        });
         
         // Start curtain opening animation after 1 second
         setTimeout(() => {
@@ -4082,78 +4070,36 @@
                     {
                         src: './index/bienvenue 2023 aug 10.jpg',
                         fallback: 'index/bienvenue 2023 aug 10.jpg',
-                        absolute: (() => {
-                            const origin = window.location.origin;
-                            const pathname = window.location.pathname;
-                            const basePath = pathname.endsWith('.html') ? pathname.replace(/[^/]*\.html$/, '') : pathname.endsWith('/') ? pathname : pathname + '/';
-                            return origin + basePath + 'index/bienvenue 2023 aug 10.jpg';
-                        })(),
                         desc: 'Bienvenue 2023 - CSIT\'s flagship annual event fostering chemical sciences community'
                     },
                     {
                         src: './index/image 1.jpg',
                         fallback: 'index/image 1.jpg',
-                        absolute: (() => {
-                            const origin = window.location.origin;
-                            const pathname = window.location.pathname;
-                            const basePath = pathname.endsWith('.html') ? pathname.replace(/[^/]*\.html$/, '') : pathname.endsWith('/') ? pathname : pathname + '/';
-                            return origin + basePath + 'index/image 1.jpg';
-                        })(),
                         desc: 'CSIT Events - Engaging activities that bring together students and faculty'
                     },
                     {
                         src: './index/image 2.jpg',
                         fallback: 'index/image 2.jpg',
-                        absolute: (() => {
-                            const origin = window.location.origin;
-                            const pathname = window.location.pathname;
-                            const basePath = pathname.endsWith('.html') ? pathname.replace(/[^/]*\.html$/, '') : pathname.endsWith('/') ? pathname : pathname + '/';
-                            return origin + basePath + 'index/image 2.jpg';
-                        })(),
                         desc: 'Research Presentations - Platform for showcasing innovative chemical research'
                     },
                     {
                         src: './index/image 3.jpg',
                         fallback: 'index/image 3.jpg',
-                        absolute: (() => {
-                            const origin = window.location.origin;
-                            const pathname = window.location.pathname;
-                            const basePath = pathname.endsWith('.html') ? pathname.replace(/[^/]*\.html$/, '') : pathname.endsWith('/') ? pathname : pathname + '/';
-                            return origin + basePath + 'index/image 3.jpg';
-                        })(),
                         desc: 'Academic Excellence - Promoting learning and discovery in chemical sciences'
                     },
                     {
                         src: './index/image 5.jpg',
                         fallback: 'index/image 5.jpg',
-                        absolute: (() => {
-                            const origin = window.location.origin;
-                            const pathname = window.location.pathname;
-                            const basePath = pathname.endsWith('.html') ? pathname.replace(/[^/]*\.html$/, '') : pathname.endsWith('/') ? pathname : pathname + '/';
-                            return origin + basePath + 'index/image 5.jpg';
-                        })(),
                         desc: 'Scientific Collaboration - Fostering partnerships in chemical research'
                     },
                     {
                         src: './index/image 6.jpg',
                         fallback: 'index/image 6.jpg',
-                        absolute: (() => {
-                            const origin = window.location.origin;
-                            const pathname = window.location.pathname;
-                            const basePath = pathname.endsWith('.html') ? pathname.replace(/[^/]*\.html$/, '') : pathname.endsWith('/') ? pathname : pathname + '/';
-                            return origin + basePath + 'index/image 6.jpg';
-                        })(),
                         desc: 'Innovation Hub - Where creativity meets scientific excellence'
                     },
                     {
                         src: './index/image 7.jpg',
                         fallback: 'index/image 7.jpg',
-                        absolute: (() => {
-                            const origin = window.location.origin;
-                            const pathname = window.location.pathname;
-                            const basePath = pathname.endsWith('.html') ? pathname.replace(/[^/]*\.html$/, '') : pathname.endsWith('/') ? pathname : pathname + '/';
-                            return origin + basePath + 'index/image 7.jpg';
-                        })(),
                         desc: 'CSIT Community - United in advancing chemical sciences at IISER TVM'
                     }
                 ];
@@ -4205,7 +4151,6 @@
                             if (index >= paths.length) {
                                 // All paths failed, show placeholder
                                 console.warn('All image paths failed for:', currentImage.desc);
-                                console.warn('Attempted paths:', paths);
                                 imageEl.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkNTSVQgSW1hZ2U8L3RleHQ+PC9zdmc+';
                                 imageEl.alt = 'CSIT Image Placeholder';
                                 descEl.textContent = currentImage.desc;
@@ -4216,8 +4161,7 @@
                             const testImg = new Image();
                             const currentPath = paths[index];
                             
-                            console.log(`🔍 Trying path ${index + 1}/${paths.length}:`, currentPath);
-                            console.log(`📍 URL breakdown - Origin: ${window.location.origin}, Pathname: ${window.location.pathname}`);
+                            console.log(`Trying path ${index + 1}/${paths.length}:`, currentPath);
                             
                             testImg.onload = function() {
                                 console.log('✅ Successfully loaded:', currentPath);
@@ -4231,14 +4175,6 @@
                                 console.log('❌ Failed to load:', currentPath);
                                 tryLoadImage(paths, index + 1);
                             };
-                            
-                            // Add timeout fallback in case the image hangs
-                            setTimeout(() => {
-                                if (!testImg.complete) {
-                                    console.log('⏰ Timeout for path:', currentPath);
-                                    tryLoadImage(paths, index + 1);
-                                }
-                            }, 5000);
                             
                             testImg.src = currentPath;
                         }
@@ -4261,21 +4197,15 @@
                         const pathsToTry = [
                             currentImage.src,
                             currentImage.fallback,
-                            currentImage.absolute,
-                            // Additional proxy-friendly paths
+                            // Simple absolute paths for proxy domains
                             window.location.origin + '/' + currentImage.fallback,
+                            // Common proxy subdirectory paths
                             window.location.origin + '/csit/' + currentImage.fallback,
-                            // Try with base tag detection
-                            (document.querySelector('base') ? document.querySelector('base').href : window.location.origin) + currentImage.fallback,
-                            // Direct GitHub raw content as last resort
+                            // GitHub raw content as fallback
                             'https://raw.githubusercontent.com/hemanth24s/csit/main/' + currentImage.fallback
                         ];
                         
-                        // Log current environment info for debugging
-                        console.log('🌐 Current location:', window.location.href);
-                        console.log('🔗 Base URL:', window.location.origin);
-                        console.log('📂 Pathname:', window.location.pathname);
-                        console.log('🎯 All paths to try:', pathsToTry);
+                        console.log('🌐 Trying image paths for:', currentImage.desc);
                         
                         tryLoadImage(pathsToTry);
                         
@@ -4368,57 +4298,6 @@
             }
             
             attemptLoad(logosPaths, currentPathIndex);
-        }
-
-        // Enhanced base path detection for proxy domains
-        let detectedBasePath = null;
-        
-        function detectBasePath(callback) {
-            if (detectedBasePath) {
-                callback(detectedBasePath);
-                return;
-            }
-            
-            const testPaths = [
-                './',
-                '',
-                window.location.pathname.replace(/[^/]*$/, ''),
-                '/',
-                '/csit/',
-                window.location.origin + '/',
-                window.location.origin + '/csit/'
-            ];
-            
-            let testIndex = 0;
-            
-            function testPath(paths, index) {
-                if (index >= paths.length) {
-                    console.warn('⚠️ Could not detect base path, using default');
-                    detectedBasePath = './';
-                    callback(detectedBasePath);
-                    return;
-                }
-                
-                const testImg = new Image();
-                const testUrl = paths[index] + 'Logo.png';
-                
-                console.log(`🔍 Testing base path ${index + 1}/${paths.length}:`, testUrl);
-                
-                testImg.onload = function() {
-                    console.log('✅ Detected base path:', paths[index]);
-                    detectedBasePath = paths[index];
-                    callback(detectedBasePath);
-                };
-                
-                testImg.onerror = function() {
-                    console.log('❌ Base path test failed:', paths[index]);
-                    testPath(paths, index + 1);
-                };
-                
-                testImg.src = testUrl;
-            }
-            
-            testPath(testPaths, testIndex);
         }
 
         // Home page image loading with fallbacks
