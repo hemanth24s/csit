@@ -1989,6 +1989,353 @@
                 font-size: 2rem;
             }
         }
+
+        /* Faculty Research Carousel Styles */
+        .faculty-research-carousel {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 80px 20px;
+            margin: 60px 0 0 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .faculty-research-carousel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(255,255,255,0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .carousel-title {
+            text-align: center;
+            color: white;
+            font-size: 3rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .carousel-subtitle {
+            text-align: center;
+            color: rgba(255,255,255,0.9);
+            font-size: 1.2rem;
+            margin-bottom: 50px;
+            font-weight: 300;
+            position: relative;
+            z-index: 2;
+        }
+
+        .faculty-carousel-container {
+            position: relative;
+            max-width: 1400px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .faculty-carousel-track {
+            display: flex;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            gap: 30px;
+            padding: 20px;
+        }
+
+        .faculty-carousel-card {
+            min-width: 400px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .faculty-carousel-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+        }
+
+        .faculty-carousel-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+        }
+
+        .faculty-carousel-card.active {
+            transform: scale(1.05);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+
+        .faculty-avatar {
+            text-align: center;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .faculty-avatar img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #fff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .faculty-avatar img:hover {
+            transform: scale(1.1);
+        }
+
+        .research-field {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 15px;
+            display: inline-block;
+        }
+
+        .faculty-info h3 {
+            color: #2d3748;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .faculty-expertise {
+            color: #667eea;
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .research-highlight {
+            background: linear-gradient(135deg, #f7fafc, #edf2f7);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border-left: 4px solid #667eea;
+        }
+
+        .fact-label {
+            color: #667eea;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .fact-text {
+            color: #4a5568;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .learn-more-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .learn-more-btn:hover {
+            background: linear-gradient(135deg, #5a67d8, #6b46c1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .learn-more-btn i {
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .learn-more-btn:hover i {
+            transform: translateY(2px);
+        }
+
+        /* Carousel Controls */
+        .faculty-carousel-controls {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            pointer-events: none;
+        }
+
+        .carousel-btn {
+            background: rgba(255,255,255,0.9);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 24px;
+            color: #667eea;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .carousel-btn:hover {
+            background: white;
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        /* Carousel Indicators */
+        .faculty-carousel-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 40px;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .indicator.active {
+            background: white;
+            transform: scale(1.3);
+        }
+
+        .indicator:hover {
+            background: rgba(255,255,255,0.8);
+            transform: scale(1.2);
+        }
+
+        /* Research Comparison Tool */
+        .research-comparison-tool {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 50px;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .research-comparison-tool h3 {
+            color: #2d3748;
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .comparison-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .faculty-select {
+            padding: 12px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            min-width: 200px;
+            transition: all 0.3s ease;
+        }
+
+        .faculty-select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .vs-text {
+            font-weight: 700;
+            color: #667eea;
+            font-size: 1.2rem;
+        }
+
+        .compare-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .compare-btn:hover {
+            background: linear-gradient(135deg, #5a67d8, #6b46c1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .comparison-result {
+            background: #f7fafc;
+            border-radius: 15px;
+            padding: 30px;
+            border-left: 5px solid #667eea;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .faculty-carousel-card {
+                min-width: 320px;
+            }
+            
+            .carousel-title {
+                font-size: 2rem;
+            }
+            
+            .comparison-controls {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .faculty-select {
+                min-width: 280px;
+            }
+        }
     </style>
 </head>
 <body style="background: #181c24; margin: 0; overflow-x: hidden;" class="dark-mode">;
@@ -2327,102 +2674,6 @@
             CSIT aims to foster curiosity, collaboration, and innovation through events, outreach, and research initiatives, creating a vibrant environment for learning and discovery.
         </div>
 
-        <!-- Faculty Research Showcase -->
-        <div class="faculty-research-showcase">
-            <h2 class="showcase-title">Faculty Research Insights</h2>
-            <p class="showcase-subtitle">Discover groundbreaking research from IISER TVM's Chemistry Department</p>
-            
-            <div class="faculty-grid">
-                <div class="faculty-card" data-faculty="mahesh">
-                    <div class="faculty-avatar">
-                        <img src="about us pictures/mahesh sir.png" alt="Prof. Mahesh Hariharan">
-                        <div class="research-field">Physical Organic Chemistry</div>
-                    </div>
-                    <div class="faculty-info">
-                        <h3>Prof. Mahesh Hariharan</h3>
-                        <p class="faculty-expertise">DNA Photochemistry & Biophysical Chemistry</p>
-                        <div class="research-highlight">
-                            <span class="fact-label">Did you know?</span>
-                            <span class="fact-text">His research on DNA photoactivated cleaving agents could revolutionize cancer treatment by selectively targeting tumor cells</span>
-                        </div>
-                        <button class="learn-more-btn" onclick="expandFaculty('mahesh')">Learn More <i class="fas fa-chevron-down"></i></button>
-                    </div>
-                </div>
-
-                <div class="faculty-card" data-faculty="kms">
-                    <div class="faculty-avatar">
-                        <img src="about us pictures/image 2.jpg" alt="Prof. Kana M. Sureshan">
-                        <div class="research-field">Medicinal Chemistry</div>
-                    </div>
-                    <div class="faculty-info">
-                        <h3>Prof. Kana M. Sureshan</h3>
-                        <p class="faculty-expertise">Chemical Biology & Drug Discovery</p>
-                        <div class="research-highlight">
-                            <span class="fact-label">Innovation:</span>
-                            <span class="fact-text">Developing novel carbohydrate-based therapeutics and supramolecular materials for targeted drug delivery systems</span>
-                        </div>
-                        <button class="learn-more-btn" onclick="expandFaculty('kms')">Learn More <i class="fas fa-chevron-down"></i></button>
-                    </div>
-                </div>
-
-                <div class="faculty-card" data-faculty="kgt">
-                    <div class="faculty-avatar">
-                        <img src="about us pictures/image 3.jpg" alt="Prof. K. George Thomas">
-                        <div class="research-field">Photochemistry</div>
-                    </div>
-                    <div class="faculty-info">
-                        <h3>Prof. K. George Thomas</h3>
-                        <p class="faculty-expertise">Nanomaterials & Light-Matter Interactions</p>
-                        <div class="research-highlight">
-                            <span class="fact-label">Breakthrough:</span>
-                            <span class="fact-text">Pioneer in hybrid nanomaterials with applications in solar energy conversion and quantum dot technologies</span>
-                        </div>
-                        <button class="learn-more-btn" onclick="expandFaculty('kgt')">Learn More <i class="fas fa-chevron-down"></i></button>
-                    </div>
-                </div>
-
-                <div class="faculty-card" data-faculty="rajendra">
-                    <div class="faculty-avatar">
-                        <img src="about us pictures/rkurapati.jpg" alt="Dr. Rajendra Kurapati">
-                        <div class="research-field">Biomaterials</div>
-                    </div>
-                    <div class="faculty-info">
-                        <h3>Dr. Rajendra Kurapati</h3>
-                        <p class="faculty-expertise">2D Materials & Nanotoxicology</p>
-                        <div class="research-highlight">
-                            <span class="fact-label">Focus:</span>
-                            <span class="fact-text">Creating safer nanomaterials through biodegradation studies and developing antimicrobial coatings for medical devices</span>
-                        </div>
-                        <button class="learn-more-btn" onclick="expandFaculty('rajendra')">Learn More <i class="fas fa-chevron-down"></i></button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Research Comparison Tool -->
-            <div class="research-comparison-tool">
-                <h3>Compare Research Areas</h3>
-                <div class="comparison-controls">
-                    <select id="faculty1Select" class="faculty-select">
-                        <option value="">Select First Faculty</option>
-                        <option value="mahesh">Prof. Mahesh Hariharan</option>
-                        <option value="kms">Prof. Kana M. Sureshan</option>
-                        <option value="kgt">Prof. K. George Thomas</option>
-                        <option value="rajendra">Dr. Rajendra Kurapati</option>
-                    </select>
-                    <span class="vs-text">VS</span>
-                    <select id="faculty2Select" class="faculty-select">
-                        <option value="">Select Second Faculty</option>
-                        <option value="mahesh">Prof. Mahesh Hariharan</option>
-                        <option value="kms">Prof. Kana M. Sureshan</option>
-                        <option value="kgt">Prof. K. George Thomas</option>
-                        <option value="rajendra">Dr. Rajendra Kurapati</option>
-                    </select>
-                    <button id="compareBtn" class="compare-btn" onclick="compareResearch()">Compare</button>
-                </div>
-                <div id="comparisonResult" class="comparison-result" style="display: none;"></div>
-            </div>
-        </div>
-
         <!-- Home Carousel Section -->
         <div class="home-carousel">
             <h2 class="home-carousel-title">CSIT Highlights</h2>
@@ -2454,6 +2705,162 @@
                     </div>
                     <div id="monthlyCalendar"></div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Faculty Research Carousel -->
+        <div class="faculty-research-carousel">
+            <h2 class="carousel-title">Faculty Research Insights</h2>
+            <p class="carousel-subtitle">Discover groundbreaking research from IISER TVM's Chemistry Department</p>
+            
+            <div class="faculty-carousel-container">
+                <div class="faculty-carousel-track" id="facultyCarouselTrack">
+                    <!-- Faculty Card 1 -->
+                    <div class="faculty-carousel-card active" data-faculty="mahesh">
+                        <div class="faculty-avatar">
+                            <img src="about us pictures/mahesh sir.png" alt="Prof. Mahesh Hariharan">
+                            <div class="research-field">Physical Organic Chemistry</div>
+                        </div>
+                        <div class="faculty-info">
+                            <h3>Prof. Mahesh Hariharan</h3>
+                            <p class="faculty-expertise">DNA Photochemistry & Biophysical Chemistry</p>
+                            <div class="research-highlight">
+                                <span class="fact-label">Did you know?</span>
+                                <span class="fact-text">His research on DNA photoactivated cleaving agents could revolutionize cancer treatment by selectively targeting tumor cells</span>
+                            </div>
+                            <button class="learn-more-btn" onclick="expandFacultyCarousel('mahesh')">Learn More <i class="fas fa-chevron-down"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Faculty Card 2 -->
+                    <div class="faculty-carousel-card" data-faculty="kms">
+                        <div class="faculty-avatar">
+                            <img src="about us pictures/image 2.jpg" alt="Prof. Kana M. Sureshan">
+                            <div class="research-field">Medicinal Chemistry</div>
+                        </div>
+                        <div class="faculty-info">
+                            <h3>Prof. Kana M. Sureshan</h3>
+                            <p class="faculty-expertise">Chemical Biology & Drug Discovery</p>
+                            <div class="research-highlight">
+                                <span class="fact-label">Innovation:</span>
+                                <span class="fact-text">Developing novel carbohydrate-based therapeutics and supramolecular materials for targeted drug delivery systems</span>
+                            </div>
+                            <button class="learn-more-btn" onclick="expandFacultyCarousel('kms')">Learn More <i class="fas fa-chevron-down"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Faculty Card 3 -->
+                    <div class="faculty-carousel-card" data-faculty="kgt">
+                        <div class="faculty-avatar">
+                            <img src="about us pictures/image 3.jpg" alt="Prof. K. George Thomas">
+                            <div class="research-field">Photochemistry</div>
+                        </div>
+                        <div class="faculty-info">
+                            <h3>Prof. K. George Thomas</h3>
+                            <p class="faculty-expertise">Nanomaterials & Light-Matter Interactions</p>
+                            <div class="research-highlight">
+                                <span class="fact-label">Breakthrough:</span>
+                                <span class="fact-text">Pioneer in hybrid nanomaterials with applications in solar energy conversion and quantum dot technologies</span>
+                            </div>
+                            <button class="learn-more-btn" onclick="expandFacultyCarousel('kgt')">Learn More <i class="fas fa-chevron-down"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Faculty Card 4 -->
+                    <div class="faculty-carousel-card" data-faculty="rajendra">
+                        <div class="faculty-avatar">
+                            <img src="about us pictures/rkurapati.jpg" alt="Dr. Rajendra Kurapati">
+                            <div class="research-field">Biomaterials</div>
+                        </div>
+                        <div class="faculty-info">
+                            <h3>Dr. Rajendra Kurapati</h3>
+                            <p class="faculty-expertise">2D Materials & Nanotoxicology</p>
+                            <div class="research-highlight">
+                                <span class="fact-label">Focus:</span>
+                                <span class="fact-text">Creating safer nanomaterials through biodegradation studies and developing antimicrobial coatings for medical devices</span>
+                            </div>
+                            <button class="learn-more-btn" onclick="expandFacultyCarousel('rajendra')">Learn More <i class="fas fa-chevron-down"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Faculty Card 5 -->
+                    <div class="faculty-carousel-card" data-faculty="basudev">
+                        <div class="faculty-avatar">
+                            <img src="about us pictures/image 2.jpg" alt="Dr. Basudev Sahoo">
+                            <div class="research-field">Catalysis</div>
+                        </div>
+                        <div class="faculty-info">
+                            <h3>Dr. Basudev Sahoo</h3>
+                            <p class="faculty-expertise">Sustainable Organic Synthesis & Photocatalysis</p>
+                            <div class="research-highlight">
+                                <span class="fact-label">Sustainability:</span>
+                                <span class="fact-text">Developing metal-free coupling reactions and photocatalytic processes for environmentally friendly chemical synthesis</span>
+                            </div>
+                            <button class="learn-more-btn" onclick="expandFacultyCarousel('basudev')">Learn More <i class="fas fa-chevron-down"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Faculty Card 6 -->
+                    <div class="faculty-carousel-card" data-faculty="reji">
+                        <div class="faculty-avatar">
+                            <img src="about us pictures/image 3.jpg" alt="Prof. Reji Varghese">
+                            <div class="research-field">Supramolecular Chemistry</div>
+                        </div>
+                        <div class="faculty-info">
+                            <h3>Prof. Reji Varghese</h3>
+                            <p class="faculty-expertise">DNA Nanotechnology & Functional Materials</p>
+                            <div class="research-highlight">
+                                <span class="fact-label">Nanotechnology:</span>
+                                <span class="fact-text">Creating programmable DNA nanostructures for biomedical applications and smart material development</span>
+                            </div>
+                            <button class="learn-more-btn" onclick="expandFacultyCarousel('reji')">Learn More <i class="fas fa-chevron-down"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Carousel Controls -->
+                <div class="faculty-carousel-controls">
+                    <button class="carousel-btn prev-btn" onclick="moveFacultyCarousel(-1)">‹</button>
+                    <button class="carousel-btn next-btn" onclick="moveFacultyCarousel(1)">›</button>
+                </div>
+
+                <!-- Carousel Indicators -->
+                <div class="faculty-carousel-indicators" id="facultyCarouselIndicators">
+                    <span class="indicator active" onclick="goToFacultySlide(0)"></span>
+                    <span class="indicator" onclick="goToFacultySlide(1)"></span>
+                    <span class="indicator" onclick="goToFacultySlide(2)"></span>
+                    <span class="indicator" onclick="goToFacultySlide(3)"></span>
+                    <span class="indicator" onclick="goToFacultySlide(4)"></span>
+                    <span class="indicator" onclick="goToFacultySlide(5)"></span>
+                </div>
+            </div>
+
+            <!-- Research Comparison Tool -->
+            <div class="research-comparison-tool">
+                <h3>Compare Research Areas</h3>
+                <div class="comparison-controls">
+                    <select id="faculty1Select" class="faculty-select">
+                        <option value="">Select First Faculty</option>
+                        <option value="mahesh">Prof. Mahesh Hariharan</option>
+                        <option value="kms">Prof. Kana M. Sureshan</option>
+                        <option value="kgt">Prof. K. George Thomas</option>
+                        <option value="rajendra">Dr. Rajendra Kurapati</option>
+                        <option value="basudev">Dr. Basudev Sahoo</option>
+                        <option value="reji">Prof. Reji Varghese</option>
+                    </select>
+                    <span class="vs-text">VS</span>
+                    <select id="faculty2Select" class="faculty-select">
+                        <option value="">Select Second Faculty</option>
+                        <option value="mahesh">Prof. Mahesh Hariharan</option>
+                        <option value="kms">Prof. Kana M. Sureshan</option>
+                        <option value="kgt">Prof. K. George Thomas</option>
+                        <option value="rajendra">Dr. Rajendra Kurapati</option>
+                        <option value="basudev">Dr. Basudev Sahoo</option>
+                        <option value="reji">Prof. Reji Varghese</option>
+                    </select>
+                    <button id="compareBtn" class="compare-btn" onclick="compareResearch()">Compare</button>
+                </div>
+                <div id="comparisonResult" class="comparison-result" style="display: none;"></div>
             </div>
         </div>
     </main>
@@ -3043,10 +3450,7 @@
         if (e.target === calendarModal) calendarModal.style.display = 'none';
     });
 
-    // Faculty Research Showcase JavaScript Functions
-    
-    // Faculty research data
-    const facultyData = {
+        </script>
         mahesh: {
             name: "Prof. Mahesh Hariharan",
             field: "Physical Organic Chemistry",
@@ -3624,6 +4028,396 @@
 
                 // Initialize carousel when page loads
                 initHomeCarousel();
+            }
+        });
+
+        // Faculty Carousel Functionality
+        let currentFacultySlide = 0;
+        const facultyCarouselTrack = document.getElementById('facultyCarouselTrack');
+        const facultyCarouselIndicators = document.getElementById('facultyCarouselIndicators');
+        const facultyCards = document.querySelectorAll('.faculty-carousel-card');
+        const totalFacultySlides = facultyCards.length;
+
+        // Faculty data for detailed information and comparison
+        const facultyData = {
+            mahesh: {
+                name: "Prof. Mahesh Hariharan",
+                field: "Physical Organic Chemistry",
+                expertise: "DNA Photochemistry & Biophysical Chemistry",
+                research: [
+                    "DNA photoactivated cleaving agents for cancer therapy",
+                    "Twisted π-systems and their photophysical properties", 
+                    "Supramolecular assemblies in biological systems",
+                    "Light-harvesting complexes mimicking natural photosynthesis"
+                ],
+                publications: "150+ peer-reviewed publications",
+                impact: "Developing targeted cancer therapies through DNA photochemistry",
+                grants: "DST, DBT, CSIR major research grants"
+            },
+            kms: {
+                name: "Prof. Kana M. Sureshan",
+                field: "Medicinal Chemistry",
+                expertise: "Chemical Biology & Drug Discovery",
+                research: [
+                    "Carbohydrate-based therapeutics for metabolic disorders",
+                    "Supramolecular materials for drug delivery",
+                    "Enzyme inhibitors for diabetes and cancer",
+                    "Bioorthogonal chemistry applications"
+                ],
+                publications: "120+ research publications",
+                impact: "Revolutionary drug delivery systems using natural carbohydrates",
+                grants: "SERB, DBT, ICMR research funding"
+            },
+            kgt: {
+                name: "Prof. K. George Thomas",
+                field: "Photochemistry",
+                expertise: "Nanomaterials & Light-Matter Interactions",
+                research: [
+                    "Hybrid nanomaterials for solar energy conversion",
+                    "Quantum dot technologies and applications",
+                    "Plasmonics and surface-enhanced spectroscopy",
+                    "Artificial light-harvesting systems"
+                ],
+                publications: "200+ high-impact publications",
+                impact: "Pioneering quantum dot solar cells and energy conversion",
+                grants: "DST-FIST, UGC-CAS, international collaborations"
+            },
+            rajendra: {
+                name: "Dr. Rajendra Kurapati",
+                field: "Biomaterials",
+                expertise: "2D Materials & Nanotoxicology",
+                research: [
+                    "Biodegradable 2D materials for biomedical applications",
+                    "Antimicrobial coatings for medical devices",
+                    "Nanotoxicology and biocompatibility studies",
+                    "Graphene-based drug delivery systems"
+                ],
+                publications: "80+ research publications",
+                impact: "Creating safer nanomaterials through biodegradation studies",
+                grants: "SERB Early Career Award, DBT funding"
+            },
+            basudev: {
+                name: "Dr. Basudev Sahoo",
+                field: "Catalysis",
+                expertise: "Sustainable Organic Synthesis & Photocatalysis",
+                research: [
+                    "Metal-free coupling reactions for green chemistry",
+                    "Photocatalytic processes for sustainable synthesis",
+                    "C-H functionalization methodologies",
+                    "Environmentally benign synthetic protocols"
+                ],
+                publications: "70+ publications in top journals",
+                impact: "Developing eco-friendly synthetic methodologies",
+                grants: "SERB Core Research Grant, CSIR funding"
+            },
+            reji: {
+                name: "Prof. Reji Varghese",
+                field: "Supramolecular Chemistry",
+                expertise: "DNA Nanotechnology & Functional Materials",
+                research: [
+                    "Programmable DNA nanostructures for biomedicine",
+                    "Smart materials with responsive properties",
+                    "Self-assembling systems for drug delivery",
+                    "Biomimetic supramolecular architectures"
+                ],
+                publications: "100+ research publications",
+                impact: "Creating programmable matter using DNA nanotechnology",
+                grants: "DST-INSPIRE, DBT major research projects"
+            }
+        };
+
+        function updateFacultyCarousel() {
+            const slideWidth = 430; // card width + gap
+            facultyCarouselTrack.style.transform = `translateX(-${currentFacultySlide * slideWidth}px)`;
+            
+            // Update active card
+            facultyCards.forEach((card, index) => {
+                card.classList.toggle('active', index === currentFacultySlide);
+            });
+            
+            // Update indicators
+            const indicators = facultyCarouselIndicators.querySelectorAll('.indicator');
+            indicators.forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentFacultySlide);
+            });
+        }
+
+        function moveFacultyCarousel(direction) {
+            currentFacultySlide += direction;
+            
+            if (currentFacultySlide >= totalFacultySlides) {
+                currentFacultySlide = 0;
+            } else if (currentFacultySlide < 0) {
+                currentFacultySlide = totalFacultySlides - 1;
+            }
+            
+            updateFacultyCarousel();
+        }
+
+        function goToFacultySlide(slideIndex) {
+            currentFacultySlide = slideIndex;
+            updateFacultyCarousel();
+        }
+
+        function expandFacultyCarousel(facultyId) {
+            const faculty = facultyData[facultyId];
+            if (!faculty) return;
+            
+            const modal = document.createElement('div');
+            modal.className = 'faculty-modal-overlay';
+            modal.innerHTML = `
+                <div class="faculty-modal">
+                    <button class="modal-close" onclick="this.parentElement.parentElement.remove()">×</button>
+                    <div class="faculty-modal-header">
+                        <h2>${faculty.name}</h2>
+                        <p class="faculty-field">${faculty.field}</p>
+                    </div>
+                    <div class="faculty-modal-content">
+                        <div class="faculty-expertise-section">
+                            <h3>Research Expertise</h3>
+                            <p>${faculty.expertise}</p>
+                        </div>
+                        <div class="faculty-research-section">
+                            <h3>Current Research Areas</h3>
+                            <ul>
+                                ${faculty.research.map(item => `<li>${item}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div class="faculty-impact-section">
+                            <h3>Research Impact</h3>
+                            <p>${faculty.impact}</p>
+                        </div>
+                        <div class="faculty-stats">
+                            <div class="stat-item">
+                                <strong>Publications:</strong> ${faculty.publications}
+                            </div>
+                            <div class="stat-item">
+                                <strong>Funding:</strong> ${faculty.grants}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Add modal styles
+            const modalStyles = `
+                <style>
+                .faculty-modal-overlay {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0,0,0,0.8);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 10000;
+                    padding: 20px;
+                    box-sizing: border-box;
+                }
+                .faculty-modal {
+                    background: white;
+                    border-radius: 20px;
+                    max-width: 600px;
+                    width: 100%;
+                    max-height: 80vh;
+                    overflow-y: auto;
+                    position: relative;
+                    box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+                }
+                .modal-close {
+                    position: absolute;
+                    top: 15px;
+                    right: 20px;
+                    background: none;
+                    border: none;
+                    font-size: 2rem;
+                    cursor: pointer;
+                    color: #666;
+                    z-index: 1;
+                }
+                .faculty-modal-header {
+                    background: linear-gradient(135deg, #667eea, #764ba2);
+                    color: white;
+                    padding: 30px;
+                    text-align: center;
+                    border-radius: 20px 20px 0 0;
+                }
+                .faculty-modal-header h2 {
+                    margin: 0 0 10px 0;
+                    font-size: 1.8rem;
+                }
+                .faculty-field {
+                    margin: 0;
+                    opacity: 0.9;
+                    font-size: 1.1rem;
+                }
+                .faculty-modal-content {
+                    padding: 30px;
+                }
+                .faculty-expertise-section, .faculty-research-section, .faculty-impact-section {
+                    margin-bottom: 25px;
+                }
+                .faculty-modal-content h3 {
+                    color: #667eea;
+                    margin-bottom: 15px;
+                    font-size: 1.3rem;
+                }
+                .faculty-modal-content ul {
+                    padding-left: 20px;
+                }
+                .faculty-modal-content li {
+                    margin-bottom: 8px;
+                    line-height: 1.6;
+                }
+                .faculty-stats {
+                    background: #f8f9fa;
+                    padding: 20px;
+                    border-radius: 10px;
+                    margin-top: 20px;
+                }
+                .stat-item {
+                    margin-bottom: 10px;
+                    color: #4a5568;
+                }
+                </style>
+            `;
+            
+            document.head.insertAdjacentHTML('beforeend', modalStyles);
+            document.body.appendChild(modal);
+        }
+
+        function compareResearch() {
+            const faculty1 = document.getElementById('faculty1Select').value;
+            const faculty2 = document.getElementById('faculty2Select').value;
+            const resultDiv = document.getElementById('comparisonResult');
+            
+            if (!faculty1 || !faculty2) {
+                alert('Please select both faculty members to compare');
+                return;
+            }
+            
+            if (faculty1 === faculty2) {
+                alert('Please select different faculty members');
+                return;
+            }
+            
+            const f1 = facultyData[faculty1];
+            const f2 = facultyData[faculty2];
+            
+            resultDiv.innerHTML = `
+                <h4>Research Comparison: ${f1.name} vs ${f2.name}</h4>
+                <div class="comparison-grid">
+                    <div class="comparison-column">
+                        <h5>${f1.name}</h5>
+                        <p><strong>Field:</strong> ${f1.field}</p>
+                        <p><strong>Focus:</strong> ${f1.expertise}</p>
+                        <p><strong>Impact:</strong> ${f1.impact}</p>
+                    </div>
+                    <div class="comparison-column">
+                        <h5>${f2.name}</h5>
+                        <p><strong>Field:</strong> ${f2.field}</p>
+                        <p><strong>Focus:</strong> ${f2.expertise}</p>
+                        <p><strong>Impact:</strong> ${f2.impact}</p>
+                    </div>
+                </div>
+                <div class="research-gaps">
+                    <h5>Potential Collaboration Areas:</h5>
+                    <p>${generateResearchGaps(f1, f2)}</p>
+                </div>
+            `;
+            
+            // Add comparison styles
+            const comparisonStyles = `
+                <style>
+                .comparison-grid {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 30px;
+                    margin: 20px 0;
+                }
+                .comparison-column {
+                    background: white;
+                    padding: 20px;
+                    border-radius: 10px;
+                    border: 2px solid #e2e8f0;
+                }
+                .comparison-column h5 {
+                    color: #667eea;
+                    margin-bottom: 15px;
+                    font-size: 1.2rem;
+                }
+                .research-gaps {
+                    background: linear-gradient(135deg, #667eea, #764ba2);
+                    color: white;
+                    padding: 20px;
+                    border-radius: 10px;
+                    margin-top: 20px;
+                }
+                .research-gaps h5 {
+                    margin-bottom: 10px;
+                    color: white;
+                }
+                </style>
+            `;
+            
+            if (!document.querySelector('style[data-comparison]')) {
+                const styleEl = document.createElement('style');
+                styleEl.setAttribute('data-comparison', 'true');
+                styleEl.innerHTML = comparisonStyles;
+                document.head.appendChild(styleEl);
+            }
+            
+            resultDiv.style.display = 'block';
+        }
+
+        function generateResearchGaps(faculty1, faculty2) {
+            const collaborations = {
+                'Physical Organic Chemistry-Medicinal Chemistry': 'Designing photoactivated drug delivery systems combining DNA photochemistry with carbohydrate therapeutics',
+                'Physical Organic Chemistry-Photochemistry': 'Developing hybrid light-harvesting systems for both biological and artificial photosynthetic applications',
+                'Physical Organic Chemistry-Biomaterials': 'Creating biodegradable 2D materials functionalized with DNA-targeting agents for cancer therapy',
+                'Medicinal Chemistry-Photochemistry': 'Engineering quantum dot-drug conjugates for targeted cancer therapy with real-time imaging',
+                'Medicinal Chemistry-Biomaterials': 'Developing antimicrobial carbohydrate coatings for medical devices with controlled drug release',
+                'Photochemistry-Biomaterials': 'Creating light-responsive 2D materials for on-demand drug delivery and photodynamic therapy',
+                'Catalysis-Medicinal Chemistry': 'Green synthesis of pharmaceutical compounds using sustainable catalytic processes',
+                'Catalysis-Photochemistry': 'Photocatalytic synthesis of complex organic molecules for materials applications',
+                'Supramolecular Chemistry-Biomaterials': 'DNA-templated assembly of functional nanomaterials for biomedical applications',
+                'Supramolecular Chemistry-Medicinal Chemistry': 'Programmable drug delivery systems using DNA nanostructures'
+            };
+            
+            const key1 = `${faculty1.field}-${faculty2.field}`;
+            const key2 = `${faculty2.field}-${faculty1.field}`;
+            
+            return collaborations[key1] || collaborations[key2] || 
+                   `Interdisciplinary research combining ${faculty1.field.toLowerCase()} and ${faculty2.field.toLowerCase()} could lead to breakthrough innovations in chemical sciences and technology.`;
+        }
+
+        // Auto-advance carousel
+        let facultyCarouselInterval;
+        
+        function startFacultyCarousel() {
+            facultyCarouselInterval = setInterval(() => {
+                moveFacultyCarousel(1);
+            }, 5000); // Change slide every 5 seconds
+        }
+
+        function stopFacultyCarousel() {
+            if (facultyCarouselInterval) {
+                clearInterval(facultyCarouselInterval);
+            }
+        }
+
+        // Initialize faculty carousel
+        document.addEventListener('DOMContentLoaded', function() {
+            updateFacultyCarousel();
+            startFacultyCarousel();
+            
+            // Pause on hover
+            const carouselContainer = document.querySelector('.faculty-carousel-container');
+            if (carouselContainer) {
+                carouselContainer.addEventListener('mouseenter', stopFacultyCarousel);
+                carouselContainer.addEventListener('mouseleave', startFacultyCarousel);
             }
         });
         </script>
