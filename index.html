@@ -839,6 +839,53 @@
             .home-carousel-desc { font-size: 1rem; }
         }
         
+        /* Home Page Image Section Styles */
+        .home-page-image-section {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(21, 101, 192, 0.15);
+            overflow: hidden;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(76, 195, 247, 0.1);
+            padding: 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease-out forwards;
+            animation-delay: 6s; /* Appears after logo animation completes */
+        }
+        
+        .home-page-image-section img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 800px) {
+            .home-page-image-section img { height: 300px; }
+        }
+        
+        @media (max-width: 600px) {
+            .home-page-image-section img { height: 250px; }
+            .home-page-image-section { padding: 15px; }
+        }
+        
         /* Carousel Animation Styles */
         .animated-slide {
             position: relative;
@@ -1915,6 +1962,11 @@
         <div class="csit-desc" style="max-width:700px; margin:16px auto 0 auto; font-size:1.18rem; color:var(--text); text-align:center;">
             The Chemical Society of IISER Thiruvananthapuram (CSIT) is a dynamic community of students and faculty passionate about chemical sciences. 
             CSIT aims to foster curiosity, collaboration, and innovation through events, outreach, and research initiatives, creating a vibrant environment for learning and discovery.
+        </div>
+
+        <!-- Home Page Image Section -->
+        <div class="home-page-image-section">
+            <img src="index/home page image1.jpg" alt="CSIT Home Page">
         </div>
 
         <!-- Home Carousel Section -->
