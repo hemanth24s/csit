@@ -341,6 +341,23 @@
 		/* Organising team styles */
 		.section-title{font-size:1.25rem;margin:8px 0 12px 0;color:#eaf7ff;text-align:center;font-weight:600}
 		.accordion{margin-top:8px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;align-items:start}
+		
+		/* Faculty Coordinator Section - Two Card Layout */
+		.accordion[data-section="faculty-coordinator"] {
+			display: grid !important;
+			grid-template-columns: 1fr 1fr !important;
+			gap: 30px !important;
+			max-width: 1000px !important;
+			margin: 0 auto !important;
+		}
+		
+		@media (max-width: 768px) {
+			.accordion[data-section="faculty-coordinator"] {
+				grid-template-columns: 1fr !important;
+				gap: 20px !important;
+			}
+		}
+		
 		.member-item{width:100%;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;padding:12px;cursor:pointer;transition:transform .12s ease,box-shadow .12s ease}
 		.member-item:hover{transform:translateY(-6px);box-shadow:0 12px 30px rgba(0,0,0,0.28)}
 		.member-head{display:flex;align-items:center;gap:16px}
@@ -856,9 +873,9 @@
 
 				<div class="section">
 					<div class="section-title">Faculty Coordinator</div>
-					<div class="accordion" data-section="faculty-coordinator" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; justify-content: center;">
-						<div class="member-item" data-name="Dr. Rajendra Kurapati" style="text-align: center; max-width: 500px; margin: 0 auto;"><div class="member-head" style="flex-direction: column; text-align: center;"><img src="about us pictures/rkurapati.jpg" alt="Dr. Rajendra Kurapati"><div class="member-name">Dr. Rajendra Kurapati</div><div class="member-role">Faculty Coordinator</div></div></div><div class="member-details" style="text-align: center;"><p>Dr. Kurapati became the faculty coordinator of the Chemical Society (CSIT) to bring together students and faculty interested in chemistry outreach and research collaborations. Dr. Kurapati's research areas include nanomaterials, biomedical applications, and chemistry education.</p><div class="contact-line">Email: rkurapati@iisertvm.ac.in</div><div class="contact-line">Office: School of Chemistry, IISER TVM</div></div></div>
-						<div class="member-item" data-name="Head of Department" style="text-align: center; max-width: 500px; margin: 0 auto;"><div class="member-head" style="flex-direction: column; text-align: center;"><img src="about us pictures/HOD image1.jpg" alt="Head of Department"><div class="member-name">Head of Department</div><div class="member-role">School of Chemistry</div></div></div><div class="member-details" style="text-align: center;"><p>The Head of Department, School of Chemistry, has been instrumental in providing unwavering support and guidance to CSIT. Their leadership and commitment to fostering academic excellence and research collaboration have been crucial in establishing CSIT as a thriving community within IISER TVM. Under their guidance, CSIT continues to grow and make significant contributions to the field of chemical sciences.</p><div class="contact-line">Office: School of Chemistry, IISER TVM</div></div></div>
+					<div class="accordion" data-section="faculty-coordinator" style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 1000px; margin: 0 auto;">
+						<div class="member-item" data-name="Dr. Rajendra Kurapati" style="text-align: center;"><div class="member-head" style="flex-direction: column; text-align: center;"><img src="about us pictures/rkurapati.jpg" alt="Dr. Rajendra Kurapati"><div class="member-name">Dr. Rajendra Kurapati</div><div class="member-role">Faculty Coordinator</div></div></div><div class="member-details" style="text-align: center;"><p>Dr. Rajendra Kurapati serves as the Faculty Coordinator of CSIT, bringing together students and faculty interested in chemistry outreach and research collaborations. His research focuses on biomaterials, materials chemistry, 2D materials, biodegradation of nanomaterials, nanotoxicology, drug delivery, antimicrobial coatings, and biomimetics. He leads the Biomaterials Lab at IISER TVM, where cutting-edge research in biomaterial applications is conducted.</p><div class="contact-line">Email: rkurapati@iisertvm.ac.in</div><div class="contact-line">Lab: Biomaterials Lab</div><div class="contact-line">Office: School of Chemistry, IISER TVM</div></div></div>
+						<div class="member-item" data-name="Prof. Ajay Venugopal" style="text-align: center;"><div class="member-head" style="flex-direction: column; text-align: center;"><img src="about us pictures/HOD image1.jpg" alt="Prof. Ajay Venugopal"><div class="member-name">Prof. Ajay Venugopal</div><div class="member-role">Head of Department</div></div></div><div class="member-details" style="text-align: center;"><p>Prof. Ajay Venugopal serves as the Head of Department, School of Chemistry at IISER TVM. He is a Professor specializing in Main Group Chemistry, leading the Main Group Chemistry Lab. His expertise lies in the synthesis and characterization of novel main group compounds with applications in catalysis and materials science. Under his leadership, the School of Chemistry has grown significantly, fostering excellence in both teaching and research.</p><div class="contact-line">Email: venugopal@iisertvm.ac.in</div><div class="contact-line">Lab: Main Group Chemistry Lab</div><div class="contact-line">Website: maingroupchemistrylab.com</div><div class="contact-line">Office: School of Chemistry, IISER TVM</div></div></div>
 					</div>
 				</div>
 
