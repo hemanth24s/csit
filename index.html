@@ -3027,7 +3027,7 @@
         <div class="home-carousel">
             <h2 class="home-carousel-title">CSIT Highlights</h2>
             <div class="home-carousel-content">
-                <img id="homeCarouselImage" class="home-carousel-image" src="" alt="CSIT Activity" onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkNTSVQgSW1hZ2U8L3RleHQ+PC9zdmc+';">
+                <img id="homeCarouselImage" class="home-carousel-image" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTAwIiBoZWlnaHQ9IjQyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMxNTY1YzAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM0ZmMzZjciLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2cpIiBvcGFjaXR5PSIwLjEiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9IidNb250c2VycmF0Jywgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyNCIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iIzRmYzNmNyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkxvYWRpbmcgQ1NJVCBIaWdobGlnaHRzLi4uPC90ZXh0Pjwvc3ZnPg==" alt="Loading CSIT Highlights">
                 <div class="home-carousel-controls">
                     <button class="home-carousel-btn" onclick="prevHomeSlide()" id="prevHomeBtn" title="Previous Image">‹</button>
                     <button class="home-carousel-btn" onclick="nextHomeSlide()" id="nextHomeBtn" title="Next Image">›</button>
@@ -4115,6 +4115,7 @@
                     if (!imageEl || !descEl || !indicatorsEl) return;
 
                     // Test image paths first for proxy domain debugging
+                    console.log('🚀 Initializing CSIT Highlights Carousel...');
                     testImagePaths();
 
                     // Create indicators
@@ -4127,10 +4128,11 @@
                         indicatorsEl.appendChild(dot);
                     });
 
-                    // Initialize first slide with a small delay
+                    // Initialize first slide with a delay to allow path detection
                     setTimeout(() => {
+                        console.log('🖼️ Loading first carousel image...');
                         updateHomeSlide();
-                    }, 100);
+                    }, 500);
                     
                     // Start auto-advance
                     startHomeCarouselTimer();
@@ -4215,22 +4217,51 @@
                         // Try multiple paths in order of preference for proxy domains
                         const baseUrl = window.location.origin;
                         const currentPath = window.location.pathname;
-                        const pathsToTry = [
-                            currentImage.src,
-                            currentImage.fallback,
-                            // Try various absolute path combinations for proxy domains
-                            baseUrl + '/' + currentImage.fallback,
-                            baseUrl + '/csit/' + currentImage.fallback,
-                            baseUrl + currentPath.replace(/[^/]*$/, '') + currentImage.fallback,
-                            // Additional proxy patterns
-                            baseUrl + '/hemanth24s/csit/' + currentImage.fallback,
-                            baseUrl + '/main/' + currentImage.fallback,
-                            // GitHub raw content as final fallback
-                            'https://raw.githubusercontent.com/hemanth24s/csit/main/' + currentImage.fallback
-                        ];
+                        const domainType = window.csitDomainType || detectDomainType();
                         
-                        console.log('🌐 Testing image paths for proxy domain:', currentImage.desc);
-                        console.log('🔍 Base URL:', baseUrl, 'Current Path:', currentPath);
+                        // Use detected working path if available
+                        let pathsToTry = [];
+                        
+                        if (window.csitBestImagePath) {
+                            console.log('🎯 Using detected working path:', window.csitBestImagePath);
+                            pathsToTry.push(window.csitBestImagePath + currentImage.fallback);
+                        }
+                        
+                        // Add optimized paths based on domain type
+                        if (domainType === 'github-pages') {
+                            pathsToTry = pathsToTry.concat([
+                                currentImage.src,
+                                currentImage.fallback,
+                                baseUrl + '/csit/' + currentImage.fallback
+                            ]);
+                        } else {
+                            // For proxy domains, test comprehensive paths
+                            pathsToTry = pathsToTry.concat([
+                                currentImage.src,
+                                currentImage.fallback,
+                                // Absolute path combinations for proxy domains
+                                baseUrl + '/' + currentImage.fallback,
+                                baseUrl + '/csit/' + currentImage.fallback,
+                                baseUrl + currentPath.replace(/[^/]*$/, '') + currentImage.fallback,
+                                // Additional proxy patterns
+                                baseUrl + '/hemanth24s/csit/' + currentImage.fallback,
+                                baseUrl + '/main/' + currentImage.fallback,
+                                baseUrl + '/github/' + currentImage.fallback,
+                                baseUrl + '/repo/' + currentImage.fallback,
+                                baseUrl + '/public/' + currentImage.fallback,
+                                baseUrl + '/static/' + currentImage.fallback,
+                                baseUrl + '/assets/' + currentImage.fallback
+                            ]);
+                        }
+                        
+                        // Always add GitHub raw content as final fallback
+                        pathsToTry.push('https://raw.githubusercontent.com/hemanth24s/csit/main/' + currentImage.fallback);
+                        
+                        // Remove duplicates
+                        pathsToTry = [...new Set(pathsToTry)];
+                        
+                        console.log('🌐 Testing', pathsToTry.length, 'image paths for:', currentImage.desc);
+                        console.log('🔍 Domain Type:', domainType, '| Base URL:', baseUrl);
                         
                         tryLoadImage(pathsToTry);
                         
@@ -4275,8 +4306,50 @@
                     startHomeCarouselTimer();
                 }
 
+                // Debug function to manually trigger image path testing
+                window.debugImagePaths = function() {
+                    console.log('🔧 Manual debug triggered...');
+                    testImagePaths();
+                    setTimeout(() => {
+                        console.log('🔄 Refreshing carousel...');
+                        updateHomeSlide();
+                    }, 1000);
+                };
+
+                // Auto-retry mechanism if images fail to load after 5 seconds
+                setTimeout(() => {
+                    const imageEl = document.getElementById('homeCarouselImage');
+                    if (imageEl && imageEl.src.includes('data:image/svg+xml')) {
+                        console.log('⚠️ Images still not loaded, retrying...');
+                        window.debugImagePaths();
+                    }
+                }, 5000);
+
                 // Initialize carousel when page loads
-                initHomeCarousel();
+                document.addEventListener('DOMContentLoaded', function() {
+                    console.log('🌐 DOM loaded, starting carousel initialization...');
+                    
+                    // Start path testing immediately
+                    console.log('🔬 Starting comprehensive image path testing...');
+                    testImagePaths();
+                    
+                    // Initialize carousel after a short delay
+                    setTimeout(() => {
+                        initHomeCarousel();
+                    }, 100);
+                });
+                
+                // Also try to initialize if DOM is already loaded (fallback)
+                if (document.readyState === 'loading') {
+                    // DOM not ready yet
+                } else {
+                    // DOM is ready
+                    console.log('🌐 DOM already loaded, initializing carousel...');
+                    testImagePaths();
+                    setTimeout(() => {
+                        initHomeCarousel();
+                    }, 100);
+                }
                 
                 // Make functions globally accessible for onclick handlers
                 window.nextHomeSlide = nextHomeSlide;
@@ -4325,30 +4398,98 @@
             attemptLoad(logosPaths, currentPathIndex);
         }
 
+        // Detect domain type for better path handling
+        function detectDomainType() {
+            const hostname = window.location.hostname;
+            const origin = window.location.origin;
+            
+            let domainType = 'unknown';
+            
+            if (hostname.includes('github.io')) {
+                domainType = 'github-pages';
+            } else if (hostname.includes('hemanth24s') || origin.includes('hemanth24s')) {
+                domainType = 'proxy-personal';
+            } else if (hostname === 'localhost' || hostname === '127.0.0.1') {
+                domainType = 'local';
+            } else {
+                domainType = 'proxy-domain';
+            }
+            
+            console.log('🌐 Domain type detected:', domainType);
+            console.log('🌐 Hostname:', hostname);
+            console.log('🌐 Origin:', origin);
+            console.log('🌐 Full URL:', window.location.href);
+            
+            return domainType;
+        }
+
         // Proxy domain image path tester - helps detect working paths
         function testImagePaths() {
             const testImage = 'index/bienvenue 2023 aug 10.jpg';
             const baseUrl = window.location.origin;
             const currentPath = window.location.pathname;
             
-            const possiblePaths = [
-                './' + testImage,
-                testImage,
-                baseUrl + '/' + testImage,
-                baseUrl + '/csit/' + testImage,
-                baseUrl + currentPath.replace(/[^/]*$/, '') + testImage,
-                baseUrl + '/hemanth24s/csit/' + testImage
-            ];
-            
             console.log('🔬 Testing proxy domain paths for images:');
+            console.log('📍 Origin:', baseUrl);
+            console.log('📍 Current Path:', currentPath);
+            console.log('📍 Full URL:', window.location.href);
+            const domainType = detectDomainType();
+            
+            let possiblePaths = [];
+            
+            // Customize paths based on domain type
+            if (domainType === 'github-pages') {
+                possiblePaths = [
+                    './' + testImage,
+                    testImage,
+                    baseUrl + '/csit/' + testImage
+                ];
+            } else {
+                // For proxy domains, test more comprehensive paths
+                possiblePaths = [
+                    './' + testImage,
+                    testImage,
+                    baseUrl + '/' + testImage,
+                    baseUrl + '/csit/' + testImage,
+                    baseUrl + currentPath.replace(/[^/]*$/, '') + testImage,
+                    baseUrl + '/hemanth24s/csit/' + testImage,
+                    // Additional proxy patterns for common proxy setups
+                    baseUrl + '/main/' + testImage,
+                    baseUrl + '/github/' + testImage,
+                    baseUrl + '/repo/' + testImage,
+                    // Try with different base paths
+                    baseUrl + '/public/' + testImage,
+                    baseUrl + '/static/' + testImage,
+                    baseUrl + '/assets/' + testImage
+                ];
+            }
+            
+            // Always add GitHub raw as ultimate fallback
+            possiblePaths.push('https://raw.githubusercontent.com/hemanth24s/csit/main/' + testImage);
+            
+            console.log('� Testing', possiblePaths.length, 'possible image paths...');
+            
+            let workingPaths = [];
+            let completedTests = 0;
             
             possiblePaths.forEach((path, index) => {
                 const testImg = new Image();
                 testImg.onload = function() {
                     console.log(`✅ WORKING PATH ${index + 1}:`, path);
+                    workingPaths.push({ index: index + 1, path: path });
+                    completedTests++;
+                    
+                    if (completedTests === possiblePaths.length && workingPaths.length > 0) {
+                        console.log('🎯 SUMMARY: Found', workingPaths.length, 'working paths');
+                        console.log('🎯 Best working path:', workingPaths[0].path);
+                        // Store the best working path for later use
+                        window.csitBestImagePath = workingPaths[0].path.replace(testImage, '');
+                        window.csitDomainType = domainType;
+                    }
                 };
                 testImg.onerror = function() {
                     console.log(`❌ Failed path ${index + 1}:`, path);
+                    completedTests++;
                 };
                 testImg.src = path;
             });
