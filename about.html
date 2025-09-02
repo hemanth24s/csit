@@ -210,6 +210,111 @@
 		.founder-head img{width:120px;height:120px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,255,0.06)}
 		.founder-bio{color:#eaf7ff;flex:1;min-width:300px}
 		
+		/* About Image Section Styles */
+		.about-image-section {
+			max-width: 800px;
+			margin: 2rem auto;
+			background: rgba(255, 255, 255, 0.02);
+			border-radius: 16px;
+			box-shadow: 0 4px 20px rgba(21, 101, 192, 0.15);
+			overflow: hidden;
+			backdrop-filter: blur(4px);
+			border: 1px solid rgba(76, 195, 247, 0.1);
+			padding: 20px;
+		}
+		
+		.about-image-section img {
+			width: 100%;
+			height: 350px;
+			object-fit: cover;
+			object-position: center;
+			display: block;
+			border-radius: 12px;
+			box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+		}
+		
+		.about-image-caption {
+			text-align: center;
+			font-size: 1.1rem;
+			color: var(--text);
+			margin-top: 1.5rem;
+			line-height: 1.6;
+			padding: 0 10px;
+		}
+		
+		@media (max-width: 800px) {
+			.about-image-section img { height: 280px; }
+			.about-image-caption { font-size: 1rem; }
+		}
+		
+		@media (max-width: 600px) {
+			.about-image-section img { height: 220px; }
+			.about-image-caption { font-size: 0.95rem; }
+			.about-image-section { padding: 15px; }
+		}
+		
+		/* Previous FIC Styles */
+		.previous-fic-container {
+			max-width: 900px;
+			margin: 0 auto;
+			padding: 20px;
+		}
+		
+		.previous-fic-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+			gap: 25px;
+			margin-top: 20px;
+		}
+		
+		.fic-card {
+			background: rgba(255, 255, 255, 0.02);
+			border-radius: 16px;
+			padding: 20px;
+			box-shadow: 0 4px 20px rgba(21, 101, 192, 0.15);
+			backdrop-filter: blur(4px);
+			border: 1px solid rgba(76, 195, 247, 0.1);
+			transition: transform 0.3s ease, box-shadow 0.3s ease;
+		}
+		
+		.fic-card:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 8px 30px rgba(21, 101, 192, 0.25);
+		}
+		
+		.fic-card img {
+			width: 100%;
+			height: 250px;
+			object-fit: cover;
+			object-position: center;
+			border-radius: 12px;
+			margin-bottom: 15px;
+			box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+		}
+		
+		.fic-card-caption {
+			font-size: 1.05rem;
+			color: var(--text);
+			line-height: 1.6;
+			text-align: center;
+		}
+		
+		@media (max-width: 900px) {
+			.previous-fic-grid {
+				grid-template-columns: 1fr;
+				gap: 20px;
+			}
+			.fic-card img { height: 220px; }
+		}
+		
+		@media (max-width: 600px) {
+			.fic-card {
+				padding: 15px;
+			}
+			.fic-card img { height: 200px; }
+			.fic-card-caption { font-size: 0.95rem; }
+		}
+		
 		/* Organising team styles */
 		.section-title{font-size:1.25rem;margin:8px 0 12px 0;color:#eaf7ff;text-align:center;font-weight:600}
 		.accordion{margin-top:8px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;align-items:start}
@@ -655,6 +760,7 @@
 			
 			<div class="tab-nav">
 				<button class="tab-btn active" data-tab="founder">Founder</button>
+				<button class="tab-btn" data-tab="previous-fic">Previous FIC, CSIT</button>
 				<button class="tab-btn" data-tab="organising-team">Organising Team</button>
 			</div>
 
@@ -678,6 +784,39 @@
 						</section>
 
 					</article>
+					
+					<!-- About Image Section -->
+					<div class="about-image-section">
+						<img src="index/image 1.jpg" alt="CSIT Inauguration">
+						<div class="about-image-caption">
+							CSIT was inaugurated on 8th January 2021 by the Hon'ble Director of IISER TVM, Prof. J. N. Moorthy. 
+							CSIT had its genesis in the visionary idea of Prof. J. N. Moorthy, an idea of connecting the student community with faculties and alumni across the globe to foster a network of chemists united in their passion for the field.
+						</div>
+					</div>
+				</div>
+
+				<!-- Previous FIC Tab Content -->
+				<div class="tab-content" id="previous-fic">
+					<div class="previous-fic-container">
+						<h3 style="text-align:center;margin-bottom:10px;color:var(--primary);">Previous Faculty-in-Charge, CSIT</h3>
+						<p style="text-align:center;margin-bottom:30px;color:var(--text);">Honoring the founding faculty members who established and nurtured CSIT</p>
+						
+						<div class="previous-fic-grid">
+							<div class="fic-card">
+								<img src="index/image 2.jpg" alt="Dr. Basudev Sahoo">
+								<div class="fic-card-caption">
+									Dr. Basudev Sahoo was the first CSIT's faculty co-ordinator and greatly supported the CSIT students to establish and run the activities
+								</div>
+							</div>
+							
+							<div class="fic-card">
+								<img src="index/image 3.jpg" alt="Prof. Sukhendu Mandal and Dr. Basudev Sahoo">
+								<div class="fic-card-caption">
+									Prof. Sukhendu Mandal (Head, SoC) and Dr. Basudev Sahoo, the first CSIT faculty co-ordinator, greatly supported the CSIT students to establish and run the activities in the first 2 years.
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 
 				<!-- Organising Team Tab Content -->
