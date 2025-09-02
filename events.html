@@ -837,6 +837,85 @@
             }
         }
         
+        /* Academic Year Section Styles */
+        .academic-year-section {
+            margin: 3rem 0;
+        }
+        
+        .year-ribbon {
+            position: relative;
+            margin-bottom: 2rem;
+            text-align: center;
+            padding: 1rem 0;
+            background: linear-gradient(135deg, rgba(21, 101, 192, 0.1), rgba(79, 195, 247, 0.1));
+            border-radius: 16px;
+            border: 1px solid rgba(79, 195, 247, 0.2);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+        
+        .year-ribbon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(79, 195, 247, 0.3), transparent);
+            animation: shimmer 3s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        .year-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin: 0;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 2px 10px rgba(79, 195, 247, 0.3);
+            letter-spacing: 1px;
+        }
+        
+        .year-highlight {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary));
+            border-radius: 2px;
+            box-shadow: 0 2px 10px rgba(79, 195, 247, 0.5);
+        }
+        
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .year-title {
+                font-size: 1.4rem;
+            }
+            
+            .academic-year-section {
+                margin: 2rem 0;
+            }
+            
+            .year-ribbon {
+                margin-bottom: 1.5rem;
+                padding: 0.8rem 0;
+            }
+        }
+
         /* Upcoming Events Countdown Box */
         .event-countdown-container {
             background: rgba(255, 255, 255, 0.02);
@@ -1039,393 +1118,324 @@
                 </div>
             </div>
             
-            <div class="events-grid">
-                <!-- Upcoming Event -->
-                <div class="event-card" data-status="upcoming">
-                    <div class="status-badge status-upcoming">Upcoming</div>
-                    <div class="expand-indicator"></div>
-                    
-                    <div class="event-header">
-                        <div>
-                            <h3 class="event-title">Bienvenue 2025</h3>
-                            <p class="event-date">September 2, 2025 (Tuesday)</p>
+            <!-- Academic Year 2025-26 -->
+            <div class="academic-year-section">
+                <div class="year-ribbon">
+                    <h2 class="year-title">Academic Year 2025-26</h2>
+                    <div class="year-highlight"></div>
+                </div>
+                <div class="events-grid">
+                <!-- Academic Year 2025-26 -->
+            <div class="academic-year-section">
+                <div class="year-ribbon">
+                    <h2 class="year-title">Academic Year 2025-26</h2>
+                    <div class="year-highlight"></div>
+                </div>
+                <div class="events-grid">
+                    <!-- Bienvenue 2025 -->
+                    <div class="event-card" data-status="upcoming">
+                        <div class="status-badge status-upcoming">Upcoming</div>
+                        <div class="expand-indicator"></div>
+                        
+                        <div class="event-header">
+                            <div>
+                                <h3 class="event-title">Bienvenue 2025</h3>
+                                <p class="event-date">September 2, 2025 (Monday)</p>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <p class="event-preview">
-                        The freshers event, Bienvenue 2025 is finally here to welcome the new batch of chemistry enthusiasts to the club!
-                    </p>
-                    
-                    <div class="event-details">
-                        <div class="event-content">
-                            <p>Bienvenue is the annual freshers event organized by the Chemical Society of IISER Thiruvananthapuram (CSIT) to warmly welcome the new batch of chemistry enthusiasts. This event is designed to introduce freshers to the vibrant world of chemistry through a series of engaging activities and informative sessions.</p>
+                        
+                        <p class="event-preview">
+                            The freshers event, Bienvenue 2025 is finally here to welcome the new batch of chemistry enthusiasts to the club!
+                        </p>
+                        
+                        <div class="event-details">
+                            <div class="event-content">
+                                <p>Bienvenue is the annual freshers event organized by the Chemical Society of IISER Thiruvananthapuram (CSIT) to warmly welcome the new batch of chemistry enthusiasts. This event is designed to introduce freshers to the vibrant world of chemistry through a series of engaging activities and informative sessions.</p>
+                                
+                                <!-- Event Image -->
+                                <div style="margin: 1.5rem 0; text-align: center;">
+                                    <img src="initiatives/bievenue.jpg" alt="Bienvenue 2025 Event" style="width: 100%; max-width: 500px; height: auto; border-radius: 12px; box-shadow: 0 8px 20px rgba(79, 195, 247, 0.2); border: 2px solid rgba(79, 195, 247, 0.3);">
+                                </div>
+                            </div>
                             
-                            <!-- Event Image -->
-                            <div style="margin: 1.5rem 0; text-align: center;">
-                                <img src="initiatives/bievenue.jpg" alt="Bienvenue 2025 Event" style="width: 100%; max-width: 500px; height: auto; border-radius: 12px; box-shadow: 0 8px 20px rgba(79, 195, 247, 0.2); border: 2px solid rgba(79, 195, 247, 0.3);">
+                            <div class="event-meta">
+                                <div class="meta-item">
+                                    <div class="meta-label">📍 Venue</div>
+                                    <div class="meta-value">IISER TVM Campus</div>
+                                </div>
+                                <div class="meta-item">
+                                    <div class="meta-label">⏰ Time</div>
+                                    <div class="meta-value">6:00 PM</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chemical Biology Symposium -->
+                    <div class="event-card" data-status="upcoming">
+                        <div class="status-badge status-upcoming">Upcoming</div>
+                        <div class="expand-indicator"></div>
+                        
+                        <div class="event-header">
+                            <div>
+                                <h3 class="event-title">Chemical Biology Symposium</h3>
+                                <p class="event-date">September 29, 2025 (Monday)</p>
                             </div>
                         </div>
                         
-                        <div class="event-meta">
-                            <div class="meta-item">
-                                <div class="meta-label">📍 Venue</div>
-                                <div class="meta-value">IISER TVM Campus</div>
+                        <p class="event-preview">
+                            A one day symposium on chemical biology featuring talks from eminent speakers and interactive sessions is being planned. Stay tuned for more updates!
+                        </p>
+                        
+                        <div class="event-details">
+                            <div class="event-content">
+                                <p>Stay tuned for more exciting details!</p>
                             </div>
-                            <div class="meta-item">
-                                <div class="meta-label">⏰ Time</div>
-                                <div class="meta-value">6:00 PM</div>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-
-                <!-- i-ChemBioMat Conference -->
-                <div class="event-card" data-status="upcoming">
-                    <div class="status-badge status-upcoming">Upcoming</div>
-                    <div class="expand-indicator"></div>
-                    
-                    <div class="event-header">
-                        <div class="event-icon">🧬</div>
-                        <div>
-                            <h3 class="event-title">i2-Chemical biology and Biomaterial conference (i-ChemBioMat)</h3>
-                            <p class="event-date">October 4, 2025 (Friday)</p>
-                        </div>
-                    </div>
-                    
-                    <p class="event-preview">
-                        A premier conference on chemical biology and biomaterials, sponsored by the Royal Society of Chemistry (RSC), featuring cutting-edge research presentations and networking opportunities.
-                    </p>
-                    
-                    <div class="event-details">
-                        <div class="event-content">
-                            <p>The i2-Chemical biology and Biomaterial conference (i-ChemBioMat) is a prestigious academic conference that brings together researchers, scientists, and industry professionals from the fields of chemical biology and biomaterials. This conference is proudly sponsored by the Royal Society of Chemistry (RSC), ensuring high-quality presentations and valuable networking opportunities.</p>
                             
-                            <p>The conference will feature keynote speeches from renowned experts, oral presentations of cutting-edge research, poster sessions, and interactive workshops. Topics will include but are not limited to:</p>
+                            <div class="event-meta">
+                                <div class="meta-item">
+                                    <div class="meta-label">📍 Venue</div>
+                                    <div class="meta-value">To be announced</div>
+                                </div>
+                                <div class="meta-item">
+                                    <div class="meta-label">⏰ Time</div>
+                                    <div class="meta-value">10:00 AM onwards</div>
+                                </div>
+                                <div class="meta-item">
+                                    <div class="meta-label">🎫 Enrollment</div>
+                                    <div class="meta-value">Open to all</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- i-ChemBioMat Conference -->
+                    <div class="event-card" data-status="upcoming">
+                        <div class="status-badge status-upcoming">Upcoming</div>
+                        <div class="expand-indicator"></div>
+                        
+                        <div class="event-header">
+                            <div class="event-icon">🧬</div>
+                            <div>
+                                <h3 class="event-title">i2-Chemical biology and Biomaterial conference (i-ChemBioMat)</h3>
+                                <p class="event-date">October 4, 2025 (Saturday)</p>
+                            </div>
+                        </div>
+                        
+                        <p class="event-preview">
+                            A premier conference on chemical biology and biomaterials, sponsored by the Royal Society of Chemistry (RSC), featuring cutting-edge research presentations and networking opportunities.
+                        </p>
+                        
+                        <div class="event-details">
+                            <div class="event-content">
+                                <p>The i2-Chemical biology and Biomaterial conference (i-ChemBioMat) is a prestigious academic conference that brings together researchers, scientists, and industry professionals from the fields of chemical biology and biomaterials. This conference is proudly sponsored by the Royal Society of Chemistry (RSC), ensuring high-quality presentations and valuable networking opportunities.</p>
+                                
+                                <p>The conference will feature keynote speeches from renowned experts, oral presentations of cutting-edge research, poster sessions, and interactive workshops. Topics will include but are not limited to:</p>
+                                
+                                <ul style="color: var(--text); margin: 1rem 0; padding-left: 1.5rem;">
+                                    <li>Chemical biology approaches to drug discovery</li>
+                                    <li>Biomaterial design and characterization</li>
+                                    <li>Biocompatibility and toxicity studies</li>
+                                    <li>Nano-biomaterials and their applications</li>
+                                    <li>Chemical tools for biological research</li>
+                                    <li>Biomolecular engineering and synthetic biology</li>
+                                </ul>
+                                
+                                <p>This is an excellent opportunity for students, researchers, and professionals to stay updated with the latest developments in these rapidly evolving fields and to establish valuable connections within the scientific community.</p>
+                            </div>
                             
-                            <ul style="color: var(--text); margin: 1rem 0; padding-left: 1.5rem;">
-                                <li>Chemical biology approaches to drug discovery</li>
-                                <li>Biomaterial design and characterization</li>
-                                <li>Biocompatibility and toxicity studies</li>
-                                <li>Nano-biomaterials and their applications</li>
-                                <li>Chemical tools for biological research</li>
-                                <li>Biomolecular engineering and synthetic biology</li>
-                            </ul>
+                            <div class="event-meta">
+                                <div class="meta-item">
+                                    <div class="meta-label">📍 Venue</div>
+                                    <div class="meta-value">IISER TVM Campus</div>
+                                </div>
+                                <div class="meta-item">
+                                    <div class="meta-label">⏰ Time</div>
+                                    <div class="meta-value">9:00 AM onwards</div>
+                                </div>
+                                <div class="meta-item">
+                                    <div class="meta-label">🏛️ Sponsor</div>
+                                    <div class="meta-value">Royal Society of Chemistry (RSC)</div>
+                                </div>
+                                <div class="meta-item">
+                                    <div class="meta-label">🎫 Registration</div>
+                                    <div class="meta-value">Details to be announced</div>
+                                </div>
+                            </div>
                             
-                            <p>This is an excellent opportunity for students, researchers, and professionals to stay updated with the latest developments in these rapidly evolving fields and to establish valuable connections within the scientific community.</p>
-                        </div>
-                        
-                        <div class="event-meta">
-                            <div class="meta-item">
-                                <div class="meta-label">📍 Venue</div>
-                                <div class="meta-value">IISER TVM Campus</div>
+                            <div class="event-actions">
+                                <a href="#" class="event-btn btn-primary">
+                                    <i class="fas fa-info-circle"></i>
+                                    More Details
+                                </a>
+                                <a href="#" class="event-btn btn-secondary">
+                                    <i class="fas fa-calendar-plus"></i>
+                                    Add to Calendar
+                                </a>
                             </div>
-                            <div class="meta-item">
-                                <div class="meta-label">⏰ Time</div>
-                                <div class="meta-value">9:00 AM onwards</div>
-                            </div>
-                            <div class="meta-item">
-                                <div class="meta-label">🏛️ Sponsor</div>
-                                <div class="meta-value">Royal Society of Chemistry (RSC)</div>
-                            </div>
-                            <div class="meta-item">
-                                <div class="meta-label">🎫 Registration</div>
-                                <div class="meta-value">Details to be announced</div>
-                            </div>
-                        </div>
-                        
-                        <div class="event-actions">
-                            <a href="#" class="event-btn btn-primary">
-                                <i class="fas fa-info-circle"></i>
-                                More Details
-                            </a>
-                            <a href="#" class="event-btn btn-secondary">
-                                <i class="fas fa-calendar-plus"></i>
-                                Add to Calendar
-                            </a>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Ongoing Event -->
-                <div class="event-card" data-status="upcoming">
-                    <div class="status-badge status-ongoing">upcoming</div>
-                    <div class="expand-indicator"></div>
-                    
-                    <div class="event-header">
-                        <div>
-                            <h3 class="event-title">Chemical Biology Symposium</h3>
-                            <p class="event-date">September 29, 2025</p>
-                        </div>
-                    </div>
-                    
-                    <p class="event-preview">
-                        A one day symposium on chemical biology featuring talks from eminent speakers and interactive sessions is being planned. Stay tuned for more updates!
-                    </p>
-                    
-                    <div class="event-details">
-                        <div class="event-content">
-                            <p>Stay tuned!</p>
-                        </div>
-                        
-                        <div class="event-meta">
-                            <div class="meta-item">
-                                <div class="meta-label">📍 Venue</div>
-                                <div class="meta-value">To be announced</div>
-                            </div>
-                            <div class="meta-item">
-                                <div class="meta-label">⏰ Time</div>
-                                <div class="meta-value">To be announced</div>
-                            </div>
-                            <div class="meta-item">
-                                <div class="meta-label">🎫 Enrollment</div>
-                                <div class="meta-value">Open to all</div>
-                            </div>
-
-                        </div>
-
-                            </a>
-                        </div>
-                    </div>
+            <!-- Academic Year 2024-25 -->
+            <div class="academic-year-section">
+                <div class="year-ribbon">
+                    <h2 class="year-title">Academic Year 2024-25</h2>
+                    <div class="year-highlight"></div>
                 </div>
+                <div class="events-grid">
+                    <!-- Bienvenue 2024 -->
+                    <div class="event-card" data-status="past">
+                        <div class="status-badge status-past">Completed</div>
+                        <div class="expand-indicator"></div>
+                        
+                        <div class="event-header">
+                            <div>
+                                <h3 class="event-title">Bienvenue 2024</h3>
+                                <p class="event-date">August 10, 2023 (Thursday)</p>
+                            </div>
+                        </div>
+                        
+                        <p class="event-preview">
+                            Successfully welcomed new chemistry enthusiasts to CSIT with engaging activities and networking sessions.
+                        </p>
+                        
+                        <div class="event-details">
+                            <div class="event-content">
+                                <p>Bienvenue 2024 was a wonderful success, welcoming the new batch of chemistry students to the CSIT family. The event featured interactive sessions, lab tours, and networking opportunities for freshers to connect with senior students and faculty members.</p>
+                                
+                                <!-- Event Image -->
+                                <div style="margin: 1.5rem 0; text-align: center;">
+                                    <img src="index/bienvenue 2023 aug 10.jpg" alt="Bienvenue 2024 Event" style="width: 100%; max-width: 500px; height: auto; border-radius: 12px; box-shadow: 0 8px 20px rgba(79, 195, 247, 0.2); border: 2px solid rgba(79, 195, 247, 0.3);">
+                                </div>
+                                
+                                <p>The event successfully introduced freshers to the vibrant chemistry community at IISER TVM and provided them with valuable insights into academic and research opportunities.</p>
+                            </div>
+                            
+                            <div class="event-meta">
+                                <div class="meta-item">
+                                    <div class="meta-label">📍 Venue</div>
+                                    <div class="meta-value">IISER TVM Campus</div>
+                                </div>
+                                <div class="meta-item">
+                                    <div class="meta-label">⏰ Time</div>
+                                    <div class="meta-value">6:00 PM</div>
+                                </div>
+                                <div class="meta-item">
+                                    <div class="meta-label">👥 Attendance</div>
+                                    <div class="meta-value">50+ Students</div>
+                                </div>
+                                <div class="meta-item">
+                                    <div class="meta-label">🎯 Status</div>
+                                    <div class="meta-value">Successfully Completed</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                <!-- Future Event -->
-                <div class="event-card disabled">
-                    <div class="expand-indicator"></div>
-                    
-                    <div class="event-header">
-                        <div class="event-icon">�</div>
-                        <div>
-                            <h3 class="event-title">Event 3</h3>
-                            <p class="event-date">To be announced</p>
-                        </div>
-                    </div>
-                    
-                    <p class="event-preview">
-                        Details for this exciting chemistry event will be announced soon. Stay tuned for updates!
-                    </p>
-                    
-                    <div class="event-details">
-                        <div class="event-content">
-                            <p>We are currently planning an exciting chemistry event for our community. More details including:</p>
-                            <ul>
-                                <li>Event theme and activities</li>
-                                <li>Date and time</li>
-                                <li>Venue information</li>
-                                <li>Registration details</li>
-                                <li>Speaker lineup</li>
-                                <li>Special features</li>
-                            </ul>
-                            <p>Will be announced soon. Keep checking our website and social media for updates!</p>
-                        </div>
+                    <!-- Chemistry Workshop Series -->
+                    <div class="event-card" data-status="past">
+                        <div class="status-badge status-past">Completed</div>
+                        <div class="expand-indicator"></div>
                         
-                        <div class="event-meta">
-                            <div class="meta-item">
-                                <div class="meta-label">📍 Venue</div>
-                                <div class="meta-value">To be announced</div>
-                            </div>
-                            <div class="meta-item">
-                                <div class="meta-label">⏰ Time</div>
-                                <div class="meta-value">To be announced</div>
-                            </div>
-                            <div class="meta-item">
-                                <div class="meta-label">� Registration</div>
-                                <div class="meta-value">Details coming soon</div>
-                            </div>
-                            <div class="meta-item">
-                                <div class="meta-label">� Updates</div>
-                                <div class="meta-value">Follow our social media</div>
+                        <div class="event-header">
+                            <div class="event-icon">🧪</div>
+                            <div>
+                                <h3 class="event-title">Chemistry Workshop Series</h3>
+                                <p class="event-date">November 2024</p>
                             </div>
                         </div>
                         
-                        <div class="event-actions">
-                            <a href="#" class="event-btn btn-secondary">
-                                <i class="fas fa-bell"></i> Get Notified
-                            </a>
-                            <a href="#" class="event-btn btn-secondary">
-                                <i class="fas fa-share-alt"></i> Share
-                            </a>
+                        <p class="event-preview">
+                            A series of hands-on workshops covering various aspects of chemistry, from basic laboratory techniques to advanced research methods.
+                        </p>
+                        
+                        <div class="event-details">
+                            <div class="event-content">
+                                <p>The Chemistry Workshop Series was designed to enhance students' practical knowledge and laboratory skills. The workshops covered a wide range of topics including:</p>
+                                
+                                <ul style="color: var(--text); margin: 1rem 0; padding-left: 1.5rem;">
+                                    <li>Advanced spectroscopy techniques</li>
+                                    <li>Organic synthesis methodologies</li>
+                                    <li>Analytical chemistry methods</li>
+                                    <li>Research paper writing and presentation skills</li>
+                                    <li>Safety protocols in laboratory</li>
+                                </ul>
+                                
+                                <p>These workshops provided valuable hands-on experience and prepared students for advanced research work in chemistry.</p>
+                            </div>
+                            
+                            <div class="event-meta">
+                                <div class="meta-item">
+                                    <div class="meta-label">📍 Venue</div>
+                                    <div class="meta-value">Chemistry Labs, IISER TVM</div>
+                                </div>
+                                <div class="meta-item">
+                                    <div class="meta-label">🗓️ Duration</div>
+                                    <div class="meta-value">5 Sessions over 2 weeks</div>
+                                </div>
+                                <div class="meta-item">
+                                    <div class="meta-label">👥 Participants</div>
+                                    <div class="meta-value">30+ Students</div>
+                                </div>
+                                <div class="meta-item">
+                                    <div class="meta-label">🎯 Status</div>
+                                    <div class="meta-value">Successfully Completed</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Another Upcoming Event -->
-                <div class="event-card disabled">
-                    <div class="expand-indicator"></div>
-                    
-                    <div class="event-header">
-                        <div class="event-icon">�</div>
-                        <div>
-                            <h3 class="event-title">Event 4</h3>
-                            <p class="event-date">To be announced</p>
-                        </div>
-                    </div>
-                    
-                    <p class="event-preview">
-                        Details for this exciting chemistry event will be announced soon. Stay tuned for updates!
-                    </p>
-                    
-                    <div class="event-details">
-                        <div class="event-content">
-                            <p>We are currently planning an exciting chemistry event for our community. More details including:</p>
-                            <ul>
-                                <li>Event theme and activities</li>
-                                <li>Date and time</li>
-                                <li>Venue information</li>
-                                <li>Registration details</li>
-                                <li>Speaker lineup</li>
-                                <li>Special features</li>
-                            </ul>
-                            <p>Will be announced soon. Keep checking our website and social media for updates!</p>
-                        </div>
+                    <!-- Research Symposium 2024 -->
+                    <div class="event-card" data-status="past">
+                        <div class="status-badge status-past">Completed</div>
+                        <div class="expand-indicator"></div>
                         
-                        <div class="event-meta">
-                            <div class="meta-item">
-                                <div class="meta-label">📍 Venue</div>
-                                <div class="meta-value">To be announced</div>
-                            </div>
-                            <div class="meta-item">
-                                <div class="meta-label">⏰ Time</div>
-                                <div class="meta-value">To be announced</div>
-                            </div>
-                            <div class="meta-item">
-                                <div class="meta-label">� Registration</div>
-                                <div class="meta-value">Details coming soon</div>
-                            </div>
-                            <div class="meta-item">
-                                <div class="meta-label">� Updates</div>
-                                <div class="meta-value">Follow our social media</div>
+                        <div class="event-header">
+                            <div class="event-icon">🔬</div>
+                            <div>
+                                <h3 class="event-title">Annual Research Symposium 2024</h3>
+                                <p class="event-date">March 2024</p>
                             </div>
                         </div>
                         
-                        <div class="event-actions">
-                            <a href="#" class="event-btn btn-secondary">
-                                <i class="fas fa-bell"></i> Get Notified
-                            </a>
-                            <a href="#" class="event-btn btn-secondary">
-                                <i class="fas fa-share-alt"></i> Share
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Research Symposium -->
-                <div class="event-card disabled">
-                    <div class="expand-indicator"></div>
-                    
-                    <div class="event-header">
-                        <div class="event-icon">�</div>
-                        <div>
-                            <h3 class="event-title">Event 5</h3>
-                            <p class="event-date">To be announced</p>
-                        </div>
-                    </div>
-                    
-                    <p class="event-preview">
-                        Details for this exciting chemistry event will be announced soon. Stay tuned for updates!
-                    </p>
-                    
-                    <div class="event-details">
-                        <div class="event-content">
-                            <p>We are currently planning an exciting chemistry event for our community. More details including:</p>
-                            <ul>
-                                <li>Event theme and activities</li>
-                                <li>Date and time</li>
-                                <li>Venue information</li>
-                                <li>Registration details</li>
-                                <li>Speaker lineup</li>
-                                <li>Special features</li>
-                            </ul>
-                            <p>Will be announced soon. Keep checking our website and social media for updates!</p>
-                        </div>
+                        <p class="event-preview">
+                            An annual showcase of research work by students and faculty, featuring poster presentations and keynote lectures.
+                        </p>
                         
-                        <div class="event-meta">
-                            <div class="meta-item">
-                                <div class="meta-label">📍 Venue</div>
-                                <div class="meta-value">To be announced</div>
+                        <div class="event-details">
+                            <div class="event-content">
+                                <p>The Annual Research Symposium 2024 was a platform for students and faculty to present their research findings and discuss emerging trends in chemistry. The event fostered academic collaboration and knowledge sharing within the CSIT community.</p>
+                                
+                                <p>The symposium featured:</p>
+                                <ul style="color: var(--text); margin: 1rem 0; padding-left: 1.5rem;">
+                                    <li>Keynote lectures by distinguished researchers</li>
+                                    <li>Student poster presentations</li>
+                                    <li>Faculty research showcases</li>
+                                    <li>Networking sessions and collaborative discussions</li>
+                                    <li>Awards for outstanding research contributions</li>
+                                </ul>
                             </div>
-                            <div class="meta-item">
-                                <div class="meta-label">⏰ Time</div>
-                                <div class="meta-value">To be announced</div>
+                            
+                            <div class="event-meta">
+                                <div class="meta-item">
+                                    <div class="meta-label">📍 Venue</div>
+                                    <div class="meta-value">Auditorium, IISER TVM</div>
+                                </div>
+                                <div class="meta-item">
+                                    <div class="meta-label">⏰ Duration</div>
+                                    <div class="meta-value">Full Day Event</div>
+                                </div>
+                                <div class="meta-item">
+                                    <div class="meta-label">🎤 Speakers</div>
+                                    <div class="meta-value">5 Keynote Speakers</div>
+                                </div>
+                                <div class="meta-item">
+                                    <div class="meta-label">📊 Presentations</div>
+                                    <div class="meta-value">25+ Poster Presentations</div>
+                                </div>
                             </div>
-                            <div class="meta-item">
-                                <div class="meta-label">🎫 Registration</div>
-                                <div class="meta-value">Details coming soon</div>
-                            </div>
-                            <div class="meta-item">
-                                <div class="meta-label">📧 Updates</div>
-                                <div class="meta-value">Follow our social media</div>
-                            </div>
-                        </div>
-                        
-                        <div class="event-actions">
-                            <a href="#" class="event-btn btn-secondary">
-                                <i class="fas fa-bell"></i> Get Notified
-                            </a>
-                            <a href="#" class="event-btn btn-secondary">
-                                <i class="fas fa-share-alt"></i> Share
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Fun Chemistry Event -->
-                <div class="event-card disabled">
-                    <div class="expand-indicator"></div>
-                    
-                    <div class="event-header">
-                        <div class="event-icon">�</div>
-                        <div>
-                            <h3 class="event-title">Event 6</h3>
-                            <p class="event-date">To be announced</p>
-                        </div>
-                    </div>
-                    
-                    <p class="event-preview">
-                        Details for this exciting chemistry event will be announced soon. Stay tuned for updates!
-                    </p>
-                    
-                    <div class="event-details">
-                        <div class="event-content">
-                            <p>We are currently planning an exciting chemistry event for our community. More details including:</p>
-                            <ul>
-                                <li>Event theme and activities</li>
-                                <li>Date and time</li>
-                                <li>Venue information</li>
-                                <li>Registration details</li>
-                                <li>Speaker lineup</li>
-                                <li>Special features</li>
-                            </ul>
-                            <p>Will be announced soon. Keep checking our website and social media for updates!</p>
-                        </div>
-                        
-                        <div class="event-meta">
-                            <div class="meta-item">
-                                <div class="meta-label">📍 Venue</div>
-                                <div class="meta-value">To be announced</div>
-                            </div>
-                            <div class="meta-item">
-                                <div class="meta-label">⏰ Time</div>
-                                <div class="meta-value">To be announced</div>
-                            </div>
-                            <div class="meta-item">
-                                <div class="meta-label">� Registration</div>
-                                <div class="meta-value">Details coming soon</div>
-                            </div>
-                            <div class="meta-item">
-                                <div class="meta-label">� Updates</div>
-                                <div class="meta-value">Follow our social media</div>
-                            </div>
-                        </div>
-                        
-                        <div class="event-actions">
-                            <a href="#" class="event-btn btn-secondary">
-                                <i class="fas fa-bell"></i> Get Notified
-                            </a>
-                            <a href="#" class="event-btn btn-secondary">
-                                <i class="fas fa-share-alt"></i> Share
-                            </a>
                         </div>
                     </div>
                 </div>
