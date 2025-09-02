@@ -781,29 +781,40 @@
             display: flex;
             justify-content: space-between;
             transform: translateY(-50%);
-            z-index: 2;
+            z-index: 10;
             padding: 0 20px;
+            pointer-events: none;
         }
         
         .home-carousel-btn {
-            background: var(--accent);
+            background: rgba(79, 195, 247, 0.9);
             border: none;
             border-radius: 50%;
-            width: 44px;
-            height: 44px;
+            width: 48px;
+            height: 48px;
             color: #fff;
             font-size: 2rem;
             cursor: pointer;
-            box-shadow: 0 2px 8px rgba(21, 101, 192, 0.3);
+            box-shadow: 0 4px 15px rgba(21, 101, 192, 0.4);
             opacity: 0.8;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
+            pointer-events: auto;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .home-carousel-btn:hover {
-            background: var(--primary);
+            background: rgba(21, 101, 192, 1);
             opacity: 1;
-            transform: scale(1.1);
+            transform: scale(1.15);
+            box-shadow: 0 6px 20px rgba(21, 101, 192, 0.6);
+        }
+
+        .home-carousel-btn:active {
+            transform: scale(0.95);
         }
         
         .carousel-indicators {
@@ -837,6 +848,127 @@
             .home-carousel-image { height: 220px; }
             .home-carousel-title { font-size: 1.4rem; }
             .home-carousel-desc { font-size: 1rem; }
+        }
+
+        /* Curtain Opening Animation */
+        .curtain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            transition: opacity 0.8s ease-in-out;
+        }
+
+        .curtain-overlay.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .curtain-left, .curtain-right {
+            position: absolute;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(135deg, #2d3748, #4a5568, #2c5282);
+            transition: transform 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.3);
+        }
+
+        .curtain-left {
+            left: 0;
+            background: linear-gradient(45deg, #2d3748, #4a5568);
+        }
+
+        .curtain-right {
+            right: 0;
+            background: linear-gradient(-45deg, #2d3748, #4a5568);
+        }
+
+        .curtain-overlay.opening .curtain-left {
+            transform: translateX(-100%);
+        }
+
+        .curtain-overlay.opening .curtain-right {
+            transform: translateX(100%);
+        }
+
+        .curtain-content {
+            text-align: center;
+            color: white;
+            z-index: 10001;
+            animation: curtainPulse 2s ease-in-out infinite;
+        }
+
+        .curtain-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #4fc3f7;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(79, 195, 247, 0.3);
+        }
+
+        .curtain-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #4fc3f7, #29b6f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .curtain-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            font-weight: 300;
+        }
+
+        @keyframes curtainPulse {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+
+        .loading-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 30px;
+        }
+
+        .loading-dot {
+            width: 12px;
+            height: 12px;
+            background: #4fc3f7;
+            border-radius: 50%;
+            animation: loadingBounce 1.4s ease-in-out infinite both;
+        }
+
+        .loading-dot:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes loadingBounce {
+            0%, 80%, 100% {
+                transform: scale(0);
+                opacity: 0.5;
+            }
+            40% {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
         
         /* Home Page Image Section Styles - Below Header */
@@ -2468,22 +2600,18 @@
     </style>
 </head>
 <body style="background: #181c24; margin: 0; overflow-x: hidden;" class="dark-mode">;
-    <!-- Loading overlay -->
-    <div id="loadingOverlay">
-        <div class="logo-spinner">
-            <!-- Nucleus (logo) -->
-            <img src="Logo.png" alt="CSIT Logo" class="loader-logo">
-            <div class="nucleus-pulse"></div>
-            
-            <!-- Electron orbital paths -->
-            <div class="atomic-orbit orbit-1">
-                <div class="electron e1"></div>
-            </div>
-            <div class="atomic-orbit orbit-2">
-                <div class="electron e2"></div>
-            </div>
-            <div class="atomic-orbit orbit-3">
-                <div class="electron e3"></div>
+    <!-- Curtain Opening Animation -->
+    <div id="curtainOverlay" class="curtain-overlay">
+        <div class="curtain-left"></div>
+        <div class="curtain-right"></div>
+        <div class="curtain-content">
+            <div class="curtain-logo">🧪</div>
+            <h1 class="curtain-title">CSIT</h1>
+            <p class="curtain-subtitle">Chemical Society of IISER TVM</p>
+            <div class="loading-dots">
+                <div class="loading-dot"></div>
+                <div class="loading-dot"></div>
+                <div class="loading-dot"></div>
             </div>
         </div>
     </div>
@@ -2809,8 +2937,8 @@
             <div class="home-carousel-content">
                 <img id="homeCarouselImage" class="home-carousel-image" src="" alt="CSIT Activity">
                 <div class="home-carousel-controls">
-                    <button class="home-carousel-btn" onclick="prevHomeSlide()" id="prevHomeBtn">‹</button>
-                    <button class="home-carousel-btn" onclick="nextHomeSlide()" id="nextHomeBtn">›</button>
+                    <button class="home-carousel-btn" onclick="prevHomeSlide()" id="prevHomeBtn" title="Previous Image">‹</button>
+                    <button class="home-carousel-btn" onclick="nextHomeSlide()" id="nextHomeBtn" title="Next Image">›</button>
                 </div>
                 <div class="carousel-indicators" id="homeCarouselIndicators"></div>
                 <div class="home-carousel-desc" id="homeCarouselDesc"></div>
@@ -3005,6 +3133,28 @@
         </div>
     </footer>
     <script>
+    // Curtain Opening Animation
+    window.addEventListener('load', function() {
+        const curtainOverlay = document.getElementById('curtainOverlay');
+        
+        // Start curtain opening animation after 1 second
+        setTimeout(() => {
+            curtainOverlay.classList.add('opening');
+            
+            // Remove curtain completely after animation completes
+            setTimeout(() => {
+                curtainOverlay.classList.add('fade-out');
+                
+                // Remove from DOM after fade out
+                setTimeout(() => {
+                    if (curtainOverlay.parentNode) {
+                        curtainOverlay.parentNode.removeChild(curtainOverlay);
+                    }
+                }, 800);
+            }, 2000); // Wait for curtain opening to complete
+        }, 1000); // Initial delay
+    });
+
     // Chemistry-inspired animated background: molecules and bonds
     const canvas = document.getElementById('chem-bg');
     const ctx = canvas.getContext('2d');
@@ -3982,13 +4132,17 @@
                 }
 
                 function nextHomeSlide() {
+                    console.log('Next slide clicked, current:', currentHomeSlide);
                     currentHomeSlide = (currentHomeSlide + 1) % homeCarouselImages.length;
+                    console.log('Moving to slide:', currentHomeSlide);
                     updateHomeSlide();
                     restartHomeCarouselTimer();
                 }
 
                 function prevHomeSlide() {
+                    console.log('Previous slide clicked, current:', currentHomeSlide);
                     currentHomeSlide = (currentHomeSlide - 1 + homeCarouselImages.length) % homeCarouselImages.length;
+                    console.log('Moving to slide:', currentHomeSlide);
                     updateHomeSlide();
                     restartHomeCarouselTimer();
                 }
@@ -4012,6 +4166,11 @@
 
                 // Initialize carousel when page loads
                 initHomeCarousel();
+                
+                // Make functions globally accessible for onclick handlers
+                window.nextHomeSlide = nextHomeSlide;
+                window.prevHomeSlide = prevHomeSlide;
+                window.goToHomeSlide = goToHomeSlide;
             }
         });
 
