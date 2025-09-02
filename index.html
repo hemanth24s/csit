@@ -2082,6 +2082,28 @@
             box-shadow: 0 25px 50px rgba(0,0,0,0.3);
         }
 
+        .research-field-icon {
+            text-align: center;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .field-symbol {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .field-symbol:hover {
+            transform: scale(1.2);
+            transition: transform 0.3s ease;
+        }
+
         .faculty-avatar {
             text-align: center;
             margin-bottom: 25px;
@@ -2113,7 +2135,7 @@
             display: inline-block;
         }
 
-        .faculty-info h3 {
+        .faculty-info h3, .field-info h3 {
             color: #2d3748;
             font-size: 1.5rem;
             margin-bottom: 10px;
@@ -2710,155 +2732,187 @@
 
         <!-- Faculty Research Carousel -->
         <div class="faculty-research-carousel">
-            <h2 class="carousel-title">Faculty Research Insights</h2>
-            <p class="carousel-subtitle">Discover groundbreaking research from IISER TVM's Chemistry Department</p>
+            <h2 class="carousel-title">Research Frontiers at IISER TVM</h2>
+            <p class="carousel-subtitle">Explore groundbreaking research fields shaping the future of chemistry</p>
             
             <div class="faculty-carousel-container">
                 <div class="faculty-carousel-track" id="facultyCarouselTrack">
-                    <!-- Faculty Card 1 -->
-                    <div class="faculty-carousel-card active" data-faculty="mahesh">
-                        <div class="faculty-avatar">
-                            <img src="about us pictures/mahesh sir.png" alt="Prof. Mahesh Hariharan">
+                    <!-- Research Field 1: Physical Organic Chemistry -->
+                    <div class="faculty-carousel-card active" data-field="physical-organic">
+                        <div class="research-field-icon">
+                            <div class="field-symbol">⚛️</div>
                             <div class="research-field">Physical Organic Chemistry</div>
                         </div>
-                        <div class="faculty-info">
-                            <h3>Prof. Mahesh Hariharan</h3>
-                            <p class="faculty-expertise">DNA Photochemistry & Biophysical Chemistry</p>
+                        <div class="field-info">
+                            <h3>Physical Organic Chemistry</h3>
                             <div class="research-highlight">
                                 <span class="fact-label">Did you know?</span>
-                                <span class="fact-text">His research on DNA photoactivated cleaving agents could revolutionize cancer treatment by selectively targeting tumor cells</span>
+                                <span class="fact-text">Physical organic chemistry bridges molecular structure and reactivity, helping us understand how molecules behave at the atomic level to design better drugs and materials</span>
                             </div>
-                            <button class="learn-more-btn" onclick="expandFacultyCarousel('mahesh')">Learn More <i class="fas fa-chevron-down"></i></button>
+                            <button class="learn-more-btn" onclick="expandResearchField('physical-organic')">Explore Faculty <i class="fas fa-chevron-down"></i></button>
                         </div>
                     </div>
 
-                    <!-- Faculty Card 2 -->
-                    <div class="faculty-carousel-card" data-faculty="kms">
-                        <div class="faculty-avatar">
-                            <img src="about us pictures/image 2.jpg" alt="Prof. Kana M. Sureshan">
+                    <!-- Research Field 2: Medicinal Chemistry -->
+                    <div class="faculty-carousel-card" data-field="medicinal">
+                        <div class="research-field-icon">
+                            <div class="field-symbol">💊</div>
                             <div class="research-field">Medicinal Chemistry</div>
                         </div>
-                        <div class="faculty-info">
-                            <h3>Prof. Kana M. Sureshan</h3>
-                            <p class="faculty-expertise">Chemical Biology & Drug Discovery</p>
+                        <div class="field-info">
+                            <h3>Medicinal Chemistry</h3>
                             <div class="research-highlight">
                                 <span class="fact-label">Innovation:</span>
-                                <span class="fact-text">Developing novel carbohydrate-based therapeutics and supramolecular materials for targeted drug delivery systems</span>
+                                <span class="fact-text">Modern medicinal chemistry uses AI and computational methods to design targeted therapies, potentially reducing drug development time from 15 years to just 5-7 years</span>
                             </div>
-                            <button class="learn-more-btn" onclick="expandFacultyCarousel('kms')">Learn More <i class="fas fa-chevron-down"></i></button>
+                            <button class="learn-more-btn" onclick="expandResearchField('medicinal')">Explore Faculty <i class="fas fa-chevron-down"></i></button>
                         </div>
                     </div>
 
-                    <!-- Faculty Card 3 -->
-                    <div class="faculty-carousel-card" data-faculty="kgt">
-                        <div class="faculty-avatar">
-                            <img src="about us pictures/image 3.jpg" alt="Prof. K. George Thomas">
-                            <div class="research-field">Photochemistry</div>
+                    <!-- Research Field 3: Photochemistry & Nanomaterials -->
+                    <div class="faculty-carousel-card" data-field="photochemistry">
+                        <div class="research-field-icon">
+                            <div class="field-symbol">🌟</div>
+                            <div class="research-field">Photochemistry & Nanomaterials</div>
                         </div>
-                        <div class="faculty-info">
-                            <h3>Prof. K. George Thomas</h3>
-                            <p class="faculty-expertise">Nanomaterials & Light-Matter Interactions</p>
+                        <div class="field-info">
+                            <h3>Photochemistry & Nanomaterials</h3>
                             <div class="research-highlight">
                                 <span class="fact-label">Breakthrough:</span>
-                                <span class="fact-text">Pioneer in hybrid nanomaterials with applications in solar energy conversion and quantum dot technologies</span>
+                                <span class="fact-text">Light-driven chemistry and nanomaterials are revolutionizing solar energy conversion, with quantum dots achieving over 16% efficiency in next-generation solar cells</span>
                             </div>
-                            <button class="learn-more-btn" onclick="expandFacultyCarousel('kgt')">Learn More <i class="fas fa-chevron-down"></i></button>
+                            <button class="learn-more-btn" onclick="expandResearchField('photochemistry')">Explore Faculty <i class="fas fa-chevron-down"></i></button>
                         </div>
                     </div>
 
-                    <!-- Faculty Card 4 -->
-                    <div class="faculty-carousel-card" data-faculty="rajendra">
-                        <div class="faculty-avatar">
-                            <img src="about us pictures/rkurapati.jpg" alt="Dr. Rajendra Kurapati">
-                            <div class="research-field">Biomaterials</div>
-                        </div>
-                        <div class="faculty-info">
-                            <h3>Dr. Rajendra Kurapati</h3>
-                            <p class="faculty-expertise">2D Materials & Nanotoxicology</p>
-                            <div class="research-highlight">
-                                <span class="fact-label">Focus:</span>
-                                <span class="fact-text">Creating safer nanomaterials through biodegradation studies and developing antimicrobial coatings for medical devices</span>
-                            </div>
-                            <button class="learn-more-btn" onclick="expandFacultyCarousel('rajendra')">Learn More <i class="fas fa-chevron-down"></i></button>
-                        </div>
-                    </div>
-
-                    <!-- Faculty Card 5 -->
-                    <div class="faculty-carousel-card" data-faculty="basudev">
-                        <div class="faculty-avatar">
-                            <img src="about us pictures/image 2.jpg" alt="Dr. Basudev Sahoo">
-                            <div class="research-field">Catalysis</div>
-                        </div>
-                        <div class="faculty-info">
-                            <h3>Dr. Basudev Sahoo</h3>
-                            <p class="faculty-expertise">Sustainable Organic Synthesis & Photocatalysis</p>
-                            <div class="research-highlight">
-                                <span class="fact-label">Sustainability:</span>
-                                <span class="fact-text">Developing metal-free coupling reactions and photocatalytic processes for environmentally friendly chemical synthesis</span>
-                            </div>
-                            <button class="learn-more-btn" onclick="expandFacultyCarousel('basudev')">Learn More <i class="fas fa-chevron-down"></i></button>
-                        </div>
-                    </div>
-
-                    <!-- Faculty Card 6 -->
-                    <div class="faculty-carousel-card" data-faculty="reji">
-                        <div class="faculty-avatar">
-                            <img src="about us pictures/image 3.jpg" alt="Prof. Reji Varghese">
+                    <!-- Research Field 4: Supramolecular Chemistry -->
+                    <div class="faculty-carousel-card" data-field="supramolecular">
+                        <div class="research-field-icon">
+                            <div class="field-symbol">🧬</div>
                             <div class="research-field">Supramolecular Chemistry</div>
                         </div>
-                        <div class="faculty-info">
-                            <h3>Prof. Reji Varghese</h3>
-                            <p class="faculty-expertise">DNA Nanotechnology & Functional Materials</p>
+                        <div class="field-info">
+                            <h3>Supramolecular Chemistry</h3>
                             <div class="research-highlight">
                                 <span class="fact-label">Nanotechnology:</span>
-                                <span class="fact-text">Creating programmable DNA nanostructures for biomedical applications and smart material development</span>
+                                <span class="fact-text">Supramolecular assemblies can self-organize like biological systems, creating smart materials that respond to environmental changes for drug delivery and sensing applications</span>
                             </div>
-                            <button class="learn-more-btn" onclick="expandFacultyCarousel('reji')">Learn More <i class="fas fa-chevron-down"></i></button>
+                            <button class="learn-more-btn" onclick="expandResearchField('supramolecular')">Explore Faculty <i class="fas fa-chevron-down"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Research Field 5: Biomaterials & 2D Materials -->
+                    <div class="faculty-carousel-card" data-field="biomaterials">
+                        <div class="research-field-icon">
+                            <div class="field-symbol">🧪</div>
+                            <div class="research-field">Biomaterials & 2D Materials</div>
+                        </div>
+                        <div class="field-info">
+                            <h3>Biomaterials & 2D Materials</h3>
+                            <div class="research-highlight">
+                                <span class="fact-label">Focus:</span>
+                                <span class="fact-text">2D materials like graphene are only one atom thick but stronger than steel, opening possibilities for biodegradable electronics and ultra-sensitive biosensors</span>
+                            </div>
+                            <button class="learn-more-btn" onclick="expandResearchField('biomaterials')">Explore Faculty <i class="fas fa-chevron-down"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Research Field 6: Catalysis & Sustainable Chemistry -->
+                    <div class="faculty-carousel-card" data-field="catalysis">
+                        <div class="research-field-icon">
+                            <div class="field-symbol">♻️</div>
+                            <div class="research-field">Catalysis & Sustainable Chemistry</div>
+                        </div>
+                        <div class="field-info">
+                            <h3>Catalysis & Sustainable Chemistry</h3>
+                            <div class="research-highlight">
+                                <span class="fact-label">Sustainability:</span>
+                                <span class="fact-text">Green catalysis can reduce chemical waste by up to 99% and enable room-temperature reactions that previously required extreme conditions, revolutionizing pharmaceutical manufacturing</span>
+                            </div>
+                            <button class="learn-more-btn" onclick="expandResearchField('catalysis')">Explore Faculty <i class="fas fa-chevron-down"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Research Field 7: Theoretical & Computational Chemistry -->
+                    <div class="faculty-carousel-card" data-field="theoretical">
+                        <div class="research-field-icon">
+                            <div class="field-symbol">🖥️</div>
+                            <div class="research-field">Theoretical & Computational Chemistry</div>
+                        </div>
+                        <div class="field-info">
+                            <h3>Theoretical & Computational Chemistry</h3>
+                            <div class="research-highlight">
+                                <span class="fact-label">Digital Science:</span>
+                                <span class="fact-text">Computational chemistry can predict molecular behavior before synthesis, saving millions in research costs and enabling virtual screening of billions of drug candidates in days</span>
+                            </div>
+                            <button class="learn-more-btn" onclick="expandResearchField('theoretical')">Explore Faculty <i class="fas fa-chevron-down"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Research Field 8: Materials Chemistry -->
+                    <div class="faculty-carousel-card" data-field="materials">
+                        <div class="research-field-icon">
+                            <div class="field-symbol">🔬</div>
+                            <div class="research-field">Materials Chemistry</div>
+                        </div>
+                        <div class="field-info">
+                            <h3>Materials Chemistry</h3>
+                            <div class="research-highlight">
+                                <span class="fact-label">Innovation:</span>
+                                <span class="fact-text">Designer materials with programmable properties can self-heal, change color on demand, or conduct electricity only when needed - creating the smart materials of tomorrow</span>
+                            </div>
+                            <button class="learn-more-btn" onclick="expandResearchField('materials')">Explore Faculty <i class="fas fa-chevron-down"></i></button>
                         </div>
                     </div>
                 </div>
 
                 <!-- Carousel Controls -->
                 <div class="faculty-carousel-controls">
-                    <button class="carousel-btn prev-btn" onclick="moveFacultyCarousel(-1)">‹</button>
-                    <button class="carousel-btn next-btn" onclick="moveFacultyCarousel(1)">›</button>
+                    <button class="carousel-btn prev-btn" onclick="moveResearchCarousel(-1)">‹</button>
+                    <button class="carousel-btn next-btn" onclick="moveResearchCarousel(1)">›</button>
                 </div>
 
                 <!-- Carousel Indicators -->
-                <div class="faculty-carousel-indicators" id="facultyCarouselIndicators">
-                    <span class="indicator active" onclick="goToFacultySlide(0)"></span>
-                    <span class="indicator" onclick="goToFacultySlide(1)"></span>
-                    <span class="indicator" onclick="goToFacultySlide(2)"></span>
-                    <span class="indicator" onclick="goToFacultySlide(3)"></span>
-                    <span class="indicator" onclick="goToFacultySlide(4)"></span>
-                    <span class="indicator" onclick="goToFacultySlide(5)"></span>
+                <div class="faculty-carousel-indicators" id="researchCarouselIndicators">
+                    <span class="indicator active" onclick="goToResearchSlide(0)"></span>
+                    <span class="indicator" onclick="goToResearchSlide(1)"></span>
+                    <span class="indicator" onclick="goToResearchSlide(2)"></span>
+                    <span class="indicator" onclick="goToResearchSlide(3)"></span>
+                    <span class="indicator" onclick="goToResearchSlide(4)"></span>
+                    <span class="indicator" onclick="goToResearchSlide(5)"></span>
+                    <span class="indicator" onclick="goToResearchSlide(6)"></span>
+                    <span class="indicator" onclick="goToResearchSlide(7)"></span>
                 </div>
             </div>
 
-            <!-- Research Comparison Tool -->
+            <!-- Research Field Comparison Tool -->
             <div class="research-comparison-tool">
-                <h3>Compare Research Areas</h3>
+                <h3>Compare Research Fields</h3>
                 <div class="comparison-controls">
-                    <select id="faculty1Select" class="faculty-select">
-                        <option value="">Select First Faculty</option>
-                        <option value="mahesh">Prof. Mahesh Hariharan</option>
-                        <option value="kms">Prof. Kana M. Sureshan</option>
-                        <option value="kgt">Prof. K. George Thomas</option>
-                        <option value="rajendra">Dr. Rajendra Kurapati</option>
-                        <option value="basudev">Dr. Basudev Sahoo</option>
-                        <option value="reji">Prof. Reji Varghese</option>
+                    <select id="field1Select" class="faculty-select">
+                        <option value="">Select First Field</option>
+                        <option value="physical-organic">Physical Organic Chemistry</option>
+                        <option value="medicinal">Medicinal Chemistry</option>
+                        <option value="photochemistry">Photochemistry & Nanomaterials</option>
+                        <option value="supramolecular">Supramolecular Chemistry</option>
+                        <option value="biomaterials">Biomaterials & 2D Materials</option>
+                        <option value="catalysis">Catalysis & Sustainable Chemistry</option>
+                        <option value="theoretical">Theoretical & Computational Chemistry</option>
+                        <option value="materials">Materials Chemistry</option>
                     </select>
                     <span class="vs-text">VS</span>
-                    <select id="faculty2Select" class="faculty-select">
-                        <option value="">Select Second Faculty</option>
-                        <option value="mahesh">Prof. Mahesh Hariharan</option>
-                        <option value="kms">Prof. Kana M. Sureshan</option>
-                        <option value="kgt">Prof. K. George Thomas</option>
-                        <option value="rajendra">Dr. Rajendra Kurapati</option>
-                        <option value="basudev">Dr. Basudev Sahoo</option>
-                        <option value="reji">Prof. Reji Varghese</option>
+                    <select id="field2Select" class="faculty-select">
+                        <option value="">Select Second Field</option>
+                        <option value="physical-organic">Physical Organic Chemistry</option>
+                        <option value="medicinal">Medicinal Chemistry</option>
+                        <option value="photochemistry">Photochemistry & Nanomaterials</option>
+                        <option value="supramolecular">Supramolecular Chemistry</option>
+                        <option value="biomaterials">Biomaterials & 2D Materials</option>
+                        <option value="catalysis">Catalysis & Sustainable Chemistry</option>
+                        <option value="theoretical">Theoretical & Computational Chemistry</option>
+                        <option value="materials">Materials Chemistry</option>
                     </select>
-                    <button id="compareBtn" class="compare-btn" onclick="compareResearch()">Compare</button>
+                    <button id="compareBtn" class="compare-btn" onclick="compareResearchFields()">Compare</button>
                 </div>
                 <div id="comparisonResult" class="comparison-result" style="display: none;"></div>
             </div>
@@ -3451,212 +3505,6 @@
     });
 
         </script>
-        mahesh: {
-            name: "Prof. Mahesh Hariharan",
-            field: "Physical Organic Chemistry",
-            expertise: "DNA Photochemistry & Biophysical Chemistry",
-            achievements: "Shanti Swarup Bhatnagar Prize recipient, 200+ publications",
-            research: "Photoactivated DNA cleaving agents, molecular recognition in biological systems",
-            applications: "Cancer therapy, targeted drug delivery, photodynamic therapy",
-            techniques: "UV-Vis spectroscopy, fluorescence, NMR, computational modeling",
-            collaboration: "Northwestern University, University of Wuerzburg",
-            impact: "Revolutionary work in DNA photochemistry with potential cancer treatment applications"
-        },
-        kms: {
-            name: "Prof. Kana M. Sureshan",
-            field: "Medicinal Chemistry",
-            expertise: "Chemical Biology & Drug Discovery",
-            achievements: "100+ publications, several patents in drug discovery",
-            research: "Carbohydrate chemistry, supramolecular systems, crystal engineering",
-            applications: "Drug delivery systems, antimicrobial agents, soft materials",
-            techniques: "Organic synthesis, X-ray crystallography, NMR spectroscopy",
-            collaboration: "International medicinal chemistry networks",
-            impact: "Novel carbohydrate-based therapeutics with enhanced bioavailability"
-        },
-        kgt: {
-            name: "Prof. K. George Thomas",
-            field: "Photochemistry",
-            expertise: "Nanomaterials & Light-Matter Interactions",
-            achievements: "J.C. Bose Fellow, Bhatnagar Prize winner, 300+ publications",
-            research: "Hybrid nanomaterials, quantum dots, solar energy conversion",
-            applications: "Solar cells, LED technology, photocatalysis, sensors",
-            techniques: "Spectroscopy, microscopy, nanofabrication, photophysics",
-            collaboration: "University of Notre Dame, Kyushu University",
-            impact: "Pioneering work in nanophotonics advancing renewable energy technologies"
-        },
-        rajendra: {
-            name: "Dr. Rajendra Kurapati",
-            field: "Biomaterials",
-            expertise: "2D Materials & Nanotoxicology",
-            achievements: "Rising star in biomaterials, 50+ publications",
-            research: "Graphene biodegradation, antimicrobial coatings, biocompatibility",
-            applications: "Medical devices, drug delivery, antimicrobial surfaces",
-            techniques: "Material characterization, cell culture, biodegradation studies",
-            collaboration: "University of Strasbourg, international biomaterials consortiums",
-            impact: "Making nanomaterials safer for biomedical applications"
-        }
-    };
-
-    // Expand faculty card function
-    function expandFaculty(facultyId) {
-        const card = document.querySelector(`[data-faculty="${facultyId}"]`);
-        const isExpanded = card.classList.contains('expanded');
-        
-        // Close all other expanded cards
-        document.querySelectorAll('.faculty-card.expanded').forEach(c => {
-            c.classList.remove('expanded');
-            const details = c.querySelector('.faculty-details');
-            if (details) details.remove();
-        });
-        
-        if (!isExpanded) {
-            card.classList.add('expanded');
-            const faculty = facultyData[facultyId];
-            
-            // Create detailed content
-            const detailsHTML = `
-                <div class="faculty-details">
-                    <div class="research-details">
-                        <div class="detail-section">
-                            <div class="detail-title">🏆 Achievements</div>
-                            <div class="detail-content">${faculty.achievements}</div>
-                        </div>
-                        <div class="detail-section">
-                            <div class="detail-title">🔬 Research Focus</div>
-                            <div class="detail-content">${faculty.research}</div>
-                        </div>
-                        <div class="detail-section">
-                            <div class="detail-title">💡 Applications</div>
-                            <div class="detail-content">${faculty.applications}</div>
-                        </div>
-                        <div class="detail-section">
-                            <div class="detail-title">⚗️ Techniques</div>
-                            <div class="detail-content">${faculty.techniques}</div>
-                        </div>
-                        <div class="detail-section">
-                            <div class="detail-title">🌍 Collaborations</div>
-                            <div class="detail-content">${faculty.collaboration}</div>
-                        </div>
-                        <div class="detail-section">
-                            <div class="detail-title">🚀 Impact</div>
-                            <div class="detail-content">${faculty.impact}</div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            card.insertAdjacentHTML('beforeend', detailsHTML);
-        }
-    }
-
-    // Research comparison function
-    function compareResearch() {
-        const faculty1Id = document.getElementById('faculty1Select').value;
-        const faculty2Id = document.getElementById('faculty2Select').value;
-        const resultDiv = document.getElementById('comparisonResult');
-        
-        if (!faculty1Id || !faculty2Id) {
-            alert('Please select both faculty members to compare');
-            return;
-        }
-        
-        if (faculty1Id === faculty2Id) {
-            alert('Please select different faculty members');
-            return;
-        }
-        
-        const faculty1 = facultyData[faculty1Id];
-        const faculty2 = facultyData[faculty2Id];
-        
-        // Generate research gaps and synergies
-        const researchGaps = generateResearchGaps(faculty1Id, faculty2Id);
-        
-        const comparisonHTML = `
-            <div class="comparison-grid">
-                <div class="faculty-comparison">
-                    <div class="comparison-name">${faculty1.name}</div>
-                    <div class="comparison-item">
-                        <div class="comparison-label">Research Field</div>
-                        <div class="comparison-value">${faculty1.field}</div>
-                    </div>
-                    <div class="comparison-item">
-                        <div class="comparison-label">Expertise</div>
-                        <div class="comparison-value">${faculty1.expertise}</div>
-                    </div>
-                    <div class="comparison-item">
-                        <div class="comparison-label">Key Applications</div>
-                        <div class="comparison-value">${faculty1.applications}</div>
-                    </div>
-                    <div class="comparison-item">
-                        <div class="comparison-label">Main Techniques</div>
-                        <div class="comparison-value">${faculty1.techniques}</div>
-                    </div>
-                </div>
-                
-                <div class="comparison-divider"></div>
-                
-                <div class="faculty-comparison">
-                    <div class="comparison-name">${faculty2.name}</div>
-                    <div class="comparison-item">
-                        <div class="comparison-label">Research Field</div>
-                        <div class="comparison-value">${faculty2.field}</div>
-                    </div>
-                    <div class="comparison-item">
-                        <div class="comparison-label">Expertise</div>
-                        <div class="comparison-value">${faculty2.expertise}</div>
-                    </div>
-                    <div class="comparison-item">
-                        <div class="comparison-label">Key Applications</div>
-                        <div class="comparison-value">${faculty2.applications}</div>
-                    </div>
-                    <div class="comparison-item">
-                        <div class="comparison-label">Main Techniques</div>
-                        <div class="comparison-value">${faculty2.techniques}</div>
-                    </div>
-                </div>
-                
-                <div class="research-gap">
-                    <div class="gap-title">🔬 Research Synergies & Opportunities</div>
-                    <div class="gap-content">${researchGaps}</div>
-                </div>
-            </div>
-        `;
-        
-        resultDiv.innerHTML = comparisonHTML;
-        resultDiv.style.display = 'block';
-        
-        // Smooth scroll to results
-        resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-
-    // Generate research gaps and synergies
-    function generateResearchGaps(faculty1Id, faculty2Id) {
-        const synergies = {
-            'mahesh-kms': 'Combining DNA photochemistry with carbohydrate chemistry could lead to novel photoactivated drug delivery systems using sugar-based carriers for targeted cancer therapy.',
-            'mahesh-kgt': 'Integration of DNA photochemistry with nanomaterials could create hybrid systems for enhanced photodynamic therapy and quantum dot-based biological imaging.',
-            'mahesh-rajendra': 'Merging DNA research with 2D materials could develop biocompatible graphene-DNA conjugates for advanced biosensors and targeted therapeutic applications.',
-            'kms-kgt': 'Combining medicinal chemistry with photochemistry could create light-activated drug delivery systems and photosensitive therapeutic compounds.',
-            'kms-rajendra': 'Integration of drug discovery with biomaterials could lead to smart drug delivery platforms using biocompatible nanomaterials with controlled release mechanisms.',
-            'kgt-rajendra': 'Merging photochemistry with 2D materials could develop advanced photocatalytic systems and light-responsive biomaterials for medical applications.'
-        };
-        
-        const key = faculty1Id < faculty2Id ? `${faculty1Id}-${faculty2Id}` : `${faculty2Id}-${faculty1Id}`;
-        return synergies[key] || 'These research areas offer exciting opportunities for interdisciplinary collaboration in advancing chemical sciences and their applications.';
-    }
-
-    // Initialize faculty showcase interactions
-    document.addEventListener('DOMContentLoaded', function() {
-        // Add click handlers for faculty cards
-        document.querySelectorAll('.faculty-card').forEach(card => {
-            card.addEventListener('click', function(e) {
-                if (!e.target.closest('.learn-more-btn')) {
-                    const facultyId = this.getAttribute('data-faculty');
-                    expandFaculty(facultyId);
-                }
-            });
-        });
-    });
-        </script>
 
         <!-- Floating social icon bar (from index.html) -->
         <style>
@@ -4032,254 +3880,406 @@
         });
 
         // Faculty Carousel Functionality
-        let currentFacultySlide = 0;
-        const facultyCarouselTrack = document.getElementById('facultyCarouselTrack');
-        const facultyCarouselIndicators = document.getElementById('facultyCarouselIndicators');
-        const facultyCards = document.querySelectorAll('.faculty-carousel-card');
-        const totalFacultySlides = facultyCards.length;
+        let currentResearchSlide = 0;
+        const researchCarouselTrack = document.getElementById('facultyCarouselTrack');
+        const researchCarouselIndicators = document.getElementById('researchCarouselIndicators');
+        const researchCards = document.querySelectorAll('.faculty-carousel-card');
+        const totalResearchSlides = researchCards.length;
 
-        // Faculty data for detailed information and comparison
-        const facultyData = {
-            mahesh: {
-                name: "Prof. Mahesh Hariharan",
-                field: "Physical Organic Chemistry",
-                expertise: "DNA Photochemistry & Biophysical Chemistry",
-                research: [
-                    "DNA photoactivated cleaving agents for cancer therapy",
-                    "Twisted π-systems and their photophysical properties", 
-                    "Supramolecular assemblies in biological systems",
-                    "Light-harvesting complexes mimicking natural photosynthesis"
+        // Research field data with associated faculty members from IISER TVM
+        const researchFieldData = {
+            'physical-organic': {
+                name: "Physical Organic Chemistry",
+                description: "Understanding molecular structure-reactivity relationships and biophysical processes",
+                faculty: [
+                    {
+                        name: "Prof. Mahesh Hariharan",
+                        email: "mahesh@iisertvm.ac.in",
+                        research: "Physical Organic Chemistry, Biophysical Chemistry",
+                        expertise: "DNA photochemistry, molecular recognition, photophysical properties"
+                    },
+                    {
+                        name: "Prof. J N Moorthy",
+                        email: "director@iisertvm.ac.in",
+                        research: "Organic Photochemistry, Supramolecular Chemistry, Organic Materials",
+                        expertise: "Mechanistic organic chemistry, photochemistry applications"
+                    }
                 ],
-                publications: "150+ peer-reviewed publications",
-                impact: "Developing targeted cancer therapies through DNA photochemistry",
-                grants: "DST, DBT, CSIR major research grants"
+                applications: "Cancer therapy, targeted drug delivery, photodynamic therapy, molecular recognition",
+                techniques: "UV-Vis spectroscopy, fluorescence, NMR, computational modeling",
+                impact: "Revolutionary work in DNA photochemistry with potential cancer treatment applications"
             },
-            kms: {
-                name: "Prof. Kana M. Sureshan",
-                field: "Medicinal Chemistry",
-                expertise: "Chemical Biology & Drug Discovery",
-                research: [
-                    "Carbohydrate-based therapeutics for metabolic disorders",
-                    "Supramolecular materials for drug delivery",
-                    "Enzyme inhibitors for diabetes and cancer",
-                    "Bioorthogonal chemistry applications"
+            'medicinal': {
+                name: "Medicinal Chemistry",
+                description: "Designing and developing new drugs and therapeutic compounds",
+                faculty: [
+                    {
+                        name: "Prof. Kana M. Sureshan",
+                        email: "kms@iisertvm.ac.in",
+                        research: "Medicinal Chemistry, Chemical Biology, Organic Synthesis",
+                        expertise: "Carbohydrate chemistry, supramolecular chemistry, crystal engineering"
+                    },
+                    {
+                        name: "Dr. Ayan Mukherjee",
+                        email: "ayan.mukherjee@iisertvm.ac.in",
+                        research: "Medicinal Chemistry, Organic synthesis, Chemical biology",
+                        expertise: "Computational drug discovery, bioactive compounds"
+                    },
+                    {
+                        name: "Dr. Rajendar Goreti",
+                        email: "rajendar@iisertvm.ac.in",
+                        research: "Asymmetric Total Synthesis Natural Product Molecules",
+                        expertise: "Asymmetric catalysis, medicinal chemistry applications"
+                    },
+                    {
+                        name: "Dr. Sreejith Jayasree Varma",
+                        email: "varma@iisertvm.ac.in",
+                        research: "Metabolic chemistry, Organic synthesis, Chemical biology",
+                        expertise: "Mass spectrometry, metabolic pathways"
+                    }
                 ],
-                publications: "120+ research publications",
-                impact: "Revolutionary drug delivery systems using natural carbohydrates",
-                grants: "SERB, DBT, ICMR research funding"
+                applications: "Drug discovery, therapeutic agents, targeted delivery systems",
+                techniques: "Organic synthesis, bioassays, computational modeling, mass spectrometry",
+                impact: "Novel carbohydrate-based therapeutics with enhanced bioavailability"
             },
-            kgt: {
-                name: "Prof. K. George Thomas",
-                field: "Photochemistry",
-                expertise: "Nanomaterials & Light-Matter Interactions",
-                research: [
-                    "Hybrid nanomaterials for solar energy conversion",
-                    "Quantum dot technologies and applications",
-                    "Plasmonics and surface-enhanced spectroscopy",
-                    "Artificial light-harvesting systems"
+            'photochemistry': {
+                name: "Photochemistry & Nanomaterials",
+                description: "Light-matter interactions and nanoscale materials for energy and sensing",
+                faculty: [
+                    {
+                        name: "Prof. K. George Thomas",
+                        email: "kgt@iisertvm.ac.in",
+                        research: "Photochemistry & photophysics, Hybrid nanomaterials",
+                        expertise: "Light-matter interactions at nanoscale, Raman spectroscopy, organized surfaces"
+                    },
+                    {
+                        name: "Dr. T. Shyamala",
+                        email: "tshyama@iisertvm.ac.in",
+                        research: "Surface Enhanced Raman Spectroscopy, Quantum dots",
+                        expertise: "Fluorescence spectroscopy, nanomaterial characterization"
+                    },
+                    {
+                        name: "Dr. Indranil Mondal",
+                        email: "i.mondal@iisertvm.ac.in",
+                        research: "Colloidal synthesis, bulk single-crystal materials",
+                        expertise: "Photocatalytic and electrocatalytic conditions, coupled electrolysis"
+                    }
                 ],
-                publications: "200+ high-impact publications",
-                impact: "Pioneering quantum dot solar cells and energy conversion",
-                grants: "DST-FIST, UGC-CAS, international collaborations"
+                applications: "Solar energy conversion, quantum dots, photocatalysis, sensors, LED technology",
+                techniques: "Spectroscopy, microscopy, nanofabrication, photophysical measurements",
+                impact: "Pioneering work in nanophotonics advancing renewable energy technologies"
             },
-            rajendra: {
-                name: "Dr. Rajendra Kurapati",
-                field: "Biomaterials",
-                expertise: "2D Materials & Nanotoxicology",
-                research: [
-                    "Biodegradable 2D materials for biomedical applications",
-                    "Antimicrobial coatings for medical devices",
-                    "Nanotoxicology and biocompatibility studies",
-                    "Graphene-based drug delivery systems"
+            'supramolecular': {
+                name: "Supramolecular Chemistry",
+                description: "Self-assembly and non-covalent interactions in molecular systems",
+                faculty: [
+                    {
+                        name: "Prof. Reji Varghese",
+                        email: "reji@iisertvm.ac.in",
+                        research: "Supramolecular chemistry with DNA, Functional DNA nanotechnology",
+                        expertise: "DNA nanostructures, programmable materials, biomedical applications"
+                    },
+                    {
+                        name: "Dr. Soumen De",
+                        email: "soumende@iisertvm.ac.in",
+                        research: "Supramolecular Chemistry, Molecular Switches and Machines",
+                        expertise: "Foldamer chemistry, molecular machines"
+                    },
+                    {
+                        name: "Dr. Ajayaghosh Ayyappanpillai",
+                        email: "ajayaghosh@niist.res.in",
+                        research: "Functional Organic Materials, Supramolecular Chemistry",
+                        expertise: "Self-assembly, functional materials design"
+                    }
                 ],
-                publications: "80+ research publications",
-                impact: "Creating safer nanomaterials through biodegradation studies",
-                grants: "SERB Early Career Award, DBT funding"
+                applications: "Smart materials, drug delivery, biosensors, molecular machines",
+                techniques: "Self-assembly studies, microscopy, spectroscopy, material characterization",
+                impact: "Creating programmable matter using DNA nanotechnology and molecular machines"
             },
-            basudev: {
-                name: "Dr. Basudev Sahoo",
-                field: "Catalysis",
-                expertise: "Sustainable Organic Synthesis & Photocatalysis",
-                research: [
-                    "Metal-free coupling reactions for green chemistry",
-                    "Photocatalytic processes for sustainable synthesis",
-                    "C-H functionalization methodologies",
-                    "Environmentally benign synthetic protocols"
+            'biomaterials': {
+                name: "Biomaterials & 2D Materials",
+                description: "Biocompatible materials and two-dimensional nanomaterials for medical applications",
+                faculty: [
+                    {
+                        name: "Dr. Rajendra Kurapati",
+                        email: "rkurapati@iisertvm.ac.in",
+                        research: "Biomaterials, Materials Chemistry, 2D Materials",
+                        expertise: "Biodegradation of nanomaterials, nanotoxicology, antimicrobial coatings"
+                    },
+                    {
+                        name: "Dr. K. R. Krishnadas",
+                        email: "krishnadas@iisertvm.ac.in",
+                        research: "Chiral Inorganic and Bio materials, Chiral Assemblies",
+                        expertise: "Fluorescence spectroscopy, nanomaterials, chiral systems"
+                    }
                 ],
-                publications: "70+ publications in top journals",
-                impact: "Developing eco-friendly synthetic methodologies",
-                grants: "SERB Core Research Grant, CSIR funding"
+                applications: "Medical devices, drug delivery, antimicrobial surfaces, biosensors",
+                techniques: "Material characterization, cell culture, biodegradation studies, microscopy",
+                impact: "Making nanomaterials safer for biomedical applications through biodegradation studies"
             },
-            reji: {
-                name: "Prof. Reji Varghese",
-                field: "Supramolecular Chemistry",
-                expertise: "DNA Nanotechnology & Functional Materials",
-                research: [
-                    "Programmable DNA nanostructures for biomedicine",
-                    "Smart materials with responsive properties",
-                    "Self-assembling systems for drug delivery",
-                    "Biomimetic supramolecular architectures"
+            'catalysis': {
+                name: "Catalysis & Sustainable Chemistry",
+                description: "Green chemistry and catalytic processes for sustainable synthesis",
+                faculty: [
+                    {
+                        name: "Dr. Basudev Sahoo",
+                        email: "basudev@iisertvm.ac.in",
+                        research: "Catalysis for Sustainable Organic Synthesis",
+                        expertise: "Transition metal-catalysis, photocatalysis, metal-free coupling reactions"
+                    },
+                    {
+                        name: "Dr. Alagiri Kaliyamoorthy",
+                        email: "alagiri@iisertvm.ac.in",
+                        research: "C–H bond activation and functionalization",
+                        expertise: "Asymmetric catalysis, natural product synthesis"
+                    },
+                    {
+                        name: "Dr. Ramesh Rasappan",
+                        email: "rr@iisertvm.ac.in",
+                        research: "Asymmetric Catalysis and Cross-Coupling Reactions",
+                        expertise: "Catalytic methodology development"
+                    },
+                    {
+                        name: "Dr. Veera Reddy Yatham",
+                        email: "reddy@iisertvm.ac.in",
+                        research: "Radical Chemistry in Organic Synthesis",
+                        expertise: "Radical reactions, synthetic methodology"
+                    },
+                    {
+                        name: "Dr. Subrata Kundu",
+                        email: "skundu@iisertvm.ac.in",
+                        research: "Inorganic Reaction Mechanisms, Catalysis",
+                        expertise: "Bioinorganic chemistry, catalytic mechanisms"
+                    },
+                    {
+                        name: "Dr. A Muthukrishnan",
+                        email: "muthukrishnan@iisertvm.ac.in",
+                        research: "Fuel cell electro-catalysis",
+                        expertise: "Platinum-free catalysts, polymer electrolyte membrane fuel cells"
+                    },
+                    {
+                        name: "Dr. Ramaraj Ayyappan",
+                        email: "ramaraj.ayyappan@iisertvm.ac.in",
+                        research: "Bond Activation and Functionalization of Small Molecules",
+                        expertise: "CO2 and N2 activation, hydrogen storage, hydrogenation reactions"
+                    },
+                    {
+                        name: "Prof. Sukhendu Mandal",
+                        email: "sukhendu@iisertvm.ac.in",
+                        research: "Biomass to liquid transportation fuel, Alkane metathesis",
+                        expertise: "Cluster-assembled materials, sustainable fuel production"
+                    }
                 ],
-                publications: "100+ research publications",
-                impact: "Creating programmable matter using DNA nanotechnology",
-                grants: "DST-INSPIRE, DBT major research projects"
+                applications: "Green synthesis, pharmaceutical manufacturing, renewable energy, sustainable processes",
+                techniques: "Catalysis, spectroscopy, electrochemistry, reaction optimization",
+                impact: "Reducing chemical waste by 99% and enabling room-temperature reactions"
+            },
+            'theoretical': {
+                name: "Theoretical & Computational Chemistry",
+                description: "Computational modeling and theoretical understanding of chemical phenomena",
+                faculty: [
+                    {
+                        name: "Prof. R. S. Swathi",
+                        email: "swathi@iisertvm.ac.in",
+                        research: "Theoretical Chemistry",
+                        expertise: "Computational methods, molecular modeling"
+                    },
+                    {
+                        name: "Dr. Vennapusa Sivaranjana Reddy",
+                        email: "siva@iisertvm.ac.in",
+                        research: "Theoretical and Computational Chemistry",
+                        expertise: "Quantum chemistry, computational modeling"
+                    },
+                    {
+                        name: "Dr. Pushpita Ghosh",
+                        email: "pushpita@iisertvm.ac.in",
+                        research: "Theoretical and Computational Chemistry, Chemical Physics",
+                        expertise: "Statistical mechanics, nonlinear dynamics, biological physics"
+                    },
+                    {
+                        name: "Prof. N Satyamurthy",
+                        email: "nsath@iisermohali.ac.in",
+                        research: "Theoretical Chemistry",
+                        expertise: "Quantum chemistry theory, computational methods"
+                    }
+                ],
+                applications: "Drug design, material property prediction, reaction mechanism elucidation",
+                techniques: "Quantum chemistry, molecular dynamics, DFT calculations, machine learning",
+                impact: "Virtual screening of billions of drug candidates in days, saving millions in research costs"
+            },
+            'materials': {
+                name: "Materials Chemistry",
+                description: "Design and synthesis of advanced materials with tailored properties",
+                faculty: [
+                    {
+                        name: "Dr. A. Thirumurugan",
+                        email: "thiru@iisertvm.ac.in",
+                        research: "Materials Chemistry - Metal organic frameworks",
+                        expertise: "Metal oxide clusters, nano composites, molecular separation, optical properties"
+                    },
+                    {
+                        name: "Dr. Gokulnath Sabapathi",
+                        email: "gokul@iisertvm.ac.in",
+                        research: "Macrocyclic systems, Bioinorganic Chemistry",
+                        expertise: "Planar aromatic systems, porphyrin-based dye-sensitized solar cells"
+                    },
+                    {
+                        name: "Prof. Ajay Venugopal",
+                        email: "venugopal@iisertvm.ac.in",
+                        research: "Main Group Chemistry",
+                        expertise: "Inorganic materials, main group element chemistry"
+                    },
+                    {
+                        name: "Prof. Suresh Das",
+                        email: "sureshdas@iisertvm.ac.in",
+                        research: "Photoresponsive Materials, Self-Assembly",
+                        expertise: "Near infrared dyes, responsive materials"
+                    },
+                    {
+                        name: "Prof. Ajayan Vinu",
+                        email: "ajayan.vinu@newcastle.edu.au",
+                        research: "Advanced Nanomaterials",
+                        expertise: "Nanomaterial synthesis and applications"
+                    },
+                    {
+                        name: "Dr. Jerry A. Fereiro",
+                        email: "jerryfereiro@iisertvm.ac.in",
+                        research: "Molecular electronics, Bio-electronics",
+                        expertise: "Quantum charge transport, nano device fabrication"
+                    },
+                    {
+                        name: "Dr. Keshaba Nanda Parida",
+                        email: "pkesh@iisertvm.ac.in",
+                        research: "Organic Synthesis, Organic Mol-electronics",
+                        expertise: "Molecular electronics, organic materials"
+                    }
+                ],
+                applications: "Smart materials, electronics, sensors, energy storage, separation membranes",
+                techniques: "Material synthesis, characterization, device fabrication, property measurement",
+                impact: "Designer materials with programmable properties for next-generation technologies"
             }
         };
 
-        function updateFacultyCarousel() {
+        function updateResearchCarousel() {
             const slideWidth = 430; // card width + gap
-            facultyCarouselTrack.style.transform = `translateX(-${currentFacultySlide * slideWidth}px)`;
+            researchCarouselTrack.style.transform = `translateX(-${currentResearchSlide * slideWidth}px)`;
             
             // Update active card
-            facultyCards.forEach((card, index) => {
-                card.classList.toggle('active', index === currentFacultySlide);
+            researchCards.forEach((card, index) => {
+                card.classList.toggle('active', index === currentResearchSlide);
             });
             
             // Update indicators
-            const indicators = facultyCarouselIndicators.querySelectorAll('.indicator');
+            const indicators = researchCarouselIndicators.querySelectorAll('.indicator');
             indicators.forEach((indicator, index) => {
-                indicator.classList.toggle('active', index === currentFacultySlide);
+                indicator.classList.toggle('active', index === currentResearchSlide);
             });
         }
 
-        function moveFacultyCarousel(direction) {
-            currentFacultySlide += direction;
+        function moveResearchCarousel(direction) {
+            currentResearchSlide += direction;
             
-            if (currentFacultySlide >= totalFacultySlides) {
-                currentFacultySlide = 0;
-            } else if (currentFacultySlide < 0) {
-                currentFacultySlide = totalFacultySlides - 1;
+            if (currentResearchSlide >= totalResearchSlides) {
+                currentResearchSlide = 0;
+            } else if (currentResearchSlide < 0) {
+                currentResearchSlide = totalResearchSlides - 1;
             }
             
-            updateFacultyCarousel();
+            updateResearchCarousel();
         }
 
-        function goToFacultySlide(slideIndex) {
-            currentFacultySlide = slideIndex;
-            updateFacultyCarousel();
+        function goToResearchSlide(slideIndex) {
+            currentResearchSlide = slideIndex;
+            updateResearchCarousel();
         }
 
-        function expandFacultyCarousel(facultyId) {
-            const faculty = facultyData[facultyId];
-            if (!faculty) return;
+        function expandResearchField(fieldId) {
+            const field = researchFieldData[fieldId];
+            if (!field) return;
             
             const modal = document.createElement('div');
             modal.className = 'faculty-modal-overlay';
             modal.innerHTML = `
-                <div class="faculty-modal">
+                <div class="faculty-modal research-field-modal">
                     <button class="modal-close" onclick="this.parentElement.parentElement.remove()">×</button>
                     <div class="faculty-modal-header">
-                        <h2>${faculty.name}</h2>
-                        <p class="faculty-field">${faculty.field}</p>
+                        <h2>${field.name}</h2>
+                        <p class="faculty-field">${field.description}</p>
                     </div>
                     <div class="faculty-modal-content">
-                        <div class="faculty-expertise-section">
-                            <h3>Research Expertise</h3>
-                            <p>${faculty.expertise}</p>
-                        </div>
-                        <div class="faculty-research-section">
-                            <h3>Current Research Areas</h3>
-                            <ul>
-                                ${faculty.research.map(item => `<li>${item}</li>`).join('')}
-                            </ul>
-                        </div>
-                        <div class="faculty-impact-section">
-                            <h3>Research Impact</h3>
-                            <p>${faculty.impact}</p>
-                        </div>
-                        <div class="faculty-stats">
-                            <div class="stat-item">
-                                <strong>Publications:</strong> ${faculty.publications}
+                        <div class="faculty-section">
+                            <h3>Faculty Members</h3>
+                            <div class="faculty-grid">
+                                ${field.faculty.map(faculty => `
+                                    <div class="faculty-member-card">
+                                        <h4>${faculty.name}</h4>
+                                        <p class="faculty-email">${faculty.email}</p>
+                                        <p class="faculty-research"><strong>Research:</strong> ${faculty.research}</p>
+                                        <p class="faculty-expertise"><strong>Expertise:</strong> ${faculty.expertise}</p>
+                                    </div>
+                                `).join('')}
                             </div>
-                            <div class="stat-item">
-                                <strong>Funding:</strong> ${faculty.grants}
+                        </div>
+                        <div class="research-details-section">
+                            <div class="detail-section">
+                                <h3>Applications</h3>
+                                <p>${field.applications}</p>
+                            </div>
+                            <div class="detail-section">
+                                <h3>Techniques & Methods</h3>
+                                <p>${field.techniques}</p>
+                            </div>
+                            <div class="detail-section">
+                                <h3>Research Impact</h3>
+                                <p>${field.impact}</p>
                             </div>
                         </div>
                     </div>
                 </div>
             `;
             
-            // Add modal styles
+            // Add enhanced modal styles
             const modalStyles = `
                 <style>
-                .faculty-modal-overlay {
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background: rgba(0,0,0,0.8);
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    z-index: 10000;
-                    padding: 20px;
-                    box-sizing: border-box;
+                .research-field-modal {
+                    max-width: 900px;
+                    max-height: 90vh;
                 }
-                .faculty-modal {
-                    background: white;
-                    border-radius: 20px;
-                    max-width: 600px;
-                    width: 100%;
-                    max-height: 80vh;
-                    overflow-y: auto;
-                    position: relative;
-                    box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+                .faculty-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                    gap: 20px;
+                    margin-top: 15px;
                 }
-                .modal-close {
-                    position: absolute;
-                    top: 15px;
-                    right: 20px;
-                    background: none;
-                    border: none;
-                    font-size: 2rem;
-                    cursor: pointer;
-                    color: #666;
-                    z-index: 1;
-                }
-                .faculty-modal-header {
-                    background: linear-gradient(135deg, #667eea, #764ba2);
-                    color: white;
-                    padding: 30px;
-                    text-align: center;
-                    border-radius: 20px 20px 0 0;
-                }
-                .faculty-modal-header h2 {
-                    margin: 0 0 10px 0;
-                    font-size: 1.8rem;
-                }
-                .faculty-field {
-                    margin: 0;
-                    opacity: 0.9;
-                    font-size: 1.1rem;
-                }
-                .faculty-modal-content {
-                    padding: 30px;
-                }
-                .faculty-expertise-section, .faculty-research-section, .faculty-impact-section {
-                    margin-bottom: 25px;
-                }
-                .faculty-modal-content h3 {
-                    color: #667eea;
-                    margin-bottom: 15px;
-                    font-size: 1.3rem;
-                }
-                .faculty-modal-content ul {
-                    padding-left: 20px;
-                }
-                .faculty-modal-content li {
-                    margin-bottom: 8px;
-                    line-height: 1.6;
-                }
-                .faculty-stats {
+                .faculty-member-card {
                     background: #f8f9fa;
                     padding: 20px;
                     border-radius: 10px;
-                    margin-top: 20px;
+                    border-left: 4px solid #667eea;
                 }
-                .stat-item {
+                .faculty-member-card h4 {
+                    color: #667eea;
+                    margin: 0 0 10px 0;
+                    font-size: 1.1rem;
+                }
+                .faculty-email {
+                    color: #666;
+                    font-size: 0.9rem;
                     margin-bottom: 10px;
-                    color: #4a5568;
+                }
+                .faculty-research, .faculty-expertise {
+                    font-size: 0.95rem;
+                    line-height: 1.4;
+                    margin-bottom: 8px;
+                }
+                .research-details-section {
+                    margin-top: 30px;
+                }
+                .faculty-section h3, .research-details-section h3 {
+                    color: #667eea;
+                    border-bottom: 2px solid #e2e8f0;
+                    padding-bottom: 10px;
+                    margin-bottom: 20px;
                 }
                 </style>
             `;
@@ -4288,136 +4288,98 @@
             document.body.appendChild(modal);
         }
 
-        function compareResearch() {
-            const faculty1 = document.getElementById('faculty1Select').value;
-            const faculty2 = document.getElementById('faculty2Select').value;
+        function compareResearchFields() {
+            const field1 = document.getElementById('field1Select').value;
+            const field2 = document.getElementById('field2Select').value;
             const resultDiv = document.getElementById('comparisonResult');
             
-            if (!faculty1 || !faculty2) {
-                alert('Please select both faculty members to compare');
+            if (!field1 || !field2) {
+                alert('Please select both research fields to compare');
                 return;
             }
             
-            if (faculty1 === faculty2) {
-                alert('Please select different faculty members');
+            if (field1 === field2) {
+                alert('Please select different research fields');
                 return;
             }
             
-            const f1 = facultyData[faculty1];
-            const f2 = facultyData[faculty2];
+            const f1 = researchFieldData[field1];
+            const f2 = researchFieldData[field2];
             
             resultDiv.innerHTML = `
-                <h4>Research Comparison: ${f1.name} vs ${f2.name}</h4>
+                <h4>Research Field Comparison: ${f1.name} vs ${f2.name}</h4>
                 <div class="comparison-grid">
                     <div class="comparison-column">
                         <h5>${f1.name}</h5>
-                        <p><strong>Field:</strong> ${f1.field}</p>
-                        <p><strong>Focus:</strong> ${f1.expertise}</p>
+                        <p><strong>Focus:</strong> ${f1.description}</p>
+                        <p><strong>Faculty Count:</strong> ${f1.faculty.length} members</p>
+                        <p><strong>Applications:</strong> ${f1.applications}</p>
                         <p><strong>Impact:</strong> ${f1.impact}</p>
                     </div>
                     <div class="comparison-column">
                         <h5>${f2.name}</h5>
-                        <p><strong>Field:</strong> ${f2.field}</p>
-                        <p><strong>Focus:</strong> ${f2.expertise}</p>
+                        <p><strong>Focus:</strong> ${f2.description}</p>
+                        <p><strong>Faculty Count:</strong> ${f2.faculty.length} members</p>
+                        <p><strong>Applications:</strong> ${f2.applications}</p>
                         <p><strong>Impact:</strong> ${f2.impact}</p>
                     </div>
                 </div>
                 <div class="research-gaps">
                     <h5>Potential Collaboration Areas:</h5>
-                    <p>${generateResearchGaps(f1, f2)}</p>
+                    <p>${generateFieldCollaboration(f1, f2)}</p>
                 </div>
             `;
-            
-            // Add comparison styles
-            const comparisonStyles = `
-                <style>
-                .comparison-grid {
-                    display: grid;
-                    grid-template-columns: 1fr 1fr;
-                    gap: 30px;
-                    margin: 20px 0;
-                }
-                .comparison-column {
-                    background: white;
-                    padding: 20px;
-                    border-radius: 10px;
-                    border: 2px solid #e2e8f0;
-                }
-                .comparison-column h5 {
-                    color: #667eea;
-                    margin-bottom: 15px;
-                    font-size: 1.2rem;
-                }
-                .research-gaps {
-                    background: linear-gradient(135deg, #667eea, #764ba2);
-                    color: white;
-                    padding: 20px;
-                    border-radius: 10px;
-                    margin-top: 20px;
-                }
-                .research-gaps h5 {
-                    margin-bottom: 10px;
-                    color: white;
-                }
-                </style>
-            `;
-            
-            if (!document.querySelector('style[data-comparison]')) {
-                const styleEl = document.createElement('style');
-                styleEl.setAttribute('data-comparison', 'true');
-                styleEl.innerHTML = comparisonStyles;
-                document.head.appendChild(styleEl);
-            }
             
             resultDiv.style.display = 'block';
         }
 
-        function generateResearchGaps(faculty1, faculty2) {
+        function generateFieldCollaboration(field1, field2) {
             const collaborations = {
-                'Physical Organic Chemistry-Medicinal Chemistry': 'Designing photoactivated drug delivery systems combining DNA photochemistry with carbohydrate therapeutics',
-                'Physical Organic Chemistry-Photochemistry': 'Developing hybrid light-harvesting systems for both biological and artificial photosynthetic applications',
-                'Physical Organic Chemistry-Biomaterials': 'Creating biodegradable 2D materials functionalized with DNA-targeting agents for cancer therapy',
-                'Medicinal Chemistry-Photochemistry': 'Engineering quantum dot-drug conjugates for targeted cancer therapy with real-time imaging',
-                'Medicinal Chemistry-Biomaterials': 'Developing antimicrobial carbohydrate coatings for medical devices with controlled drug release',
-                'Photochemistry-Biomaterials': 'Creating light-responsive 2D materials for on-demand drug delivery and photodynamic therapy',
-                'Catalysis-Medicinal Chemistry': 'Green synthesis of pharmaceutical compounds using sustainable catalytic processes',
-                'Catalysis-Photochemistry': 'Photocatalytic synthesis of complex organic molecules for materials applications',
-                'Supramolecular Chemistry-Biomaterials': 'DNA-templated assembly of functional nanomaterials for biomedical applications',
-                'Supramolecular Chemistry-Medicinal Chemistry': 'Programmable drug delivery systems using DNA nanostructures'
+                'Physical Organic Chemistry-Medicinal Chemistry': 'Combining molecular understanding with drug design for targeted therapeutics and personalized medicine approaches',
+                'Physical Organic Chemistry-Photochemistry & Nanomaterials': 'Developing light-responsive biomolecules and hybrid organic-inorganic materials for advanced applications',
+                'Physical Organic Chemistry-Theoretical & Computational Chemistry': 'Integrating experimental observations with computational predictions for mechanism elucidation and design',
+                'Medicinal Chemistry-Photochemistry & Nanomaterials': 'Creating photoactivated drug delivery systems and diagnostic imaging agents using nanomaterials',
+                'Medicinal Chemistry-Supramolecular Chemistry': 'Designing self-assembling drug carriers and host-guest therapeutic systems',
+                'Medicinal Chemistry-Biomaterials & 2D Materials': 'Developing biocompatible drug delivery platforms and antimicrobial medical devices',
+                'Photochemistry & Nanomaterials-Supramolecular Chemistry': 'Engineering light-harvesting assemblies and photoresponsive supramolecular devices',
+                'Photochemistry & Nanomaterials-Materials Chemistry': 'Creating advanced optical materials and energy conversion devices with tailored properties',
+                'Supramolecular Chemistry-Biomaterials & 2D Materials': 'Designing bio-inspired hierarchical materials and responsive biomedical systems',
+                'Catalysis & Sustainable Chemistry-Materials Chemistry': 'Developing heterogeneous catalysts and sustainable material synthesis pathways',
+                'Theoretical & Computational Chemistry-Materials Chemistry': 'Predicting material properties and designing novel compounds through computational approaches'
             };
             
-            const key1 = `${faculty1.field}-${faculty2.field}`;
-            const key2 = `${faculty2.field}-${faculty1.field}`;
+            const key1 = `${field1.name}-${field2.name}`;
+            const key2 = `${field2.name}-${field1.name}`;
             
             return collaborations[key1] || collaborations[key2] || 
-                   `Interdisciplinary research combining ${faculty1.field.toLowerCase()} and ${faculty2.field.toLowerCase()} could lead to breakthrough innovations in chemical sciences and technology.`;
+                   `Interdisciplinary research combining ${field1.name.toLowerCase()} and ${field2.name.toLowerCase()} could lead to breakthrough innovations in chemical sciences and technology applications.`;
         }
 
         // Auto-advance carousel
-        let facultyCarouselInterval;
+        let researchCarouselInterval;
         
-        function startFacultyCarousel() {
-            facultyCarouselInterval = setInterval(() => {
-                moveFacultyCarousel(1);
-            }, 5000); // Change slide every 5 seconds
+        function startResearchCarousel() {
+            researchCarouselInterval = setInterval(() => {
+                moveResearchCarousel(1);
+            }, 6000); // Change slide every 6 seconds
         }
 
-        function stopFacultyCarousel() {
-            if (facultyCarouselInterval) {
-                clearInterval(facultyCarouselInterval);
+        function stopResearchCarousel() {
+            if (researchCarouselInterval) {
+                clearInterval(researchCarouselInterval);
             }
         }
 
-        // Initialize faculty carousel
+        // Initialize research carousel
         document.addEventListener('DOMContentLoaded', function() {
-            updateFacultyCarousel();
-            startFacultyCarousel();
+            updateResearchCarousel();
+            startResearchCarousel();
             
             // Pause on hover
             const carouselContainer = document.querySelector('.faculty-carousel-container');
             if (carouselContainer) {
-                carouselContainer.addEventListener('mouseenter', stopFacultyCarousel);
-                carouselContainer.addEventListener('mouseleave', startFacultyCarousel);
+                carouselContainer.addEventListener('mouseenter', stopResearchCarousel);
+                carouselContainer.addEventListener('mouseleave', startResearchCarousel);
             }
         });
         </script>
