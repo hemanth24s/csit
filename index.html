@@ -3027,7 +3027,7 @@
         <div class="home-carousel">
             <h2 class="home-carousel-title">CSIT Highlights</h2>
             <div class="home-carousel-content">
-                <img id="homeCarouselImage" class="home-carousel-image" src="" alt="CSIT Activity" onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkNTSVQgSW1hZ2U8L3RleHQ+PC9zdmc+';">,
+                <img id="homeCarouselImage" class="home-carousel-image" src="" alt="CSIT Activity" onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkNTSVQgSW1hZ2U8L3RleHQ+PC9zdmc+';">
                 <div class="home-carousel-controls">
                     <button class="home-carousel-btn" onclick="prevHomeSlide()" id="prevHomeBtn" title="Previous Image">‹</button>
                     <button class="home-carousel-btn" onclick="nextHomeSlide()" id="nextHomeBtn" title="Next Image">›</button>
@@ -4114,6 +4114,9 @@
                     
                     if (!imageEl || !descEl || !indicatorsEl) return;
 
+                    // Test image paths first for proxy domain debugging
+                    testImagePaths();
+
                     // Create indicators
                     indicatorsEl.innerHTML = '';
                     homeCarouselImages.forEach((_, index) => {
@@ -4124,8 +4127,10 @@
                         indicatorsEl.appendChild(dot);
                     });
 
-                    // Initialize first slide
-                    updateHomeSlide();
+                    // Initialize first slide with a small delay
+                    setTimeout(() => {
+                        updateHomeSlide();
+                    }, 100);
                     
                     // Start auto-advance
                     startHomeCarouselTimer();
@@ -4149,19 +4154,32 @@
                         // Function to try loading image with different paths
                         function tryLoadImage(paths, index = 0) {
                             if (index >= paths.length) {
-                                // All paths failed, show placeholder
-                                console.warn('All image paths failed for:', currentImage.desc);
-                                imageEl.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkNTSVQgSW1hZ2U8L3RleHQ+PC9zdmc+';
-                                imageEl.alt = 'CSIT Image Placeholder';
-                                descEl.textContent = currentImage.desc;
-                                finishTransition();
+                                // All paths failed, try GitHub raw as absolute last resort
+                                console.warn('All image paths failed, trying GitHub raw...');
+                                const githubUrl = 'https://raw.githubusercontent.com/hemanth24s/csit/main/' + currentImage.fallback;
+                                const finalTest = new Image();
+                                finalTest.onload = function() {
+                                    console.log('✅ GitHub raw loaded:', githubUrl);
+                                    imageEl.src = githubUrl;
+                                    imageEl.alt = currentImage.desc;
+                                    descEl.textContent = currentImage.desc;
+                                    finishTransition();
+                                };
+                                finalTest.onerror = function() {
+                                    console.warn('❌ Even GitHub raw failed, showing placeholder');
+                                    imageEl.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkNTSVQgSW1hZ2U8L3RleHQ+PC9zdmc+';
+                                    imageEl.alt = 'CSIT Image Placeholder';
+                                    descEl.textContent = currentImage.desc;
+                                    finishTransition();
+                                };
+                                finalTest.src = githubUrl;
                                 return;
                             }
                             
                             const testImg = new Image();
                             const currentPath = paths[index];
                             
-                            console.log(`Trying path ${index + 1}/${paths.length}:`, currentPath);
+                            console.log(`🔍 Trying path ${index + 1}/${paths.length}:`, currentPath);
                             
                             testImg.onload = function() {
                                 console.log('✅ Successfully loaded:', currentPath);
@@ -4173,7 +4191,8 @@
                             
                             testImg.onerror = function() {
                                 console.log('❌ Failed to load:', currentPath);
-                                tryLoadImage(paths, index + 1);
+                                // Try next path immediately
+                                setTimeout(() => tryLoadImage(paths, index + 1), 50);
                             };
                             
                             testImg.src = currentPath;
@@ -4193,19 +4212,25 @@
                             }, 600);
                         }
                         
-                        // Try multiple paths in order of preference
+                        // Try multiple paths in order of preference for proxy domains
+                        const baseUrl = window.location.origin;
+                        const currentPath = window.location.pathname;
                         const pathsToTry = [
                             currentImage.src,
                             currentImage.fallback,
-                            // Simple absolute paths for proxy domains
-                            window.location.origin + '/' + currentImage.fallback,
-                            // Common proxy subdirectory paths
-                            window.location.origin + '/csit/' + currentImage.fallback,
-                            // GitHub raw content as fallback
+                            // Try various absolute path combinations for proxy domains
+                            baseUrl + '/' + currentImage.fallback,
+                            baseUrl + '/csit/' + currentImage.fallback,
+                            baseUrl + currentPath.replace(/[^/]*$/, '') + currentImage.fallback,
+                            // Additional proxy patterns
+                            baseUrl + '/hemanth24s/csit/' + currentImage.fallback,
+                            baseUrl + '/main/' + currentImage.fallback,
+                            // GitHub raw content as final fallback
                             'https://raw.githubusercontent.com/hemanth24s/csit/main/' + currentImage.fallback
                         ];
                         
-                        console.log('🌐 Trying image paths for:', currentImage.desc);
+                        console.log('🌐 Testing image paths for proxy domain:', currentImage.desc);
+                        console.log('🔍 Base URL:', baseUrl, 'Current Path:', currentPath);
                         
                         tryLoadImage(pathsToTry);
                         
@@ -4298,6 +4323,35 @@
             }
             
             attemptLoad(logosPaths, currentPathIndex);
+        }
+
+        // Proxy domain image path tester - helps detect working paths
+        function testImagePaths() {
+            const testImage = 'index/bienvenue 2023 aug 10.jpg';
+            const baseUrl = window.location.origin;
+            const currentPath = window.location.pathname;
+            
+            const possiblePaths = [
+                './' + testImage,
+                testImage,
+                baseUrl + '/' + testImage,
+                baseUrl + '/csit/' + testImage,
+                baseUrl + currentPath.replace(/[^/]*$/, '') + testImage,
+                baseUrl + '/hemanth24s/csit/' + testImage
+            ];
+            
+            console.log('🔬 Testing proxy domain paths for images:');
+            
+            possiblePaths.forEach((path, index) => {
+                const testImg = new Image();
+                testImg.onload = function() {
+                    console.log(`✅ WORKING PATH ${index + 1}:`, path);
+                };
+                testImg.onerror = function() {
+                    console.log(`❌ Failed path ${index + 1}:`, path);
+                };
+                testImg.src = path;
+            });
         }
 
         // Home page image loading with fallbacks
