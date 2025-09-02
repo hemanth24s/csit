@@ -965,10 +965,22 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
-            color: #4fc3f7;
             backdrop-filter: blur(10px);
             border: 2px solid rgba(79, 195, 247, 0.3);
+            padding: 15px;
+        }
+
+        .csit-logo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: brightness(1.2) contrast(1.1);
+            transition: all 0.3s ease;
+        }
+
+        .curtain-logo:hover .csit-logo-img {
+            transform: scale(1.1);
+            filter: brightness(1.4) contrast(1.2);
         }
 
         .curtain-title {
@@ -2683,7 +2695,9 @@
                     <p class="presents-text">Prof. J N Moorthy, Director, IISER TVM presents</p>
                 </div>
             </div>
-            <div class="curtain-logo">🧪</div>
+            <div class="curtain-logo">
+                <img src="./Logo.png" alt="CSIT Logo" class="csit-logo-img" onerror="tryLoadCSITLogo(this)">
+            </div>
             <h1 class="curtain-title">CSIT</h1>
             <p class="curtain-subtitle">Chemical Society of IISER Thiruvananthapuram</p>
             <div class="loading-dots">
@@ -4250,6 +4264,46 @@
                 window.goToHomeSlide = goToHomeSlide;
             }
         });
+
+        // CSIT Logo Loading Function with Fallbacks
+        function tryLoadCSITLogo(imgElement) {
+            const logosPaths = [
+                './Logo.png',
+                'Logo.png',
+                window.location.origin + window.location.pathname.replace(/[^/]*$/, '') + 'Logo.png'
+            ];
+            
+            let currentPathIndex = 0;
+            
+            function attemptLoad(paths, index) {
+                if (index >= paths.length) {
+                    // All paths failed, show placeholder
+                    console.warn('All CSIT logo paths failed');
+                    imgElement.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSI2MCIgY3k9IjYwIiByPSI1MCIgZmlsbD0iIzRmYzNmNyIgb3BhY2l0eT0iMC4zIi8+PHRleHQgeD0iNjAiIHk9IjY1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM0ZmMzZjciIHRleHQtYW5jaG9yPSJtaWRkbGUiPkNTSVQ8L3RleHQ+PC9zdmc+';
+                    imgElement.alt = 'CSIT Logo';
+                    return;
+                }
+                
+                const testImg = new Image();
+                const currentPath = paths[index];
+                
+                console.log(`Trying CSIT logo path ${index + 1}/${paths.length}:`, currentPath);
+                
+                testImg.onload = function() {
+                    console.log('Successfully loaded CSIT logo:', currentPath);
+                    imgElement.src = currentPath;
+                };
+                
+                testImg.onerror = function() {
+                    console.log('Failed to load CSIT logo:', currentPath);
+                    attemptLoad(paths, index + 1);
+                };
+                
+                testImg.src = currentPath;
+            }
+            
+            attemptLoad(logosPaths, currentPathIndex);
+        }
 
         // Faculty Carousel Functionality
         let currentResearchSlide = 0;
