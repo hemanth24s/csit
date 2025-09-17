@@ -892,23 +892,23 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 500px; /* Increased height for better image display */
+            min-height: 700px; /* Significantly increased height for better visibility */
         }
         
         .chembiomat-carousel-container {
             position: relative;
             width: 100%;
-            max-width: 1000px; /* Reduced max-width to better fit image proportions */
-            height: 500px; /* Increased height from 400px to 500px */
+            max-width: 1400px; /* Increased max-width for larger carousel */
+            height: 700px; /* Significantly increased height from 500px to 700px */
             overflow: hidden;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(21, 101, 192, 0.2);
-            background: linear-gradient(135deg, rgba(21, 101, 192, 0.05), rgba(79, 195, 247, 0.05));
+            border-radius: 15px;
+            box-shadow: 0 6px 30px rgba(21, 101, 192, 0.3);
+            background: linear-gradient(135deg, rgba(21, 101, 192, 0.08), rgba(79, 195, 247, 0.08));
         }
         
         .chembiomat-carousel-track {
             display: flex;
-            transition: transform 0.5s ease-in-out;
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Enhanced easing for smoother animation */
             height: 100%;
         }
         
@@ -920,6 +920,14 @@
             align-items: center;
             justify-content: center;
             background: rgba(255, 255, 255, 0.02);
+            transform: scale(0.95); /* Slightly smaller by default */
+            transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
+            opacity: 0.7;
+        }
+        
+        .chembiomat-carousel-slide.active {
+            transform: scale(1); /* Full size when active */
+            opacity: 1;
         }
         
         .chembiomat-carousel-slide img {
@@ -929,9 +937,15 @@
             object-fit: contain; /* Changed from cover to contain to show full images */
             object-position: center;
             display: block;
-            border-radius: 8px;
+            border-radius: 12px;
             opacity: 1; /* Changed from 0 to 1 for immediate visibility */
-            transition: opacity 0.5s ease-in-out;
+            transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out, filter 0.8s ease-in-out;
+            filter: brightness(0.9) saturate(0.9);
+        }
+        
+        .chembiomat-carousel-slide.active img {
+            filter: brightness(1) saturate(1.1);
+            transform: scale(1.02); /* Slight zoom on active slide */
         }
         
         .chembiomat-carousel-slide img.loaded {
@@ -1020,26 +1034,29 @@
         }
         
         .chembiomat-carousel-btn {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             color: var(--primary);
-            border: none;
-            width: 35px;
-            height: 35px;
+            border: 2px solid rgba(79, 195, 247, 0.3);
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            font-size: 18px;
+            font-weight: bold;
         }
         
         .chembiomat-carousel-btn:hover {
-            background: rgba(79, 195, 247, 0.9);
+            background: rgba(79, 195, 247, 0.95);
             color: white;
-            transform: scale(1.1);
-            box-shadow: 0 4px 12px rgba(79, 195, 247, 0.3);
+            transform: scale(1.15);
+            box-shadow: 0 6px 20px rgba(79, 195, 247, 0.4);
+            border-color: rgba(79, 195, 247, 0.8);
         }
         
         .chembiomat-carousel-indicators {
@@ -1071,24 +1088,24 @@
         
         @media (max-width: 1024px) {
             .chembiomat-carousel-container {
-                max-width: 900px;
-                height: 450px;
+                max-width: 1200px;
+                height: 600px;
             }
             
             .chembiomat-carousel {
-                min-height: 450px;
+                min-height: 600px;
             }
         }
         
         @media (max-width: 768px) {
             .chembiomat-carousel-container {
-                height: 350px;
+                height: 500px;
                 max-width: 100%;
                 margin: 0 10px;
             }
             
             .chembiomat-carousel {
-                min-height: 350px;
+                min-height: 500px;
             }
             
             .register-link {
@@ -4925,6 +4942,12 @@
             const translateX = -currentChemBioMatSlide * 100;
             chembiomatCarouselTrack.style.transform = `translateX(${translateX}%)`;
             
+            // Update active slide classes for enhanced animations
+            const slides = chembiomatCarouselTrack.querySelectorAll('.chembiomat-carousel-slide');
+            slides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === currentChemBioMatSlide);
+            });
+            
             // Update indicators
             if (chembiomatCarouselIndicators) {
                 const indicators = chembiomatCarouselIndicators.querySelectorAll('.chembiomat-indicator');
@@ -4968,6 +4991,12 @@
 
         // Initialize ChemBioMat carousel
         document.addEventListener('DOMContentLoaded', function() {
+            // Set first slide as active initially
+            const firstSlide = document.querySelector('.chembiomat-carousel-slide');
+            if (firstSlide) {
+                firstSlide.classList.add('active');
+            }
+            
             updateChemBioMatCarousel();
             startChemBioMatCarousel();
             
@@ -5623,9 +5652,19 @@
 
         // Enhanced Fireball Animation Control with Perfect Synchronization
         function triggerFireballAnimation() {
+            console.log('🔥 Triggering fireball animation...');
             const introSequence = document.querySelector('.intro-sequence');
             const atomicStructure = document.querySelector('.atomic-structure');
-            if (!introSequence || !atomicStructure) return;
+            
+            console.log('🎯 Elements found:', { 
+                introSequence: !!introSequence, 
+                atomicStructure: !!atomicStructure 
+            });
+            
+            if (!introSequence || !atomicStructure) {
+                console.error('❌ Required elements not found!');
+                return;
+            }
             
             // Reset all elements to initial state
             const leftFireball = introSequence.querySelector('.fireball-left');
@@ -5662,6 +5701,7 @@
             
             // Start the coordinated animation sequence
             setTimeout(() => {
+                console.log('⚡ Phase 1: Starting fireball movement...');
                 // PHASE 1: Fireballs move towards center (2s duration)
                 if (leftFireball) {
                     leftFireball.style.opacity = '1';
@@ -5683,6 +5723,7 @@
                 
                 // PHASE 2: Collision explosion at 2s mark
                 setTimeout(() => {
+                    console.log('💥 Phase 2: BIG BANG EXPLOSION!');
                     if (collisionBlast) {
                         collisionBlast.style.opacity = '1';
                         collisionBlast.style.animation = 'explosionBlast 1.5s ease-out forwards';
@@ -5712,13 +5753,16 @@
                 
                 // PHASE 3: Atomic structure formation at 2.5s mark
                 setTimeout(() => {
+                    console.log('⚛️ Phase 3: CSIT LOGO FORMATION!');
                     if (atomicStructure) {
                         atomicStructure.style.opacity = '1';
                         atomicStructure.style.animation = 'nebulaFormation 1.5s ease-out forwards';
+                        console.log('✨ Atomic structure animation started');
                     }
                     
                     // Nucleus and logo appear
                     setTimeout(() => {
+                        console.log('🏷️ Materializing CSIT logo...');
                         if (nucleus) {
                             nucleus.style.opacity = '1';
                             nucleus.style.animation = 'logoMaterialize 1.2s ease-out forwards';
@@ -5728,6 +5772,7 @@
                         }
                         if (logo) {
                             logo.style.animation = 'logoFloat 4s ease-in-out infinite';
+                            console.log('🎯 CSIT logo should now be visible and floating!');
                         }
                     }, 500);
                     
@@ -5797,9 +5842,11 @@
 
         // Auto-trigger fireball animation on page load
         document.addEventListener('DOMContentLoaded', function() {
+            // Delay to ensure all elements are loaded
             setTimeout(() => {
+                console.log('Auto-triggering fireball animation...');
                 triggerFireballAnimation();
-            }, 500); // Small delay to ensure everything is loaded
+            }, 1000); // Increased delay to ensure everything is loaded
         });
 
         // Add click event to trigger animation manually (for testing/replay)
