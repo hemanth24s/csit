@@ -930,7 +930,7 @@
             object-position: center;
             display: block;
             border-radius: 8px;
-            opacity: 0;
+            opacity: 1; /* Changed from 0 to 1 for immediate visibility */
             transition: opacity 0.5s ease-in-out;
         }
         
@@ -2992,11 +2992,17 @@
         <div class="chembiomat-carousel-container">
             <div class="chembiomat-carousel-track" id="chembiomatCarouselTrack">
                 <div class="chembiomat-carousel-slide">
-                    <img src="./events/chembiomatf1.jpg" alt="ChemBioMat Conference Image 1" onerror="tryLoadChemBioMatImage(this, 1)">
+                    <img src="./events/chembiomatf1.jpg" alt="ChemBioMat Conference Image 1" 
+                         onerror="tryLoadChemBioMatImage(this, 1)" 
+                         onload="this.classList.add('loaded'); this.closest('.chembiomat-carousel-slide').classList.add('image-loaded');"
+                         style="opacity: 1;">
                     <div class="chembiomat-carousel-overlay"></div>
                 </div>
                 <div class="chembiomat-carousel-slide">
-                    <img src="./events/chembiomatf2.jpg" alt="ChemBioMat Conference Image 2" onerror="tryLoadChemBioMatImage(this, 2)">
+                    <img src="./events/chembiomatf2.jpg" alt="ChemBioMat Conference Image 2" 
+                         onerror="tryLoadChemBioMatImage(this, 2)"
+                         onload="this.classList.add('loaded'); this.closest('.chembiomat-carousel-slide').classList.add('image-loaded');"
+                         style="opacity: 1;">
                     <div class="chembiomat-carousel-overlay"></div>
                 </div>
             </div>
@@ -4787,12 +4793,18 @@
 
         // ChemBioMat image loading with fallbacks
         function tryLoadChemBioMatImage(imgElement, imageNumber) {
+            console.log(`🔄 ChemBioMat image ${imageNumber} failed to load, trying fallbacks...`);
+            
             const domainType = detectDomainType();
             const chembiomatImagePaths = [
                 `./events/chembiomatf${imageNumber}.jpg`,
                 `./events/chembiomatf${imageNumber}.JPG`,
                 `./events/chembiomatf${imageNumber}.png`,
                 `./events/chembiomatf${imageNumber}.PNG`,
+                `events/chembiomatf${imageNumber}.jpg`, // Without ./
+                `events/chembiomatf${imageNumber}.JPG`,
+                `events/chembiomatf${imageNumber}.png`,
+                `events/chembiomatf${imageNumber}.PNG`,
                 `./chembiomat-images/chembiomatf${imageNumber}.jpg`,
                 `./chembiomat-images/chembiomatf${imageNumber}.JPG`,
                 `./chembiomat-images/chembiomatf${imageNumber}.png`,
@@ -4804,7 +4816,9 @@
                     `https://raw.githubusercontent.com/hemanth24s/csit/main/events/chembiomatf${imageNumber}.jpg`,
                     `https://raw.githubusercontent.com/hemanth24s/csit/main/events/chembiomatf${imageNumber}.JPG`,
                     `https://raw.githubusercontent.com/hemanth24s/csit/main/events/chembiomatf${imageNumber}.png`,
-                    `https://raw.githubusercontent.com/hemanth24s/csit/main/events/chembiomatf${imageNumber}.PNG`
+                    `https://raw.githubusercontent.com/hemanth24s/csit/main/events/chembiomatf${imageNumber}.PNG`,
+                    `https://raw.githubusercontent.com/hemanth24s/csit/refs/heads/main/events/chembiomatf${imageNumber}.jpg`,
+                    `https://raw.githubusercontent.com/hemanth24s/csit/refs/heads/main/events/chembiomatf${imageNumber}.JPG`
                 );
             }
             
@@ -4814,8 +4828,21 @@
             function attemptChemBioMatLoad(paths, index) {
                 if (index >= paths.length) {
                     console.log('❌ All ChemBioMat image paths failed for image', imageNumber);
-                    imgElement.style.display = 'none';
-                    if (slideElement) slideElement.classList.add('image-loaded'); // Hide loading spinner
+                    // Show a placeholder instead of hiding
+                    imgElement.src = `data:image/svg+xml;base64,${btoa(`
+                        <svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="100%" height="100%" fill="#f0f0f0"/>
+                            <text x="50%" y="40%" text-anchor="middle" font-family="Arial" font-size="18" fill="#666">
+                                ChemBioMat Image ${imageNumber}
+                            </text>
+                            <text x="50%" y="60%" text-anchor="middle" font-family="Arial" font-size="14" fill="#999">
+                                Upload chembiomatf${imageNumber}.jpg to events folder
+                            </text>
+                        </svg>
+                    `)}`;
+                    imgElement.style.display = 'block';
+                    imgElement.classList.add('loaded');
+                    if (slideElement) slideElement.classList.add('image-loaded');
                     return;
                 }
                 
@@ -4906,6 +4933,27 @@
                 carouselContainer.addEventListener('mouseenter', stopChemBioMatCarousel);
                 carouselContainer.addEventListener('mouseleave', startChemBioMatCarousel);
             }
+            
+            // Force load images on initialization
+            setTimeout(() => {
+                const carouselImages = document.querySelectorAll('#chembiomatCarouselTrack img');
+                carouselImages.forEach((img, index) => {
+                    console.log(`🔄 Initializing ChemBioMat image ${index + 1}:`, img.src);
+                    
+                    // Test if image loads
+                    const testImg = new Image();
+                    testImg.onload = function() {
+                        console.log(`✅ ChemBioMat image ${index + 1} loaded successfully`);
+                        img.classList.add('loaded');
+                        img.closest('.chembiomat-carousel-slide').classList.add('image-loaded');
+                    };
+                    testImg.onerror = function() {
+                        console.log(`❌ ChemBioMat image ${index + 1} failed to load, triggering fallback`);
+                        tryLoadChemBioMatImage(img, index + 1);
+                    };
+                    testImg.src = img.src;
+                });
+            }, 100);
         });
 
         // ChemBioMat Carousel Image Loading with Fallbacks
