@@ -2830,6 +2830,23 @@
 </head>
 <body style="background: #181c24; margin: 0; overflow-x: hidden;" class="dark-mode">;
     
+    <!-- Loading overlay with fireball animation -->
+    <div id="loadingOverlay">
+        <div class="logo-spinner">
+            <div class="nucleus-pulse"></div>
+            <div class="atomic-orbit orbit-1">
+                <div class="electron e1"></div>
+            </div>
+            <div class="atomic-orbit orbit-2">
+                <div class="electron e2"></div>
+            </div>
+            <div class="atomic-orbit orbit-3">
+                <div class="electron e3"></div>
+            </div>
+            <img src="Logo.png" alt="CSIT Logo" class="loader-logo" onerror="tryLoadCSITLogo(this)">
+        </div>
+    </div>
+    
     <canvas id="chem-bg"></canvas>
     <header>
         <div class="header-content" style="justify-content: center; align-items: center;">
@@ -2878,11 +2895,11 @@
         <div class="chembiomat-carousel-container">
             <div class="chembiomat-carousel-track" id="chembiomatCarouselTrack">
                 <div class="chembiomat-carousel-slide">
-                    <img src="./chembiomat-images/chembiomatf1.jpg" alt="ChemBioMat Conference Image 1" onerror="tryLoadChemBioMatImage(this, 1)">
+                    <img src="./events/chembiomatf1.jpg" alt="ChemBioMat Conference Image 1" onerror="tryLoadChemBioMatImage(this, 1)">
                     <div class="chembiomat-carousel-overlay"></div>
                 </div>
                 <div class="chembiomat-carousel-slide">
-                    <img src="./chembiomat-images/chembiomatf2.jpg" alt="ChemBioMat Conference Image 2" onerror="tryLoadChemBioMatImage(this, 2)">
+                    <img src="./events/chembiomatf2.jpg" alt="ChemBioMat Conference Image 2" onerror="tryLoadChemBioMatImage(this, 2)">
                     <div class="chembiomat-carousel-overlay"></div>
                 </div>
             </div>
@@ -4671,6 +4688,125 @@
             attemptHomeLoad(homeImagePaths, currentPathIndex);
         }
 
+        // ChemBioMat image loading with fallbacks
+        function tryLoadChemBioMatImage(imgElement, imageNumber) {
+            const domainType = detectDomainType();
+            const chembiomatImagePaths = [
+                `./events/chembiomatf${imageNumber}.jpg`,
+                `./events/chembiomatf${imageNumber}.JPG`,
+                `./events/chembiomatf${imageNumber}.png`,
+                `./events/chembiomatf${imageNumber}.PNG`,
+                `./chembiomat-images/chembiomatf${imageNumber}.jpg`,
+                `./chembiomat-images/chembiomatf${imageNumber}.JPG`,
+                `./chembiomat-images/chembiomatf${imageNumber}.png`,
+                `./chembiomat-images/chembiomatf${imageNumber}.PNG`
+            ];
+            
+            if (domainType === 'proxy') {
+                chembiomatImagePaths.push(
+                    `https://raw.githubusercontent.com/hemanth24s/csit/main/events/chembiomatf${imageNumber}.jpg`,
+                    `https://raw.githubusercontent.com/hemanth24s/csit/main/events/chembiomatf${imageNumber}.JPG`,
+                    `https://raw.githubusercontent.com/hemanth24s/csit/main/events/chembiomatf${imageNumber}.png`,
+                    `https://raw.githubusercontent.com/hemanth24s/csit/main/events/chembiomatf${imageNumber}.PNG`
+                );
+            }
+            
+            let currentPathIndex = 0;
+            
+            function attemptChemBioMatLoad(paths, index) {
+                if (index >= paths.length) {
+                    console.log('❌ All ChemBioMat image paths failed for image', imageNumber);
+                    imgElement.style.display = 'none';
+                    return;
+                }
+                
+                const currentPath = paths[index];
+                console.log(`🔄 Trying ChemBioMat image ${imageNumber}:`, currentPath);
+                
+                const testImg = new Image();
+                testImg.onload = function() {
+                    console.log('✅ ChemBioMat image loaded successfully:', currentPath);
+                    imgElement.src = currentPath;
+                    imgElement.style.display = 'block';
+                };
+                
+                testImg.onerror = function() {
+                    console.log('❌ Failed to load ChemBioMat image:', currentPath);
+                    attemptChemBioMatLoad(paths, index + 1);
+                };
+                
+                testImg.src = currentPath;
+            }
+            
+            attemptChemBioMatLoad(chembiomatImagePaths, currentPathIndex);
+        }
+
+        // ChemBioMat Carousel Functionality
+        let currentChemBioMatSlide = 0;
+        const chembiomatCarouselTrack = document.getElementById('chembiomatCarouselTrack');
+        const chembiomatCarouselIndicators = document.getElementById('chembiomatCarouselIndicators');
+        const totalChemBioMatSlides = 2;
+
+        function updateChemBioMatCarousel() {
+            if (!chembiomatCarouselTrack) return;
+            
+            const translateX = -currentChemBioMatSlide * 100;
+            chembiomatCarouselTrack.style.transform = `translateX(${translateX}%)`;
+            
+            // Update indicators
+            if (chembiomatCarouselIndicators) {
+                const indicators = chembiomatCarouselIndicators.querySelectorAll('.chembiomat-indicator');
+                indicators.forEach((indicator, index) => {
+                    indicator.classList.toggle('active', index === currentChemBioMatSlide);
+                });
+            }
+        }
+
+        function moveChemBioMatCarousel(direction) {
+            currentChemBioMatSlide += direction;
+            
+            if (currentChemBioMatSlide >= totalChemBioMatSlides) {
+                currentChemBioMatSlide = 0;
+            } else if (currentChemBioMatSlide < 0) {
+                currentChemBioMatSlide = totalChemBioMatSlides - 1;
+            }
+            
+            updateChemBioMatCarousel();
+        }
+
+        function goToChemBioMatSlide(slideIndex) {
+            currentChemBioMatSlide = slideIndex;
+            updateChemBioMatCarousel();
+        }
+
+        // Auto-advance ChemBioMat carousel
+        let chembiomatCarouselInterval;
+        
+        function startChemBioMatCarousel() {
+            chembiomatCarouselInterval = setInterval(() => {
+                moveChemBioMatCarousel(1);
+            }, 4000);
+        }
+
+        function stopChemBioMatCarousel() {
+            if (chembiomatCarouselInterval) {
+                clearInterval(chembiomatCarouselInterval);
+            }
+        }
+
+        // Initialize ChemBioMat carousel
+        document.addEventListener('DOMContentLoaded', function() {
+            updateChemBioMatCarousel();
+            startChemBioMatCarousel();
+            
+            // Pause carousel on hover
+            const carouselContainer = document.querySelector('.chembiomat-carousel-container');
+            if (carouselContainer) {
+                carouselContainer.addEventListener('mouseenter', stopChemBioMatCarousel);
+                carouselContainer.addEventListener('mouseleave', startChemBioMatCarousel);
+            }
+        });
+
         // ChemBioMat Carousel Image Loading with Fallbacks
         function tryLoadChemBioMatImage(imgElement, imageNumber) {
             const domainType = detectDomainType();
@@ -4713,72 +4849,6 @@
             
             attemptChemBioMatLoad(chembiomatImagePaths, currentPathIndex);
         }
-
-        // ChemBioMat Carousel Functionality
-        let currentChemBioMatSlide = 0;
-        const chembiomatCarouselTrack = document.getElementById('chembiomatCarouselTrack');
-        const chembiomatCarouselIndicators = document.getElementById('chembiomatCarouselIndicators');
-        const totalChemBioMatSlides = 2;
-
-        function updateChemBioMatCarousel() {
-            if (chembiomatCarouselTrack) {
-                const translateX = -currentChemBioMatSlide * 100;
-                chembiomatCarouselTrack.style.transform = `translateX(${translateX}%)`;
-            }
-            
-            // Update indicators
-            if (chembiomatCarouselIndicators) {
-                const indicators = chembiomatCarouselIndicators.querySelectorAll('.chembiomat-indicator');
-                indicators.forEach((indicator, index) => {
-                    indicator.classList.toggle('active', index === currentChemBioMatSlide);
-                });
-            }
-        }
-
-        function moveChemBioMatCarousel(direction) {
-            currentChemBioMatSlide += direction;
-            
-            if (currentChemBioMatSlide >= totalChemBioMatSlides) {
-                currentChemBioMatSlide = 0;
-            } else if (currentChemBioMatSlide < 0) {
-                currentChemBioMatSlide = totalChemBioMatSlides - 1;
-            }
-            
-            updateChemBioMatCarousel();
-        }
-
-        function goToChemBioMatSlide(slideIndex) {
-            currentChemBioMatSlide = slideIndex;
-            updateChemBioMatCarousel();
-        }
-
-        // Auto-advance ChemBioMat carousel
-        let chembiomatCarouselInterval;
-        
-        function startChemBioMatCarousel() {
-            chembiomatCarouselInterval = setInterval(() => {
-                moveChemBioMatCarousel(1);
-            }, 4000); // Change slide every 4 seconds
-        }
-
-        function stopChemBioMatCarousel() {
-            if (chembiomatCarouselInterval) {
-                clearInterval(chembiomatCarouselInterval);
-            }
-        }
-
-        // Initialize ChemBioMat carousel when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            updateChemBioMatCarousel();
-            startChemBioMatCarousel();
-            
-            // Pause carousel on hover
-            const carouselContainer = document.querySelector('.chembiomat-carousel-container');
-            if (carouselContainer) {
-                carouselContainer.addEventListener('mouseenter', stopChemBioMatCarousel);
-                carouselContainer.addEventListener('mouseleave', startChemBioMatCarousel);
-            }
-        });
 
         // Faculty Carousel Functionality
         let currentResearchSlide = 0;
