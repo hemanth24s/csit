@@ -1361,28 +1361,54 @@
         
         /* Enhanced Atomic Animations */
         @keyframes nucleusGlow {
-            0%, 100% { 
+            0% { 
                 transform: translate(-50%, -50%) scale(1);
-                opacity: 0.6;
+                opacity: 0.4;
+                background: radial-gradient(circle, rgba(79,195,247,0.2) 0%, rgba(21,101,192,0.1) 50%, transparent 70%);
+                box-shadow: 0 0 50px rgba(79,195,247,0.4), 0 0 100px rgba(21,101,192,0.2);
+            }
+            25% { 
+                transform: translate(-50%, -50%) scale(1.15);
+                opacity: 0.7;
+                background: radial-gradient(circle, rgba(79,195,247,0.4) 0%, rgba(21,101,192,0.2) 50%, rgba(255,235,59,0.1) 70%, transparent 80%);
+                box-shadow: 0 0 80px rgba(79,195,247,0.6), 0 0 150px rgba(21,101,192,0.3), 0 0 200px rgba(255,235,59,0.2);
             }
             50% { 
-                transform: translate(-50%, -50%) scale(1.1);
+                transform: translate(-50%, -50%) scale(1.3);
                 opacity: 0.9;
+                background: radial-gradient(circle, rgba(79,195,247,0.5) 0%, rgba(21,101,192,0.3) 40%, rgba(255,235,59,0.2) 60%, rgba(255,107,53,0.1) 80%, transparent 90%);
+                box-shadow: 0 0 120px rgba(79,195,247,0.8), 0 0 200px rgba(21,101,192,0.4), 0 0 300px rgba(255,235,59,0.3);
+            }
+            75% { 
+                transform: translate(-50%, -50%) scale(1.15);
+                opacity: 0.7;
+                background: radial-gradient(circle, rgba(79,195,247,0.4) 0%, rgba(21,101,192,0.2) 50%, rgba(255,235,59,0.1) 70%, transparent 80%);
+                box-shadow: 0 0 80px rgba(79,195,247,0.6), 0 0 150px rgba(21,101,192,0.3), 0 0 200px rgba(255,235,59,0.2);
+            }
+            100% { 
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.4;
+                background: radial-gradient(circle, rgba(79,195,247,0.2) 0%, rgba(21,101,192,0.1) 50%, transparent 70%);
+                box-shadow: 0 0 50px rgba(79,195,247,0.4), 0 0 100px rgba(21,101,192,0.2);
             }
         }
         
         @keyframes logoFloat {
             0%, 100% { 
                 transform: translateY(0px) rotate(0deg) scale(1);
-                filter: drop-shadow(0 0 25px rgba(79,195,247,0.6));
+                filter: drop-shadow(0 0 25px rgba(79,195,247,0.6)) drop-shadow(0 0 50px rgba(21,101,192,0.3));
             }
-            33% { 
-                transform: translateY(-8px) rotate(2deg) scale(1.02);
-                filter: drop-shadow(0 0 30px rgba(79,195,247,0.8));
+            25% { 
+                transform: translateY(-5px) rotate(1deg) scale(1.02);
+                filter: drop-shadow(0 0 35px rgba(79,195,247,0.8)) drop-shadow(0 0 70px rgba(21,101,192,0.4)) drop-shadow(0 0 100px rgba(255,235,59,0.2));
             }
-            66% { 
-                transform: translateY(-4px) rotate(-1deg) scale(1.01);
-                filter: drop-shadow(0 0 35px rgba(79,195,247,0.7));
+            50% { 
+                transform: translateY(-10px) rotate(0deg) scale(1.05);
+                filter: drop-shadow(0 0 45px rgba(79,195,247,1)) drop-shadow(0 0 90px rgba(21,101,192,0.5)) drop-shadow(0 0 150px rgba(255,235,59,0.3));
+            }
+            75% { 
+                transform: translateY(-5px) rotate(-1deg) scale(1.02);
+                filter: drop-shadow(0 0 35px rgba(79,195,247,0.8)) drop-shadow(0 0 70px rgba(21,101,192,0.4)) drop-shadow(0 0 100px rgba(255,235,59,0.2));
             }
         }
         
@@ -1513,7 +1539,7 @@
         /* EPIC CINEMATIC ANIMATIONS   */
         /* =========================== */
         
-        /* Fireball Movement Animations - Enhanced with increasing brightness */
+        /* Fireball Movement Animations - Enhanced collision sequence */
         @keyframes fireballLeft {
             0% { 
                 left: -80px; 
@@ -1532,17 +1558,18 @@
                 filter: brightness(1.5) saturate(1.3);
                 box-shadow: 0 0 50px #ff6b35, 0 0 100px #ff4757, 0 0 150px rgba(255,107,53,0.5);
             }
-            90% { 
-                left: calc(50vw - 40px); 
-                transform: translateY(-50%) scale(1.2);
+            85% { 
+                left: calc(50% - 50px); 
+                transform: translateY(-50%) scale(1.3);
                 filter: brightness(2.5) saturate(2) hue-rotate(10deg);
                 box-shadow: 0 0 80px #ff6b35, 0 0 160px #ff4757, 0 0 240px rgba(255,107,53,0.8);
             }
             100% { 
-                left: calc(50vw - 40px); 
-                transform: translateY(-50%) scale(0); 
+                left: calc(50% - 10px); 
+                transform: translateY(-50%) scale(2.5); 
                 opacity: 0;
-                filter: brightness(3) saturate(3);
+                filter: brightness(5) saturate(5) blur(5px);
+                box-shadow: 0 0 200px #ff6b35, 0 0 400px #ff4757;
             }
         }
         
@@ -1564,17 +1591,18 @@
                 filter: brightness(1.5) saturate(1.3);
                 box-shadow: 0 0 50px #4fc3f7, 0 0 100px #1e88e5, 0 0 150px rgba(79,195,247,0.5);
             }
-            90% { 
-                right: calc(50vw - 40px); 
-                transform: translateY(-50%) scale(1.2);
+            85% { 
+                right: calc(50% - 50px); 
+                transform: translateY(-50%) scale(1.3);
                 filter: brightness(2.5) saturate(2) hue-rotate(-10deg);
                 box-shadow: 0 0 80px #4fc3f7, 0 0 160px #1e88e5, 0 0 240px rgba(79,195,247,0.8);
             }
             100% { 
-                right: calc(50vw - 40px); 
-                transform: translateY(-50%) scale(0); 
+                right: calc(50% - 10px); 
+                transform: translateY(-50%) scale(2.5); 
                 opacity: 0;
-                filter: brightness(3) saturate(3);
+                filter: brightness(5) saturate(5) blur(5px);
+                box-shadow: 0 0 200px #4fc3f7, 0 0 400px #1e88e5;
             }
         }
         
@@ -1598,37 +1626,43 @@
             50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.1); }
         }
         
-        /* Explosion and Blast Animations - Enhanced for unrestricted explosion */
+        /* Explosion and Blast Animations - Enhanced for spectacular big bang */
         @keyframes explosionBlast {
             0% { 
                 opacity: 0; 
                 transform: translate(-50%, -50%) scale(0); 
-                filter: brightness(1); 
+                filter: brightness(1) blur(0px); 
+                background: radial-gradient(circle, #fff 0%, #ffeb3b 20%, #ff9800 40%, #f44336 60%, #9c27b0 80%, transparent 100%);
             }
-            20% { 
+            10% { 
                 opacity: 1; 
-                transform: translate(-50%, -50%) scale(3); 
-                filter: brightness(4); 
+                transform: translate(-50%, -50%) scale(2); 
+                filter: brightness(8) blur(2px); 
+                background: radial-gradient(circle, #fff 0%, #ffeb3b 10%, #ff6b35 30%, #f44336 50%, #9c27b0 70%, #4fc3f7 90%, transparent 100%);
             }
-            40% { 
-                opacity: 0.8; 
-                transform: translate(-50%, -50%) scale(8); 
-                filter: brightness(3); 
+            25% { 
+                opacity: 0.9; 
+                transform: translate(-50%, -50%) scale(6); 
+                filter: brightness(6) blur(4px); 
+                background: radial-gradient(circle, #fff 0%, #ffeb3b 5%, #ff6b35 20%, #f44336 40%, #9c27b0 60%, #4fc3f7 80%, transparent 100%);
             }
-            60% { 
-                opacity: 0.6; 
-                transform: translate(-50%, -50%) scale(15); 
-                filter: brightness(2.5); 
+            50% { 
+                opacity: 0.7; 
+                transform: translate(-50%, -50%) scale(12); 
+                filter: brightness(4) blur(6px); 
+                background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, #ffeb3b 10%, #ff6b35 25%, #f44336 45%, #9c27b0 65%, #4fc3f7 85%, transparent 100%);
             }
-            80% { 
-                opacity: 0.3; 
-                transform: translate(-50%, -50%) scale(25); 
-                filter: brightness(2); 
+            75% { 
+                opacity: 0.4; 
+                transform: translate(-50%, -50%) scale(20); 
+                filter: brightness(2.5) blur(8px); 
+                background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, rgba(255,235,59,0.8) 15%, rgba(255,107,53,0.7) 35%, rgba(244,67,54,0.6) 55%, rgba(156,39,176,0.5) 75%, rgba(79,195,247,0.4) 95%, transparent 100%);
             }
             100% { 
                 opacity: 0; 
                 transform: translate(-50%, -50%) scale(40); 
-                filter: brightness(1.5); 
+                filter: brightness(1.5) blur(15px); 
+                background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,235,59,0.4) 20%, rgba(255,107,53,0.3) 40%, rgba(244,67,54,0.2) 60%, rgba(156,39,176,0.2) 80%, rgba(79,195,247,0.1) 90%, transparent 100%);
             }
         }
         
@@ -1637,21 +1671,31 @@
                 opacity: 0; 
                 transform: translate(-50%, -50%) scale(0); 
                 border-width: 8px; 
+                filter: brightness(3) drop-shadow(0 0 20px currentColor);
             }
-            30% { 
+            20% { 
                 opacity: 1; 
-                transform: translate(-50%, -50%) scale(1); 
+                transform: translate(-50%, -50%) scale(0.5); 
                 border-width: 6px; 
+                filter: brightness(2.5) drop-shadow(0 0 30px currentColor);
             }
-            70% { 
-                opacity: 0.5; 
-                transform: translate(-50%, -50%) scale(5); 
+            50% { 
+                opacity: 0.8; 
+                transform: translate(-50%, -50%) scale(2); 
+                border-width: 4px; 
+                filter: brightness(2) drop-shadow(0 0 40px currentColor);
+            }
+            80% { 
+                opacity: 0.3; 
+                transform: translate(-50%, -50%) scale(8); 
                 border-width: 2px; 
+                filter: brightness(1.5) drop-shadow(0 0 60px currentColor);
             }
             100% { 
                 opacity: 0; 
-                transform: translate(-50%, -50%) scale(12); 
+                transform: translate(-50%, -50%) scale(15); 
                 border-width: 1px; 
+                filter: brightness(1) drop-shadow(0 0 80px currentColor);
             }
         }
         
@@ -3052,32 +3096,32 @@
                     </div>
                     
                     <!-- Collision Blast -->
-                    <div class="collision-blast" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100px; height: 100px; border-radius: 50%; background: radial-gradient(circle, #fff 0%, #ffeb3b 20%, #ff9800 40%, #f44336 60%, #9c27b0 80%, transparent 100%); animation: explosionBlast 0.8s ease-out 1.8s forwards; opacity: 0; z-index: 20;">
-                        <div class="blast-ring" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; height: 300px; border: 4px solid #fff; border-radius: 50%; animation: blastRing 1s ease-out 1.8s forwards; opacity: 0;"></div>
-                        <div class="blast-ring-2" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 600px; height: 600px; border: 2px solid #4fc3f7; border-radius: 50%; animation: blastRing 1.2s ease-out 1.9s forwards; opacity: 0;"></div>
-                        <div class="blast-ring-3" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 1000px; height: 1000px; border: 1px solid #ff9800; border-radius: 50%; animation: blastRing 1.5s ease-out 2s forwards; opacity: 0;"></div>
+                    <div class="collision-blast" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100px; height: 100px; border-radius: 50%; background: radial-gradient(circle, #fff 0%, #ffeb3b 20%, #ff9800 40%, #f44336 60%, #9c27b0 80%, transparent 100%); opacity: 0; z-index: 20;">
+                        <div class="blast-ring" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; height: 300px; border: 4px solid #fff; border-radius: 50%; opacity: 0;"></div>
+                        <div class="blast-ring-2" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 600px; height: 600px; border: 2px solid #4fc3f7; border-radius: 50%; opacity: 0;"></div>
+                        <div class="blast-ring-3" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 1000px; height: 1000px; border: 1px solid #ff9800; border-radius: 50%; opacity: 0;"></div>
                     </div>
                     
                     <!-- Energy Sparks -->
                     <div class="energy-sparks">
-                        <div class="spark spark-1" style="position: absolute; top: 42%; left: 45%; width: 4px; height: 4px; background: #ffeb3b; border-radius: 50%; animation: sparkFly 1.5s ease-out 1.9s forwards; opacity: 0;"></div>
-                        <div class="spark spark-2" style="position: absolute; top: 58%; left: 55%; width: 6px; height: 6px; background: #4fc3f7; border-radius: 50%; animation: sparkFly2 1.8s ease-out 1.9s forwards; opacity: 0;"></div>
-                        <div class="spark spark-3" style="position: absolute; top: 37%; right: 48%; width: 3px; height: 3px; background: #f44336; border-radius: 50%; animation: sparkFly3 2s ease-out 1.8s forwards; opacity: 0;"></div>
-                        <div class="spark spark-4" style="position: absolute; top: 63%; left: 52%; width: 5px; height: 5px; background: #9c27b0; border-radius: 50%; animation: sparkFly4 1.6s ease-out 2s forwards; opacity: 0;"></div>
-                        <div class="spark spark-5" style="position: absolute; top: 30%; left: 48%; width: 4px; height: 4px; background: #ff9800; border-radius: 50%; animation: sparkFlyUp 2.2s ease-out 1.9s forwards; opacity: 0;"></div>
-                        <div class="spark spark-6" style="position: absolute; top: 25%; right: 50%; width: 3px; height: 3px; background: #00bcd4; border-radius: 50%; animation: sparkFlyUpRight 2.5s ease-out 2s forwards; opacity: 0;"></div>
-                        <div class="spark spark-7" style="position: absolute; top: 28%; left: 45%; width: 5px; height: 5px; background: #e91e63; border-radius: 50%; animation: sparkFlyUpLeft 2.8s ease-out 2.1s forwards; opacity: 0;"></div>
-                        <div class="spark spark-8" style="position: absolute; top: 32%; left: 52%; width: 3px; height: 3px; background: #ffeb3b; border-radius: 50%; animation: sparkFlyUp 3s ease-out 2.2s forwards; opacity: 0;"></div>
-                        <div class="spark spark-9" style="position: absolute; top: 26%; left: 46%; width: 4px; height: 4px; background: #9c27b0; border-radius: 50%; animation: sparkFlyUpRight 2.7s ease-out 2.3s forwards; opacity: 0;"></div>
+                        <div class="spark spark-1" style="position: absolute; top: 42%; left: 45%; width: 4px; height: 4px; background: #ffeb3b; border-radius: 50%; opacity: 0;"></div>
+                        <div class="spark spark-2" style="position: absolute; top: 58%; left: 55%; width: 6px; height: 6px; background: #4fc3f7; border-radius: 50%; opacity: 0;"></div>
+                        <div class="spark spark-3" style="position: absolute; top: 37%; right: 48%; width: 3px; height: 3px; background: #f44336; border-radius: 50%; opacity: 0;"></div>
+                        <div class="spark spark-4" style="position: absolute; top: 63%; left: 52%; width: 5px; height: 5px; background: #9c27b0; border-radius: 50%; opacity: 0;"></div>
+                        <div class="spark spark-5" style="position: absolute; top: 30%; left: 48%; width: 4px; height: 4px; background: #ff9800; border-radius: 50%; opacity: 0;"></div>
+                        <div class="spark spark-6" style="position: absolute; top: 25%; right: 50%; width: 3px; height: 3px; background: #00bcd4; border-radius: 50%; opacity: 0;"></div>
+                        <div class="spark spark-7" style="position: absolute; top: 28%; left: 45%; width: 5px; height: 5px; background: #e91e63; border-radius: 50%; opacity: 0;"></div>
+                        <div class="spark spark-8" style="position: absolute; top: 32%; left: 52%; width: 3px; height: 3px; background: #ffeb3b; border-radius: 50%; opacity: 0;"></div>
+                        <div class="spark spark-9" style="position: absolute; top: 26%; left: 46%; width: 4px; height: 4px; background: #9c27b0; border-radius: 50%; opacity: 0;"></div>
                     </div>
                 </div>
                 
                 <!-- CSIT Atomic Structure (Born from the explosion) -->
-                <div class="atomic-structure" style="position: relative; width: 380px; height: 380px; display: flex; align-items: center; justify-content: center; opacity: 0; animation: nebulaFormation 1.5s ease-out 2.6s forwards; top: -10px;">
+                <div class="atomic-structure" style="position: relative; width: 380px; height: 380px; display: flex; align-items: center; justify-content: center; opacity: 0; top: -10px;">
                     <!-- Central Nucleus (CSIT Logo) -->
-                    <div class="nucleus" style="position: relative; z-index: 10; opacity: 0; animation: logoMaterialize 1.2s ease-out 3s forwards;">
-                        <div class="nucleus-glow" style="position: absolute; width: 180px; height: 180px; border-radius: 50%; background: radial-gradient(circle, rgba(79,195,247,0.3) 0%, rgba(21,101,192,0.1) 70%, transparent 100%); animation: nucleusGlow 3s ease-in-out infinite 4s; top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
-                        <img src="Logo.png" alt="CSIT Logo" style="width: 140px; height: 140px; border-radius: 50%; position: relative; z-index: 5; filter: drop-shadow(0 0 25px rgba(79,195,247,0.6)); animation: logoFloat 4s ease-in-out infinite 4.5s;">
+                    <div class="nucleus" style="position: relative; z-index: 10; opacity: 0;">
+                        <div class="nucleus-glow" style="position: absolute; width: 180px; height: 180px; border-radius: 50%; background: radial-gradient(circle, rgba(79,195,247,0.3) 0%, rgba(21,101,192,0.1) 70%, transparent 100%); top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
+                        <img src="Logo.png" alt="CSIT Logo" style="width: 140px; height: 140px; border-radius: 50%; position: relative; z-index: 5; filter: drop-shadow(0 0 25px rgba(79,195,247,0.6));">
                     </div>
                     
                     <!-- Electron Orbital Paths (Materializing one by one) -->
@@ -5577,27 +5621,50 @@
             });
         });
 
-        // Fireball Animation Control
+        // Enhanced Fireball Animation Control with Perfect Synchronization
         function triggerFireballAnimation() {
             const introSequence = document.querySelector('.intro-sequence');
-            if (!introSequence) return;
+            const atomicStructure = document.querySelector('.atomic-structure');
+            if (!introSequence || !atomicStructure) return;
             
-            // Reset all animations by recreating the elements
+            // Reset all elements to initial state
             const leftFireball = introSequence.querySelector('.fireball-left');
             const rightFireball = introSequence.querySelector('.fireball-right');
             const collisionBlast = introSequence.querySelector('.collision-blast');
             const energySparks = introSequence.querySelector('.energy-sparks');
             
-            if (leftFireball) leftFireball.style.animation = 'none';
-            if (rightFireball) rightFireball.style.animation = 'none';
-            if (collisionBlast) collisionBlast.style.animation = 'none';
+            // Reset animations
+            [leftFireball, rightFireball, collisionBlast, atomicStructure].forEach(element => {
+                if (element) {
+                    element.style.animation = 'none';
+                    element.style.opacity = '0';
+                }
+            });
+            
+            // Reset atomic structure elements
+            const nucleus = atomicStructure.querySelector('.nucleus');
+            const nucleusGlow = atomicStructure.querySelector('.nucleus-glow');
+            const logo = atomicStructure.querySelector('img');
+            const orbits = atomicStructure.querySelectorAll('.orbit');
+            const electrons = atomicStructure.querySelectorAll('.electron');
+            const particles = atomicStructure.querySelectorAll('.particle');
+            const nebulaParticles = atomicStructure.querySelectorAll('.nebula-particle');
+            
+            [nucleus, nucleusGlow, logo, ...orbits, ...electrons, ...particles, ...nebulaParticles].forEach(element => {
+                if (element) {
+                    element.style.animation = 'none';
+                    element.style.opacity = '0';
+                }
+            });
             
             // Force reflow
             void introSequence.offsetHeight;
             
-            // Restart animations
+            // Start the coordinated animation sequence
             setTimeout(() => {
+                // PHASE 1: Fireballs move towards center (2s duration)
                 if (leftFireball) {
+                    leftFireball.style.opacity = '1';
                     leftFireball.style.animation = 'fireballLeft 2s ease-out forwards';
                     const leftCore = leftFireball.querySelector('.fireball-core');
                     const leftTrail = leftFireball.querySelector('.fireball-trail');
@@ -5606,6 +5673,7 @@
                 }
                 
                 if (rightFireball) {
+                    rightFireball.style.opacity = '1';
                     rightFireball.style.animation = 'fireballRight 2s ease-out forwards';
                     const rightCore = rightFireball.querySelector('.fireball-core');
                     const rightTrail = rightFireball.querySelector('.fireball-trail');
@@ -5613,36 +5681,109 @@
                     if (rightTrail) rightTrail.style.animation = 'trailRight 2s ease-out forwards';
                 }
                 
-                // Trigger collision blast after 1.8s
+                // PHASE 2: Collision explosion at 2s mark
                 setTimeout(() => {
                     if (collisionBlast) {
-                        collisionBlast.style.animation = 'explosionBlast 0.8s ease-out forwards';
+                        collisionBlast.style.opacity = '1';
+                        collisionBlast.style.animation = 'explosionBlast 1.5s ease-out forwards';
+                        
+                        // Blast rings
                         const blastRings = collisionBlast.querySelectorAll('.blast-ring, .blast-ring-2, .blast-ring-3');
                         blastRings.forEach((ring, index) => {
-                            ring.style.animation = `blastRing ${1 + index * 0.2}s ease-out ${0.1 * index}s forwards`;
+                            setTimeout(() => {
+                                ring.style.animation = `blastRing ${1.2 + index * 0.3}s ease-out forwards`;
+                            }, index * 100);
                         });
                     }
                     
-                    // Trigger sparks
+                    // Energy sparks
                     if (energySparks) {
                         const sparks = energySparks.querySelectorAll('.spark');
                         sparks.forEach((spark, index) => {
                             const sparkAnimations = ['sparkFly', 'sparkFly2', 'sparkFly3', 'sparkFly4', 'sparkFlyUp', 'sparkFlyUpRight', 'sparkFlyUpLeft'];
                             const animationName = sparkAnimations[index % sparkAnimations.length];
-                            const duration = 1.5 + (index * 0.3);
-                            spark.style.animation = `${animationName} ${duration}s ease-out ${0.1 + index * 0.1}s forwards`;
+                            const duration = 1.5 + (index * 0.2);
+                            setTimeout(() => {
+                                spark.style.animation = `${animationName} ${duration}s ease-out forwards`;
+                            }, index * 50);
                         });
                     }
+                }, 2000);
+                
+                // PHASE 3: Atomic structure formation at 2.5s mark
+                setTimeout(() => {
+                    if (atomicStructure) {
+                        atomicStructure.style.opacity = '1';
+                        atomicStructure.style.animation = 'nebulaFormation 1.5s ease-out forwards';
+                    }
                     
-                    // Show atomic structure after explosion
+                    // Nucleus and logo appear
                     setTimeout(() => {
-                        const atomicStructure = document.querySelector('.atomic-structure');
-                        if (atomicStructure) {
-                            atomicStructure.style.animation = 'nebulaFormation 1.5s ease-out forwards';
+                        if (nucleus) {
+                            nucleus.style.opacity = '1';
+                            nucleus.style.animation = 'logoMaterialize 1.2s ease-out forwards';
                         }
-                    }, 800);
+                        if (nucleusGlow) {
+                            nucleusGlow.style.animation = 'nucleusGlow 3s ease-in-out infinite';
+                        }
+                        if (logo) {
+                            logo.style.animation = 'logoFloat 4s ease-in-out infinite';
+                        }
+                    }, 500);
                     
-                }, 1800);
+                    // Orbits materialize one by one
+                    orbits.forEach((orbit, index) => {
+                        setTimeout(() => {
+                            orbit.style.opacity = '1';
+                            orbit.style.animation = `orbitMaterialize 0.8s ease-out forwards`;
+                            
+                            // Add orbital rotation after materialization
+                            setTimeout(() => {
+                                if (index === 0) orbit.style.animation += ', rotateOrbit 8s linear infinite';
+                                else if (index === 1) orbit.style.animation += ', rotateOrbit3D 12s linear infinite';
+                                else if (index === 2) orbit.style.animation += ', rotateOrbit3D2 16s linear infinite';
+                                else if (index === 3) orbit.style.animation += ', rotateOrbit3D3 20s linear infinite';
+                            }, 800);
+                        }, 700 + index * 200);
+                    });
+                    
+                    // Electrons appear after their orbits
+                    electrons.forEach((electron, index) => {
+                        setTimeout(() => {
+                            electron.style.opacity = '1';
+                            electron.style.animation = `electronMaterialize 0.6s ease-out forwards, electronGlow ${2 + index * 0.5}s ease-in-out infinite`;
+                            
+                            // Electron pulse
+                            const pulse = electron.querySelector('div');
+                            if (pulse) {
+                                pulse.style.animation = `electronPulse ${1.5 + index * 0.5}s ease-in-out infinite`;
+                            }
+                        }, 900 + index * 200);
+                    });
+                    
+                    // Floating particles
+                    particles.forEach((particle, index) => {
+                        setTimeout(() => {
+                            particle.style.opacity = '1';
+                            particle.style.animation = `particleBirth 0.8s ease-out forwards, floatParticle ${6 + index * 2}s ease-in-out infinite`;
+                        }, 1200 + index * 200);
+                    });
+                    
+                    // Nebula emission particles
+                    nebulaParticles.forEach((particle, index) => {
+                        const emissionTypes = ['radialEmission1', 'radialEmission2', 'radialEmission3', 'radialEmission4', 'radialEmission5', 
+                                             'ultraFastEmission1', 'ultraFastEmission2', 'ultraFastEmission3', 'ultraFastEmission4', 'ultraFastEmission5',
+                                             'spiralEmission1', 'spiralEmission2', 'spiralEmission3', 'spiralEmission4', 'spiralEmission5'];
+                        const animationType = emissionTypes[index % emissionTypes.length];
+                        const duration = 1.5 + (index * 0.1);
+                        
+                        setTimeout(() => {
+                            particle.style.animation = `${animationType} ${duration}s ease-out forwards`;
+                        }, 300 + index * 50);
+                    });
+                    
+                }, 2500);
+                
             }, 50);
         }
 
