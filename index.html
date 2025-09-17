@@ -1410,6 +1410,34 @@
             }
         }
         
+        @keyframes nucleusExplosion {
+            0% { 
+                transform: translate(-50%, -50%) scale(1); 
+                box-shadow: 0 0 30px #ffeb3b, 0 0 60px #ff9800, 0 0 90px #f44336; 
+                opacity: 1; 
+            }
+            25% { 
+                transform: translate(-50%, -50%) scale(2.5); 
+                box-shadow: 0 0 80px #ffeb3b, 0 0 160px #ff9800, 0 0 240px #f44336, 0 0 320px #e91e63; 
+                opacity: 0.9; 
+            }
+            50% { 
+                transform: translate(-50%, -50%) scale(4); 
+                box-shadow: 0 0 150px #ffeb3b, 0 0 300px #ff9800, 0 0 450px #f44336, 0 0 600px #e91e63, 0 0 750px #9c27b0; 
+                opacity: 0.8; 
+            }
+            75% { 
+                transform: translate(-50%, -50%) scale(6); 
+                box-shadow: 0 0 200px #ffeb3b, 0 0 400px #ff9800, 0 0 600px #f44336, 0 0 800px #e91e63, 0 0 1000px #9c27b0; 
+                opacity: 0.6; 
+            }
+            100% { 
+                transform: translate(-50%, -50%) scale(1); 
+                box-shadow: 0 0 50px #ffeb3b, 0 0 100px #ff9800, 0 0 150px #f44336; 
+                opacity: 1; 
+            }
+        }
+        
         @keyframes logoFloat {
             0%, 100% { 
                 transform: translateY(0px) rotate(0deg) scale(1);
@@ -1804,18 +1832,28 @@
         @keyframes logoMaterialize {
             0% { 
                 opacity: 0; 
-                transform: scale(0) rotate(180deg); 
-                filter: blur(10px); 
+                transform: scale(0) rotate(360deg); 
+                filter: blur(20px) brightness(5) saturate(3);
+            }
+            25% { 
+                opacity: 0.3; 
+                transform: scale(0.5) rotate(270deg); 
+                filter: blur(15px) brightness(4) saturate(2.5);
             }
             50% { 
-                opacity: 0.5; 
-                transform: scale(1.2) rotate(90deg); 
-                filter: blur(5px); 
+                opacity: 0.7; 
+                transform: scale(1.3) rotate(180deg); 
+                filter: blur(8px) brightness(3) saturate(2);
+            }
+            75% { 
+                opacity: 0.9; 
+                transform: scale(1.1) rotate(90deg); 
+                filter: blur(3px) brightness(2) saturate(1.5);
             }
             100% { 
                 opacity: 1; 
                 transform: scale(1) rotate(0deg); 
-                filter: blur(0px); 
+                filter: blur(0px) brightness(1.2) saturate(1.1);
             }
         }
         
@@ -3134,39 +3172,39 @@
                 </div>
                 
                 <!-- CSIT Atomic Structure (Born from the explosion) -->
-                <div class="atomic-structure" style="position: relative; width: 380px; height: 380px; display: flex; align-items: center; justify-content: center; opacity: 0; top: -10px;">
+                <div class="atomic-structure" style="position: relative; width: 500px; height: 500px; display: flex; align-items: center; justify-content: center; opacity: 0; top: -10px;">
                     <!-- Central Nucleus (CSIT Logo) -->
                     <div class="nucleus" style="position: relative; z-index: 10; opacity: 0;">
-                        <div class="nucleus-glow" style="position: absolute; width: 180px; height: 180px; border-radius: 50%; background: radial-gradient(circle, rgba(79,195,247,0.3) 0%, rgba(21,101,192,0.1) 70%, transparent 100%); top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
-                        <img src="Logo.png" alt="CSIT Logo" style="width: 140px; height: 140px; border-radius: 50%; position: relative; z-index: 5; filter: drop-shadow(0 0 25px rgba(79,195,247,0.6));">
+                        <div class="nucleus-glow" style="position: absolute; width: 250px; height: 250px; border-radius: 50%; background: radial-gradient(circle, rgba(79,195,247,0.3) 0%, rgba(21,101,192,0.1) 70%, transparent 100%); top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
+                        <img src="Logo.png" alt="CSIT Logo" style="width: 200px; height: 200px; border-radius: 50%; position: relative; z-index: 5; filter: drop-shadow(0 0 40px rgba(79,195,247,0.8)) drop-shadow(0 0 80px rgba(21,101,192,0.6)) brightness(1.2) contrast(1.1);">
                     </div>
                     
                     <!-- Electron Orbital Paths (Materializing one by one) -->
                     <div class="orbital-system">
                         <!-- Orbit 1 - Inner -->
-                        <div class="orbit orbit-1" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 230px; height: 230px; border: 3px solid rgba(79,195,247,0.4); border-radius: 50%; opacity: 0;">
-                            <div class="electron electron-1" style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); width: 24px; height: 24px; background: radial-gradient(circle, #fff 0%, #4fc3f7 100%); border-radius: 50%; box-shadow: 0 0 20px #4fc3f7, 0 0 40px rgba(79,195,247,0.5); opacity: 0;">
+                        <div class="orbit orbit-1" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 320px; height: 320px; border: 4px solid rgba(79,195,247,0.5); border-radius: 50%; opacity: 0;">
+                            <div class="electron electron-1" style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 30px; height: 30px; background: radial-gradient(circle, #fff 0%, #4fc3f7 100%); border-radius: 50%; box-shadow: 0 0 25px #4fc3f7, 0 0 50px rgba(79,195,247,0.6); opacity: 0;">
                                 <div style="position: absolute; width: 100%; height: 100%; border-radius: 50%; background: rgba(255,255,255,0.8);"></div>
                             </div>
                         </div>
                         
                         <!-- Orbit 2 - Middle -->
-                        <div class="orbit orbit-2" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotateX(60deg) rotateY(30deg); width: 300px; height: 300px; border: 3px solid rgba(21,101,192,0.3); border-radius: 50%; opacity: 0;">
-                            <div class="electron electron-2" style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 20px; height: 20px; background: radial-gradient(circle, #81c784 0%, #4caf50 100%); border-radius: 50%; box-shadow: 0 0 18px #81c784, 0 0 35px rgba(129,199,132,0.4); opacity: 0;">
+                        <div class="orbit orbit-2" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotateX(60deg) rotateY(30deg); width: 420px; height: 420px; border: 4px solid rgba(21,101,192,0.4); border-radius: 50%; opacity: 0;">
+                            <div class="electron electron-2" style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); width: 25px; height: 25px; background: radial-gradient(circle, #81c784 0%, #4caf50 100%); border-radius: 50%; box-shadow: 0 0 22px #81c784, 0 0 45px rgba(129,199,132,0.5); opacity: 0;">
                                 <div style="position: absolute; width: 100%; height: 100%; border-radius: 50%; background: rgba(255,255,255,0.7);"></div>
                             </div>
                         </div>
                         
                         <!-- Orbit 3 - Outer -->
-                        <div class="orbit orbit-3" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotateX(-45deg) rotateY(-60deg); width: 370px; height: 370px; border: 3px solid rgba(255,193,7,0.3); border-radius: 50%; opacity: 0;">
-                            <div class="electron electron-3" style="position: absolute; top: -8px; left: 50%; transform: translateX(-50%); width: 16px; height: 16px; background: radial-gradient(circle, #ffc107 0%, #ff8f00 100%); border-radius: 50%; box-shadow: 0 0 15px #ffc107, 0 0 30px rgba(255,193,7,0.4); opacity: 0;">
+                        <div class="orbit orbit-3" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotateX(-45deg) rotateY(-60deg); width: 520px; height: 520px; border: 4px solid rgba(255,193,7,0.4); border-radius: 50%; opacity: 0;">
+                            <div class="electron electron-3" style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 20px; height: 20px; background: radial-gradient(circle, #ffc107 0%, #ff8f00 100%); border-radius: 50%; box-shadow: 0 0 18px #ffc107, 0 0 36px rgba(255,193,7,0.5); opacity: 0;">
                                 <div style="position: absolute; width: 100%; height: 100%; border-radius: 50%; background: rgba(255,255,255,0.6);"></div>
                             </div>
                         </div>
                         
                         <!-- Additional Orbit 4 - Outermost -->
-                        <div class="orbit orbit-4" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotateX(30deg) rotateY(-45deg); width: 440px; height: 440px; border: 2px solid rgba(156,39,176,0.2); border-radius: 50%; opacity: 0;">
-                            <div class="electron electron-4" style="position: absolute; top: -6px; left: 50%; transform: translateX(-50%); width: 12px; height: 12px; background: radial-gradient(circle, #e91e63 0%, #9c27b0 100%); border-radius: 50%; box-shadow: 0 0 12px #e91e63, 0 0 25px rgba(233,30,99,0.3); opacity: 0;">
+                        <div class="orbit orbit-4" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotateX(30deg) rotateY(-45deg); width: 620px; height: 620px; border: 3px solid rgba(156,39,176,0.3); border-radius: 50%; opacity: 0;">
+                            <div class="electron electron-4" style="position: absolute; top: -8px; left: 50%; transform: translateX(-50%); width: 16px; height: 16px; background: radial-gradient(circle, #e91e63 0%, #9c27b0 100%); border-radius: 50%; box-shadow: 0 0 15px #e91e63, 0 0 30px rgba(233,30,99,0.4); opacity: 0;">
                                 <div style="position: absolute; width: 100%; height: 100%; border-radius: 50%; background: rgba(255,255,255,0.5);"></div>
                             </div>
                         </div>
@@ -5723,7 +5761,48 @@
                 
                 // PHASE 2: Collision explosion at 2s mark
                 setTimeout(() => {
-                    console.log('💥 Phase 2: BIG BANG EXPLOSION!');
+                    console.log('💥 Phase 2: SPECTACULAR BIG BANG EXPLOSION FOR CSIT LOGO!');
+                    
+                    // Create massive explosion flash effect
+                    const explosionFlash = document.createElement('div');
+                    explosionFlash.style.cssText = `
+                        position: fixed;
+                        top: 50%;
+                        left: 50%;
+                        width: 2000px;
+                        height: 2000px;
+                        background: radial-gradient(circle, 
+                            rgba(255,255,255,0.9) 0%, 
+                            rgba(255,215,0,0.8) 10%, 
+                            rgba(255,140,0,0.6) 25%, 
+                            rgba(255,69,0,0.4) 45%, 
+                            rgba(255,0,0,0.2) 65%, 
+                            transparent 85%);
+                        border-radius: 50%;
+                        transform: translate(-50%, -50%) scale(0);
+                        z-index: 999999;
+                        pointer-events: none;
+                        animation: megaExplosion 2.5s ease-out forwards;
+                    `;
+                    document.body.appendChild(explosionFlash);
+                    
+                    // Add mega explosion animation
+                    const megaStyle = document.createElement('style');
+                    megaStyle.textContent = `
+                        @keyframes megaExplosion {
+                            0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+                            20% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.9; }
+                            50% { transform: translate(-50%, -50%) scale(1.8); opacity: 0.6; }
+                            80% { transform: translate(-50%, -50%) scale(3.2); opacity: 0.2; }
+                            100% { transform: translate(-50%, -50%) scale(5); opacity: 0; }
+                        }
+                    `;
+                    document.head.appendChild(megaStyle);
+                    setTimeout(() => {
+                        explosionFlash.remove();
+                        megaStyle.remove();
+                    }, 2500);
+                    
                     if (collisionBlast) {
                         collisionBlast.style.opacity = '1';
                         collisionBlast.style.animation = 'explosionBlast 1.5s ease-out forwards';
@@ -5735,6 +5814,76 @@
                                 ring.style.animation = `blastRing ${1.2 + index * 0.3}s ease-out forwards`;
                             }, index * 100);
                         });
+                    }
+                    
+                    // Create spectacular particle burst with CSIT colors
+                    const particleCount = 80;
+                    for (let i = 0; i < particleCount; i++) {
+                        const particle = document.createElement('div');
+                        const angle = (360 / particleCount) * i + Math.random() * 10;
+                        const velocity = 300 + Math.random() * 400;
+                        const size = 3 + Math.random() * 12;
+                        
+                        // CSIT brand colors and gold/orange theme
+                        const colors = [
+                            '#FFD700', '#FFA500', '#FF8C00', '#FF6347', '#FF4500',
+                            '#DC143C', '#B22222', '#8B0000', '#FFFF00', '#FFEB3B'
+                        ];
+                        const color = colors[Math.floor(Math.random() * colors.length)];
+                        
+                        particle.style.cssText = `
+                            position: fixed;
+                            top: 50%;
+                            left: 50%;
+                            width: ${size}px;
+                            height: ${size}px;
+                            background: radial-gradient(circle, ${color}, ${color}88);
+                            border-radius: 50%;
+                            transform: translate(-50%, -50%);
+                            z-index: 99998;
+                            pointer-events: none;
+                            box-shadow: 0 0 ${size * 3}px ${color}, 0 0 ${size * 6}px ${color}66;
+                        `;
+                        
+                        // Create unique animation for each particle
+                        const animationName = `spectacularBurst${i}`;
+                        const particleStyle = document.createElement('style');
+                        particleStyle.textContent = `
+                            @keyframes ${animationName} {
+                                0% { 
+                                    transform: translate(-50%, -50%) scale(1); 
+                                    opacity: 1; 
+                                }
+                                30% { 
+                                    transform: translate(-50%, -50%) translate(${Math.cos(angle * Math.PI / 180) * velocity * 0.7}px, ${Math.sin(angle * Math.PI / 180) * velocity * 0.7}px) scale(1.2); 
+                                    opacity: 0.9; 
+                                }
+                                70% { 
+                                    transform: translate(-50%, -50%) translate(${Math.cos(angle * Math.PI / 180) * velocity}px, ${Math.sin(angle * Math.PI / 180) * velocity}px) scale(0.8); 
+                                    opacity: 0.5; 
+                                }
+                                100% { 
+                                    transform: translate(-50%, -50%) translate(${Math.cos(angle * Math.PI / 180) * velocity * 1.5}px, ${Math.sin(angle * Math.PI / 180) * velocity * 1.5}px) scale(0); 
+                                    opacity: 0; 
+                                }
+                            }
+                        `;
+                        document.head.appendChild(particleStyle);
+                        particle.style.animation = `${animationName} 4s ease-out forwards`;
+                        
+                        document.body.appendChild(particle);
+                        
+                        // Cleanup after animation
+                        setTimeout(() => {
+                            particle.remove();
+                            particleStyle.remove();
+                        }, 4000);
+                    }
+                    
+                    // Enhanced nucleus explosion effect
+                    if (nucleusGlow) {
+                        nucleusGlow.style.animation = 'nucleusExplosion 3s ease-out forwards';
+                        console.log('💥 Enhanced nucleus explosion triggered!');
                     }
                     
                     // Energy sparks
