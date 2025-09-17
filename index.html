@@ -849,61 +849,208 @@
             .home-carousel-title { font-size: 1.4rem; }
             .home-carousel-desc { font-size: 1rem; }
         }
-
-        /* Curtain Opening Animation */
-        .curtain-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
+        
+        /* Home Page Image Section Styles - Below Header */
+        .home-page-image-section {
             width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
-            z-index: 10000;
+            margin: 0 auto;
+            background: none;
+            border-radius: 0;
+            box-shadow: none;
+            overflow: hidden;
+            backdrop-filter: none;
+            border: none;
+            padding: 20px 0;
+            opacity: 1;
+            transform: none;
+            animation: none;
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+        }
+        
+        .home-page-image-section img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            object-position: center;
+            display: block;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(21, 101, 192, 0.2);
+            max-width: 100%;
+        }
+        
+        /* ChemBioMat Conference Carousel Styles */
+        .chembiomat-carousel {
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+            background: none;
+            border-radius: 0;
+            box-shadow: none;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 1;
-            transition: opacity 0.8s ease-in-out;
+            min-height: 400px;
         }
-
-        .curtain-overlay.fade-out {
-            opacity: 0;
-            pointer-events: none;
+        
+        .chembiomat-carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            height: 400px;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(21, 101, 192, 0.2);
         }
-
-        .curtain-left, .curtain-right {
+        
+        .chembiomat-carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            height: 100%;
+        }
+        
+        .chembiomat-carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        .chembiomat-carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+        
+        .chembiomat-carousel-overlay {
             position: absolute;
             top: 0;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(135deg, #2d3748, #4a5568, #2c5282);
-            transition: transform 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            box-shadow: inset 0 0 50px rgba(0,0,0,0.3);
-        }
-
-        .curtain-left {
             left: 0;
-            background: linear-gradient(45deg, #2d3748, #4a5568);
-        }
-
-        .curtain-right {
             right: 0;
-            background: linear-gradient(-45deg, #2d3748, #4a5568);
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(21, 101, 192, 0.1), rgba(79, 195, 247, 0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
         }
-
-        .curtain-overlay.opening .curtain-left {
-            transform: translateX(-100%);
-        }
-
-        .curtain-overlay.opening .curtain-right {
-            transform: translateX(100%);
-        }
-
-        .curtain-content {
-            text-align: center;
+        
+        .register-link {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+            background: rgba(79, 195, 247, 0.9);
             color: white;
-            z-index: 10001;
-            animation: curtainPulse 2s ease-in-out infinite;
+            padding: 12px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(79, 195, 247, 0.3);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .register-link:hover {
+            background: rgba(21, 101, 192, 0.9);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(21, 101, 192, 0.4);
+        }
+        
+        .register-link i {
+            font-size: 1rem;
+        }
+        
+        .chembiomat-carousel-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 10;
+        }
+        
+        .chembiomat-carousel-btn {
+            background: rgba(255, 255, 255, 0.8);
+            color: var(--primary);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .chembiomat-carousel-btn:hover {
+            background: rgba(79, 195, 247, 0.9);
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .chembiomat-carousel-indicators {
+            position: absolute;
+            bottom: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+        
+        .chembiomat-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .chembiomat-indicator.active {
+            background: rgba(79, 195, 247, 0.9);
+            transform: scale(1.2);
+        }
+        
+        @media (max-width: 768px) {
+            .chembiomat-carousel-container {
+                height: 300px;
+            }
+            
+            .register-link {
+                top: 10px;
+                right: 10px;
+                padding: 8px 15px;
+                font-size: 0.8rem;
+            }
+            
+            .chembiomat-carousel-controls {
+                bottom: 15px;
+            }
+            
+            .chembiomat-carousel-indicators {
+                bottom: 60px;
+            }
+        }
+        
+        /* Content below image */
+        .main-content {
+        .main-content {
+            position: relative;
+            z-index: 3;
+            background: #181c24;
+            padding-top: 0;
         }
 
         .director-info {
@@ -2682,31 +2829,6 @@
     </style>
 </head>
 <body style="background: #181c24; margin: 0; overflow-x: hidden;" class="dark-mode">;
-    <!-- Curtain Opening Animation -->
-    <div id="curtainOverlay" class="curtain-overlay">
-        <div class="curtain-left"></div>
-        <div class="curtain-right"></div>
-        <div class="curtain-content">
-            <div class="director-info">
-                <div class="director-image">
-                    <img src="./about us pictures/jnmoortthy.jpeg" alt="Prof. J N Moorthy" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSI2MCIgY3k9IjYwIiByPSI1MCIgZmlsbD0iIzRmYzNmNyIgb3BhY2l0eT0iMC4zIi8+PHRleHQgeD0iNjAiIHk9IjY1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM0ZmMzZjciIHRleHQtYW5jaG9yPSJtaWRkbGUiPkRpcmVjdG9yPC90ZXh0Pjwvc3ZnPg=='">
-                </div>
-                <div class="director-text">
-                    <p class="presents-text">Prof. J N Moorthy, Director, IISER TVM presents</p>
-                </div>
-            </div>
-            <div class="curtain-logo">
-                <img src="./Logo.png" alt="CSIT Logo" class="csit-logo-img" onerror="tryLoadCSITLogo(this)">
-            </div>
-            <h1 class="curtain-title">CSIT</h1>
-            <p class="curtain-subtitle">Chemical Society of IISER Thiruvananthapuram</p>
-            <div class="loading-dots">
-                <div class="loading-dot"></div>
-                <div class="loading-dot"></div>
-                <div class="loading-dot"></div>
-            </div>
-        </div>
-    </div>
     
     <canvas id="chem-bg"></canvas>
     <header>
@@ -2751,9 +2873,43 @@
         </a>
     </div>
 
-    <!-- Home Page Image Section -->
-    <div class="home-page-image-section">
-        <img src="./index/home page image1.jpg" alt="CSIT Home Page" onerror="tryLoadHomePageImage(this)">
+    <!-- ChemBioMat Conference Carousel -->
+    <div class="chembiomat-carousel">
+        <div class="chembiomat-carousel-container">
+            <div class="chembiomat-carousel-track" id="chembiomatCarouselTrack">
+                <div class="chembiomat-carousel-slide">
+                    <img src="./chembiomat-images/chembiomatf1.jpg" alt="ChemBioMat Conference Image 1" onerror="tryLoadChemBioMatImage(this, 1)">
+                    <div class="chembiomat-carousel-overlay"></div>
+                </div>
+                <div class="chembiomat-carousel-slide">
+                    <img src="./chembiomat-images/chembiomatf2.jpg" alt="ChemBioMat Conference Image 2" onerror="tryLoadChemBioMatImage(this, 2)">
+                    <div class="chembiomat-carousel-overlay"></div>
+                </div>
+            </div>
+            
+            <!-- Registration Link -->
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSc5Hv1sSfXNZKNgTLmQ3yBKbcfwo7OYiLw1Bqks4e98y_PNhg/viewform?usp=sharing&ouid=104880994648333509698" 
+               target="_blank" rel="noopener noreferrer" class="register-link">
+                <i class="fas fa-user-plus"></i>
+                Register Here
+            </a>
+            
+            <!-- Carousel Controls -->
+            <div class="chembiomat-carousel-controls">
+                <button class="chembiomat-carousel-btn" onclick="moveChemBioMatCarousel(-1)">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="chembiomat-carousel-btn" onclick="moveChemBioMatCarousel(1)">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            
+            <!-- Carousel Indicators -->
+            <div class="chembiomat-carousel-indicators" id="chembiomatCarouselIndicators">
+                <div class="chembiomat-indicator active" onclick="goToChemBioMatSlide(0)"></div>
+                <div class="chembiomat-indicator" onclick="goToChemBioMatSlide(1)"></div>
+            </div>
+        </div>
     </div>
 
     <div class="main-content">
@@ -3225,28 +3381,6 @@
         </div>
     </footer>
     <script>
-    // Curtain Opening Animation
-    window.addEventListener('load', function() {
-        const curtainOverlay = document.getElementById('curtainOverlay');
-        
-        // Start curtain opening animation after 1 second
-        setTimeout(() => {
-            curtainOverlay.classList.add('opening');
-            
-            // Remove curtain completely after animation completes
-            setTimeout(() => {
-                curtainOverlay.classList.add('fade-out');
-                
-                // Remove from DOM after fade out
-                setTimeout(() => {
-                    if (curtainOverlay.parentNode) {
-                        curtainOverlay.parentNode.removeChild(curtainOverlay);
-                    }
-                }, 800);
-            }, 2000); // Wait for curtain opening to complete
-        }, 1000); // Initial delay
-    });
-
     // Chemistry-inspired animated background: molecules and bonds
     const canvas = document.getElementById('chem-bg');
     const ctx = canvas.getContext('2d');
@@ -3419,7 +3553,7 @@
     // Example events (replace/edit in code as site editor)
     const events = [
         { date: '2025-09-02', time: '18:00', title: 'Bienvenue 2025', venue: 'IISER TVM Campus' },
-        { date: '2025-10-04', time: '09:00', title: 'i2-Chemical biology and Biomaterial conference (i-ChemBioMat)', venue: 'IISER TVM Campus', sponsor: 'RSC' }
+        { date: '2025-09-29', time: '09:00', title: 'i2-Chemical biology and Biomaterial conference (i-ChemBioMat)', venue: 'IISER TVM Campus', sponsor: 'RSC' }
     ];
 
     // Global variable to store IST offset
@@ -4536,6 +4670,115 @@
             
             attemptHomeLoad(homeImagePaths, currentPathIndex);
         }
+
+        // ChemBioMat Carousel Image Loading with Fallbacks
+        function tryLoadChemBioMatImage(imgElement, imageNumber) {
+            const domainType = detectDomainType();
+            
+            // Define multiple fallback paths for ChemBioMat images
+            const chembiomatImagePaths = [
+                `./chembiomat-images/chembiomatf${imageNumber}.jpg`,
+                `./chembiomat-images/chembiomatf${imageNumber}.png`,
+                `./chembiomat-images/chembiomatf${imageNumber}.jpeg`,
+                `./chembiomat-images/chembiomatf${imageNumber}.webp`,
+                `https://raw.githubusercontent.com/hemanth24s/csit/main/chembiomat-images/chembiomatf${imageNumber}.jpg`,
+                `https://raw.githubusercontent.com/hemanth24s/csit/main/chembiomat-images/chembiomatf${imageNumber}.png`,
+                `https://raw.githubusercontent.com/hemanth24s/csit/main/chembiomat-images/chembiomatf${imageNumber}.jpeg`,
+                `https://raw.githubusercontent.com/hemanth24s/csit/main/chembiomat-images/chembiomatf${imageNumber}.webp`,
+                // Fallback to a placeholder or conference logo
+                './Logo.png'
+            ];
+            
+            let currentPathIndex = 0;
+            
+            function attemptChemBioMatLoad(paths, index) {
+                if (index >= paths.length) {
+                    console.warn(`ChemBioMat image ${imageNumber} failed to load from all sources`);
+                    return;
+                }
+                
+                const currentPath = paths[index];
+                const testImg = new Image();
+                
+                testImg.onload = function() {
+                    imgElement.src = currentPath;
+                };
+                
+                testImg.onerror = function() {
+                    attemptChemBioMatLoad(paths, index + 1);
+                };
+                
+                testImg.src = currentPath;
+            }
+            
+            attemptChemBioMatLoad(chembiomatImagePaths, currentPathIndex);
+        }
+
+        // ChemBioMat Carousel Functionality
+        let currentChemBioMatSlide = 0;
+        const chembiomatCarouselTrack = document.getElementById('chembiomatCarouselTrack');
+        const chembiomatCarouselIndicators = document.getElementById('chembiomatCarouselIndicators');
+        const totalChemBioMatSlides = 2;
+
+        function updateChemBioMatCarousel() {
+            if (chembiomatCarouselTrack) {
+                const translateX = -currentChemBioMatSlide * 100;
+                chembiomatCarouselTrack.style.transform = `translateX(${translateX}%)`;
+            }
+            
+            // Update indicators
+            if (chembiomatCarouselIndicators) {
+                const indicators = chembiomatCarouselIndicators.querySelectorAll('.chembiomat-indicator');
+                indicators.forEach((indicator, index) => {
+                    indicator.classList.toggle('active', index === currentChemBioMatSlide);
+                });
+            }
+        }
+
+        function moveChemBioMatCarousel(direction) {
+            currentChemBioMatSlide += direction;
+            
+            if (currentChemBioMatSlide >= totalChemBioMatSlides) {
+                currentChemBioMatSlide = 0;
+            } else if (currentChemBioMatSlide < 0) {
+                currentChemBioMatSlide = totalChemBioMatSlides - 1;
+            }
+            
+            updateChemBioMatCarousel();
+        }
+
+        function goToChemBioMatSlide(slideIndex) {
+            currentChemBioMatSlide = slideIndex;
+            updateChemBioMatCarousel();
+        }
+
+        // Auto-advance ChemBioMat carousel
+        let chembiomatCarouselInterval;
+        
+        function startChemBioMatCarousel() {
+            chembiomatCarouselInterval = setInterval(() => {
+                moveChemBioMatCarousel(1);
+            }, 4000); // Change slide every 4 seconds
+        }
+
+        function stopChemBioMatCarousel() {
+            if (chembiomatCarouselInterval) {
+                clearInterval(chembiomatCarouselInterval);
+            }
+        }
+
+        // Initialize ChemBioMat carousel when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            updateChemBioMatCarousel();
+            startChemBioMatCarousel();
+            
+            // Pause carousel on hover
+            const carouselContainer = document.querySelector('.chembiomat-carousel-container');
+            if (carouselContainer) {
+                carouselContainer.addEventListener('mouseenter', stopChemBioMatCarousel);
+                carouselContainer.addEventListener('mouseleave', startChemBioMatCarousel);
+            }
+        });
 
         // Faculty Carousel Functionality
         let currentResearchSlide = 0;
