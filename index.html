@@ -1853,7 +1853,7 @@
             100% { 
                 opacity: 1; 
                 transform: scale(1) rotate(0deg); 
-                filter: blur(0px) brightness(1.2) saturate(1.1);
+                filter: blur(0px) brightness(1.2) saturate(1.1) drop-shadow(0 0 40px rgba(79,195,247,0.8)) drop-shadow(0 0 80px rgba(21,101,192,0.6));
             }
         }
         
@@ -3176,7 +3176,7 @@
                     <!-- Central Nucleus (CSIT Logo) -->
                     <div class="nucleus" style="position: relative; z-index: 10; opacity: 0;">
                         <div class="nucleus-glow" style="position: absolute; width: 250px; height: 250px; border-radius: 50%; background: radial-gradient(circle, rgba(79,195,247,0.3) 0%, rgba(21,101,192,0.1) 70%, transparent 100%); top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
-                        <img src="Logo.png" alt="CSIT Logo" style="width: 200px; height: 200px; border-radius: 50%; position: relative; z-index: 5; filter: drop-shadow(0 0 40px rgba(79,195,247,0.8)) drop-shadow(0 0 80px rgba(21,101,192,0.6)) brightness(1.2) contrast(1.1);">
+                        <img src="Logo.png" alt="CSIT Logo" onload="console.log('✅ Logo image loaded successfully')" onerror="console.error('❌ Logo image failed to load:', this.src); this.src='iiser tvm logo.png';" style="width: 200px; height: 200px; border-radius: 50%; position: relative; z-index: 5; filter: drop-shadow(0 0 40px rgba(79,195,247,0.8)) drop-shadow(0 0 80px rgba(21,101,192,0.6)) brightness(1.2) contrast(1.1);">
                     </div>
                     
                     <!-- Electron Orbital Paths (Materializing one by one) -->
@@ -5727,12 +5727,23 @@
             const particles = atomicStructure.querySelectorAll('.particle');
             const nebulaParticles = atomicStructure.querySelectorAll('.nebula-particle');
             
+            console.log('🔍 Logo element found:', !!logo, logo ? logo.src : 'No logo');
+            
             [nucleus, nucleusGlow, logo, ...orbits, ...electrons, ...particles, ...nebulaParticles].forEach(element => {
                 if (element) {
                     element.style.animation = 'none';
                     element.style.opacity = '0';
                 }
             });
+            
+            // Ensure logo is properly reset
+            if (logo) {
+                logo.style.opacity = '0';
+                logo.style.animation = 'none';
+                logo.style.transform = 'scale(1)';
+                logo.style.filter = 'drop-shadow(0 0 40px rgba(79,195,247,0.8)) drop-shadow(0 0 80px rgba(21,101,192,0.6)) brightness(1.2) contrast(1.1)';
+                console.log('🎯 Logo reset complete');
+            }
             
             // Force reflow
             void introSequence.offsetHeight;
@@ -5915,13 +5926,21 @@
                         if (nucleus) {
                             nucleus.style.opacity = '1';
                             nucleus.style.animation = 'logoMaterialize 1.2s ease-out forwards';
+                            console.log('✅ Nucleus made visible');
                         }
                         if (nucleusGlow) {
                             nucleusGlow.style.animation = 'nucleusGlow 3s ease-in-out infinite';
+                            console.log('✅ Nucleus glow animation started');
                         }
                         if (logo) {
+                            logo.style.opacity = '1';
                             logo.style.animation = 'logoFloat 4s ease-in-out infinite';
-                            console.log('🎯 CSIT logo should now be visible and floating!');
+                            logo.style.visibility = 'visible';
+                            logo.style.display = 'block';
+                            logo.style.zIndex = '10';
+                            console.log('🎯 CSIT logo should now be visible and floating!', logo.src);
+                        } else {
+                            console.error('❌ Logo element not found!');
                         }
                     }, 500);
                     
